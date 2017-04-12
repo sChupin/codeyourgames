@@ -8,10 +8,7 @@ export function configure(aurelia: Aurelia) {
     .standardConfiguration()
     .developmentLogging()
     .plugin('aurelia-dialog')
-    .plugin('abalmus/aurelia-ace-editor')
-    .plugin('aurelia-auth', (baseConfig) => {
-      baseConfig.configure(config);
-    });
+    .plugin('abalmus/aurelia-ace-editor');
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin('aurelia-animator-css');
@@ -19,7 +16,6 @@ export function configure(aurelia: Aurelia) {
   // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   // aurelia.use.plugin('aurelia-html-import-template-loader')
 
-  // TODO: set root to app if already inside the app...
   let root = 'app';
   aurelia.start().then(() => aurelia.setRoot(root));
 }
