@@ -1,15 +1,7 @@
 import {Router, RouterConfiguration} from 'aurelia-router';
-import {FetchConfig} from 'aurelia-auth';
-import {inject} from 'aurelia-framework';
 
-@inject(FetchConfig)
 export class App {
   public router: Router;
-  public fetchConfig: FetchConfig;
-
-  constructor(fetchConfig: FetchConfig) {
-    this.fetchConfig = fetchConfig;
-  }
 
   public configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Loop';
@@ -21,10 +13,6 @@ export class App {
     ]);
 
     this.router = router;
-  }
-
-  activate() {
-    this.fetchConfig.configure();
   }
 
 }
