@@ -1,0 +1,14 @@
+<template>
+  <div class="panel panel-default" style="height: 100%;">
+    <div class="panel-heading">Image Gallery</div>
+    <div class="panel-body" style="height: calc(100% - 40.48px); overflow-y: scroll;">
+      <div class="col-md-3" repeat.for="image of gallery">
+        <div class="panel panel-default">
+          <div class="panel-body" style="width: 55px; height: 75px; margin: auto;">
+            <img src.bind="image.url" click.delegate="publishImg($index)" class="img-responsive" alt="image.name">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

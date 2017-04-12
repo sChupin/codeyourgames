@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "raw": "github:nathancahill/split.js",
+    "main": "dist/split.d.ts",
+    "name": "split.js"
+  }
+}

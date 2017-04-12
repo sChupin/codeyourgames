@@ -1,0 +1,10 @@
+.editorconfig
+.vscode
+dist
+jspm_packages
+node_modules
+test/e2e/dist
+/export
+coverage
+.DS_STORE
+build/reports

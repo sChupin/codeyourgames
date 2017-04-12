@@ -1,0 +1,26 @@
+{
+  "name": "aurelia-starter-node",
+  "version": "1.0.0",
+  "description": "The server component for the Aurelia starter node",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node server.js"
+  },
+  "author": "Dwayne Charrington <dwaynecharrington@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.1",
+    "cors": "^2.8.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.3.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.9.3",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.0"
+  }
+}

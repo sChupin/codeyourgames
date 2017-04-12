@@ -1,0 +1,51 @@
+<template>
+  <style>
+    .ace_editor {
+        display: block;
+        border: 1px solid lightgray;
+        margin: auto;
+        height: calc(100% - 35px);
+        width: 100%;
+    }
+  </style>
+
+  <div class="full-height">
+    <div class="row full-height">
+    <div class="col-md-2" style="padding-right: 7px;">
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#create-editor" data-toggle="tab">Create</a></li>
+        <li class="active"><a href="#update-editor" data-toggle="tab">Update</a></li>
+      </ul>
+    </div>
+
+    <div class="col-md-10 full-height tab-content" style="padding-left: 0px">
+      <div id="create-editor" class="tab-pane fade full-height">
+        <ace config-theme="ace/theme/monokai"
+            config-mode="ace/mode/typescript"
+            config-read-only="false"
+            ref="createAceEditor">
+          
+          
+        </ace>
+      </div>
+      <div id="update-editor" class="tab-pane fade in active full-height">
+        <ace config-theme="ace/theme/monokai"
+            config-mode="ace/mode/typescript"
+            config-read-only="false"
+            ref="updateAceEditor">
+          
+          
+        </ace>
+      </div>
+    </div>
+    </div>    
+    <div class="row">
+      <div class="col-md-offset-9 col-md-3">
+        <button type="button" class="btn btn-large btn-block btn-success" click.trigger="runCode()">Run Code</button>
+      </div>
+    </div>
+  </div>
+    
+</template>
+
+

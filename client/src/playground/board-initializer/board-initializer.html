@@ -1,0 +1,105 @@
+<template>
+  <require from="../../utils/value-converter/blob-to-url"></require>
+  <require from="../../utils/value-converter/file-list-to-array"></require>
+  <require from="../../utils/value-converter/string-to-number"></require>
+  <require from="../image-gallery"></require>
+  <div class="full-height">
+    <div class="col-md-6" style="height: 100%">
+      <style>
+        .panel.with-nav-tabs .panel-heading{
+            padding: 5px 5px 0 5px;
+        }
+        .panel.with-nav-tabs .nav-tabs{
+          border-bottom: none;
+        }
+        .panel.with-nav-tabs .nav-justified{
+          margin-bottom: -1px;
+        }
+      </style>
+      <div class="panel with-nav-tabs panel-default" style="height: 100%">
+        <div class="panel-heading">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tabbackground" data-toggle="tab">Background</a></li>
+            <li><a href="#tabdecor" data-toggle="tab">Decor</a></li>
+            <li><a href="#tabplatform" data-toggle="tab">Platforms</a></li>
+            <li><a href="#tabbodies" data-toggle="tab">Bodies</a></li>
+            <button type="button" class="btn btn-success pull-right" style="margin: 1px;" click.delegate="saveBoard()">Save this board</button>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="tabbackground">
+              <button id="jscolortest" type="button" class="btn btn-secondary">Set background color</button>
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('file').click();">Set background image</button>
+              <br>
+              <br>
+              <input id="file" type="file" change.delegate="setBackground($event.target.files[0])" style="display:none">
+                <!--<input id="file" type='file' multiple accept="image/*" files.bind='selectedFiles' style="display:none" />
+                  <div if.bind="selectedFiles !== undefined">
+                    <img src.bind="selectedFiles.item(0) | blobToUrl"><img>
+                  </div>-->
+              <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Set dimensions</button>
+                <input type="number" id="board-width" value.bind="width | stringToNumber">x
+                <input type="number" id="board-height" value.bind="height | stringToNumber">
+            </div>
+            <div class="tab-pane fade" id="tabdecor">Decor</div>
+            <div class="tab-pane fade" id="tabplatform">Platforms</div>
+            <div class="tab-pane fade" id="tabbodies">
+              <!--<div repeat.for="body of bodies">
+                <compose view="./body.html" view-model="./body" model.bind="body"></compose>
+              </div>-->
+              <div class="row">
+                <div repeat.for="body of bodies">
+                  <div class="col-md-3">
+                    <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'">
+                      <div class="panel-body" style="width: 55px; height: 75px; margin: auto;">
+                        <img src.bind="body._element.src" class="img-responsive" alt="body.name">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#gallery"><span class="glyphicon glyphicon-plus"></span></button>
+                <!-- Modal -->
+                <div id="gallery" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Image Gallery</h4>
+                      </div>
+                      <div class="modal-body">
+                        <image-gallery></image-gallery>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div>Key: ${selectedBody.key}</div>
+                <div>Name: ${selectedBody.name}</div>
+                <div>Height: ${selectedBody.height * selectedBody.scaleY}</div>
+                <div>Width: ${selectedBody.width * selectedBody.scaleX}</div>
+                <div>x: ${selectedBody.left}</div>
+                <div>y: ${selectedBody.top}</div>
+              </div>              
+                    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="height: 100%">
+      <div class="full-height" style="border: solid 1px #ddd; border-radius: 2px; overflow: hidden;">
+        <canvas id="board" class="full-height"></canvas>
+      </div>
+    </div>
+  </div>
+</template>
