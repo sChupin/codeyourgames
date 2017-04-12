@@ -1,5 +1,5 @@
 export class CodeUpdated {
-  constructor(public code: string) { }
+  constructor(public createCode: string, public updateCode: string) { }
 }
 
 export class ImageInfo {

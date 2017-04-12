@@ -11,15 +11,19 @@ export class Editor {
   private updateEditor;
 
   constructor(private ea: EventAggregator) {
-    this.ea.subscribe(GameInfo, msg => this.createEditor.setValue(getCreateCode(msg)));
+    this.ea.subscribe(GameInfo, msg => this.createEditor.setValue(createCodeFromInfo(msg)));
    }
 
   public runCode() {
-    this.ea.publish(new CodeUpdated(this.getCode()));
+    this.ea.publish(new CodeUpdated(this.getCreateCode(), this.getUpdateCode()));
   }
 
-  private getCode() {
+  private getUpdateCode() {
       return this.updateEditor.getValue();
+  }
+
+  private getCreateCode() {
+    return this.createEditor.getValue();
   }
 
   private attached() {
@@ -29,8 +33,12 @@ export class Editor {
 
 }
 
-function getCreateCode(gameInfo) {
+function createCodeFromInfo(gameInfo) {
   let code = "this.cursors = this.input.keyboard.createCursorKeys();\n";
+ 
+  if (gameInfo.backgroundColor) {
+    code += "this.game.stage.backgroundColor = '" + gameInfo.backgroundColor + "';\n";
+  }
   // if (gameInfo.backgroundImage) {
   //   code += "this.add.sprite(0, 0, '" + gameInfo.backgroundImage.key + "');\n";
   // }
