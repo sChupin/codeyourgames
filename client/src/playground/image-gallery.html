@@ -10,7 +10,6 @@
         <div class="panel-body">
         <div class="col-md-3" repeat.for="image of gallery[section]">
           <div class="panel panel-default" class.bind="image.selected ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="addImage(image)">
-            <!--<div class="panel-body" style="width: 55px; height: 75px; margin: auto;">-->
             <div class="panel-body">
               <img src.bind="image.url" class="img-responsive" alt="image.name">
             </div>

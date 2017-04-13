@@ -53,8 +53,8 @@ function getPreloadCode(gameInfo) {
 }
 
 class GameContainer extends Phaser.Game {
-  constructor(preloadCode: string, createCode: string, updateCode: string, width: number = 400, height: number = 300) {
-    super(width, height, Phaser.AUTO, 'game-container', null);
+  constructor(preloadCode: string, createCode: string, updateCode: string, containerId: string = "game-container", width: number = 400, height: number = 300) {
+    super(width, height, Phaser.AUTO, containerId, null);
     GameWorld.prototype.userPreload = Function(preloadCode);
     GameWorld.prototype.userCreate = Function(createCode);
     GameWorld.prototype.userUpdate = Function(updateCode);

@@ -39,15 +39,10 @@ function createCodeFromInfo(gameInfo) {
   if (gameInfo.backgroundColor) {
     code += "this.game.stage.backgroundColor = '" + gameInfo.backgroundColor + "';\n";
   }
-  // if (gameInfo.backgroundImage) {
-  //   code += "this.add.sprite(0, 0, '" + gameInfo.backgroundImage.key + "');\n";
-  // }
-  // add background image key to key list
-  // Modify first how background image is set
 
   gameInfo.bodies.forEach(body => {
-    // code += "var " + body.name + " = this.add.sprite(" + body.x + ", " + body.y + ", '" + body.key + "');\n"
     code += "this.bodies['" + body.name + "'] = this.add.sprite(" + body.x + ", " + body.y + ", '" + body.key + "');\n"
+    code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
   });
   
   return code;
