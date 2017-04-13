@@ -27,7 +27,9 @@ export class GameContainer {
 
   detached() {
     this.subscriber.dispose();
-    this.game.destroy();
+    if (this.game != null) {
+      this.game.destroy();
+    }
   }
 
 }
