@@ -33,7 +33,8 @@ app.use(cookieParser());
 app.use(require('./api/api'));
 
 // Serve index and config.js
-app.get('/', (req, res) => res.render('index.html'));
+// app.get('/', (req, res) => res.render('../../client/index.html')); // index stored in server (./views)
+app.get('/', (req, res) => res.render('index.html')); // index stored in client
 app.get('/config.js', (req, res) => res.sendFile(path.join(__dirname, '../client/config.js')));
 
 // Serve client static files
