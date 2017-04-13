@@ -1,7 +1,6 @@
 import 'bootstrap';
 import 'EastDesire/jscolor';
 import {Aurelia} from 'aurelia-framework';
-import config from './other/auth-config';
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
