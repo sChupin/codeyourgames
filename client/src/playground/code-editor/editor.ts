@@ -12,7 +12,7 @@ export class Editor {
 
   constructor(private ea: EventAggregator) {
     this.ea.subscribe(GameInfo, msg => this.createEditor.setValue(createCodeFromInfo(msg)));
-   }
+  }
 
   public runCode() {
     this.ea.publish(new CodeUpdated(this.getCreateCode(), this.getUpdateCode()));
