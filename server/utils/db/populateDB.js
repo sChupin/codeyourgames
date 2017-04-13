@@ -41,8 +41,3 @@ fs.readdir(imagesPath, (err, dirs) => {
         });
     });
 });
-// var sprite = new schema.ImgGallery({ sectionName: 'Sprite', images: [{name: 'test', url: 'http://www.untamed.wild-refuge.net/images/rpgxp/single/anakin.png'}]});
-// sprite.save(function(err, silence) {
-//     if (err) return console.error(err);
-//     console.log('Kitten ' + silence.name + ' saved into db.');
-// });
