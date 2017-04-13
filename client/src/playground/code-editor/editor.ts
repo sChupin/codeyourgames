@@ -10,12 +10,17 @@ export class Editor {
   private createEditor;
   private updateEditor;
 
+  private preloadCode: string = ""; // Not editable by user
+
   constructor(private ea: EventAggregator) {
-    this.ea.subscribe(GameInfo, msg => this.createEditor.setValue(createCodeFromInfo(msg)));
+    this.ea.subscribe(GameInfo, msg => {
+      this.preloadCode = preloadCodeFromInfo(msg);
+      this.createEditor.setValue(createCodeFromInfo(msg));
+    });
   }
 
   public runCode() {
-    this.ea.publish(new CodeUpdated(this.getCreateCode(), this.getUpdateCode()));
+    this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
   }
 
   private getUpdateCode() {
@@ -33,6 +38,21 @@ export class Editor {
 
 }
 
+function preloadCodeFromInfo(gameInfo) {
+  let code = "";
+
+  // Allow cross-origin
+  code += "this.load.crossOrigin = 'anonymous';\n"
+
+  gameInfo.bodies.forEach(body => {
+    code += "this.load.image('" + body.key + "', '" + body.url + "');\n"
+  });
+
+  console.log('Preload Code is:');
+  console.log(code);
+  return code;
+}
+
 function createCodeFromInfo(gameInfo) {
   let code = "this.cursors = this.input.keyboard.createCursorKeys();\n";
  
@@ -41,7 +61,7 @@ function createCodeFromInfo(gameInfo) {
   }
 
   gameInfo.bodies.forEach(body => {
-    code += "this.bodies['" + body.name + "'] = this.add.sprite(" + body.x + ", " + body.y + ", '" + body.key + "');\n"
+    code += "this.bodies['" + body.name + "'] = this.add.sprite(" + (body.x + body.width/2) + ", " + (body.y + body.height/2) + ", '" + body.key + "');\n"
     code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
   });
   
