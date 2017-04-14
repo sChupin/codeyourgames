@@ -1,5 +1,5 @@
 import {autoinject} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 import {ImageInfo, GameInfo} from '../messages';
 import {Body} from './body';
 import {BackendService} from '../../backend-service';
@@ -11,24 +11,23 @@ import {fabric} from 'fabric';
 
 @autoinject
 export class BoardInitializer {
+  private subscriber: Subscription;
+  
   private board;
   private width: number = 400;
   private height: number = 300;
   private selectedBody = {height: 0, width: 0, top: 0, left: 0};
   private bgColorPicker;
   
-  private currentBackgroundUrl = 'http://fabricjs.com/assets/honey_im_subtle.png';
+  private currentBackgroundUrl = '';
 
   private bodies = [];
-  // private bodies: Array<Body> = [];
-  // private bodies  = [{name: "body1", url: "http://www.untamed.wild-refuge.net/images/rpgxp/single/alberto.png"},
-  //                    {name: "body2", url: "http://www.untamed.wild-refuge.net/images/rpgxp/single/anakin.png"}];
 
-  constructor(private ea : EventAggregator) {
-    ea.subscribe(ImageInfo, msg => this.addImageToBoard(msg.name, msg.URL));
-  }
+  constructor(private ea : EventAggregator) { }
 
   attached() {
+    this.subscriber = this.ea.subscribe(ImageInfo, msg => this.addImageToBoard(msg.name, msg.URL));
+    
     let __this = this;
 
     this.board = new fabric.Canvas('board');
@@ -86,6 +85,10 @@ export class BoardInitializer {
   public saveBoard() {
     console.log(this.board._objects);
     this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects));
+  }
+
+  detached() {
+    this.subscriber.dispose();
   }
 
 }
