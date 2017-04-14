@@ -1,11 +1,11 @@
 <template>
-  <require from="./gallery"></require>
-  <require from="./creator"></require>
-  <div class="full-height">
-    <div class="col-md-6" id="left2" style="height: 100%">
-    </div>
-    <div class="col-md-6" id="right2">
-      <creator></creator>
-    </div>
-  </div>
+  <require from="../split-view"></require>
+  <split-view component-name.bind="componentName">
+    <template replace-part="left">
+      Left part replaced
+    </template>
+    <template replace-part="right">
+      Right parte replaced
+    </template>
+  </split-view>
 </template>

@@ -1,0 +1,16 @@
+<template>
+  <div class="container-fluid" style="height: 100%; padding-bottom: 0px;">
+    <div class="row full-height">
+      <div class="col-md-6 full-height" id.bind="componentName + '-left'">
+        <template replaceable part="left">
+          Left replaceable part
+        </template>
+      </div>
+      <div class="col-md-6 full-height" id.bind="componentName + '-right'" style="padding: 0px;">
+        <template replaceable part="right">
+          Right replaceable part
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
