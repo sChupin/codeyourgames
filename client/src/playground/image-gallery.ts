@@ -1,10 +1,12 @@
 import {BackendService} from '../backend-service';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ImageInfo} from './messages';
-import {autoinject} from 'aurelia-framework';
+import {autoinject, bindable} from 'aurelia-framework';
 
 @autoinject
 export class ImageGallery {
+  @bindable background
+
   public sections;
   public gallery;
   private loaded;
@@ -13,7 +15,14 @@ export class ImageGallery {
   constructor(private backend: BackendService, private ea: EventAggregator) {
     this.gallery = {};
     this.loaded = {};
-    backend.getGallerySections().then(data => this.sections = JSON.parse(data.response));
+  }
+
+  attached() {
+    if (!this.background) {
+      this.backend.getGallerySections().then(data => this.sections = JSON.parse(data.response));
+    } else {
+      this.sections = ['Backgrounds'];
+    }
   }
 
   retrieveImg(section) {
@@ -39,7 +48,7 @@ export class ImageGallery {
   }
 
   public addImage(image) {
-    this.ea.publish(new ImageInfo(image.name, image.url));
+    this.ea.publish(new ImageInfo(this.background, image.name, image.url));
   }
 
 }

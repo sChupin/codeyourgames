@@ -34,7 +34,7 @@ var dest = path.join(__dirname, '../public/images/');
 */
 
 let getGalleries = function(req, res) {
-    db.retrieveItem('imggalleries', {}, {sectionName: 1, _id: 0}, function(err, sectionNames) {
+    db.retrieveItem('imggalleries', {sectionName: { $ne: 'Backgrounds' } }, {sectionName: 1, _id: 0}, function(err, sectionNames) {
         if (!err) {
             if (sectionNames !== undefined && sectionNames.length > 0) {
                 let names = [];

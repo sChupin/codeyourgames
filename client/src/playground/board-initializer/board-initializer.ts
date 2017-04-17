@@ -1,7 +1,6 @@
 import {autoinject} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 import {ImageInfo, GameInfo} from '../messages';
-import {Body} from './body';
 import {BackendService} from '../../backend-service';
 
 import jscolor = require('EastDesire/jscolor');
@@ -26,7 +25,13 @@ export class BoardInitializer {
   constructor(private ea : EventAggregator) { }
 
   attached() {
-    this.subscriber = this.ea.subscribe(ImageInfo, msg => this.addImageToBoard(msg.name, msg.URL));
+    this.subscriber = this.ea.subscribe(ImageInfo, msg => {
+      if (msg.isBackground) {
+        this.setBackgroundFromUrl(msg.URL);
+      } else {
+        this.addImageToBoard(msg.name, msg.URL);
+      }
+    });
     
     let __this = this;
 
@@ -77,7 +82,7 @@ export class BoardInitializer {
     this.board.setDimensions({width: __this.width, height: __this.height});
     
     if (this.board.backgroundImage) {
-      this.setBackgroundFromUrl(this.currentBackgroundUrl);
+      this.setBackgroundFromUrl(this.board.backgroundImage);
     }
     // this.board.renderAll();
   }

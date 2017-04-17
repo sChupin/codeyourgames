@@ -1,5 +1,6 @@
 export class StringToNumberValueConverter {
   fromView(str) {
-    return parseInt(str);
+    let isnan = isNaN(parseInt(str));
+    return str && !isnan ? parseInt(str) : 0;
   }
 }

@@ -3,7 +3,7 @@ export class CodeUpdated {
 }
 
 export class ImageInfo {
-  constructor(public name: string, public URL: string) { }
+  constructor(public isBackground: boolean, public name: string, public URL: string) { }
 }
 
 export class GameInfo {
