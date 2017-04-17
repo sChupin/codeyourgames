@@ -55,6 +55,8 @@ interface GameWorld {
 
 class GameWorld extends Phaser.State {
   
+  private background;
+
   private bodies: any = {};
 
   private cursors: Phaser.CursorKeys;

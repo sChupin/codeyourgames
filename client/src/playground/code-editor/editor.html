@@ -15,6 +15,7 @@
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#create-editor" data-toggle="tab">Create</a></li>
         <li class="active"><a href="#update-editor" data-toggle="tab">Update</a></li>
+        <li><a href="#function-editor" data-toggle="tab">Function</a></li>
       </ul>
     </div>
 
@@ -36,6 +37,16 @@
           
           
         </ace>
+      </div>
+      <div id="function-editor" class="tab-pane fade full-height">
+        <ace config-theme="ace/theme/monokai"
+            config-mode="ace/mode/typescript"
+            config-read-only="false"
+            ref="functionAceEditor">
+          
+          
+        </ace>
+        <button type="button" class="btn btn-default" click.delegate="addNewFunction()">Add new function</button>        
       </div>
     </div>
     </div>    
