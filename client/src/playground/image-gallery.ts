@@ -49,6 +49,13 @@ export class ImageGallery {
 
   public addImage(image) {
     this.ea.publish(new ImageInfo(this.background, image.name, image.url));
+    
+    // Deselect image
+    if (this.selectedImg) {
+      this.selectedImg.selected = false;
+      this.selectedImg = null;
+    }
+
   }
 
 }

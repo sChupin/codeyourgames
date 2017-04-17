@@ -97,3 +97,9 @@ export class BoardInitializer {
   }
 
 }
+
+function closeModal() {
+  // unselect element
+  // close modal
+  // close collapse
+}
