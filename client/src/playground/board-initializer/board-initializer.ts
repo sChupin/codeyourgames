@@ -64,6 +64,10 @@ export class BoardInitializer {
     });
   }
 
+  private selectObj(obj) {
+    this.board.setActiveObject(obj);
+  }
+
   public setBackgroundFromUrl(url) {
     let __this = this;
 

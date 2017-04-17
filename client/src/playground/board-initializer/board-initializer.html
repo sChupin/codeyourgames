@@ -70,7 +70,7 @@
               <div class="row">
                 <div repeat.for="body of bodies">
                   <div class="col-md-3">
-                    <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'">
+                    <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(body)">
                       <div class="panel-body" style="width: 55px; height: 75px; margin: auto;">
                         <img src.bind="body._element.src" class="img-responsive" alt="body.name">
                       </div>
