@@ -85,10 +85,10 @@
                 </modal-view>
                 </div>
               </div>
-              <hr>
 
               <!--Bodies properties-->
-              <div class="row">
+              <div if.bind="selectedBody.key">
+                <hr>
                 <div>Key: ${selectedBody.key}</div>
                 <div>Name: ${selectedBody.name}</div>
                 <div>Height: ${selectedBody.height * selectedBody.scaleY}</div>

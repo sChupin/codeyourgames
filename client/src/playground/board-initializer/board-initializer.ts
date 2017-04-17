@@ -15,7 +15,7 @@ export class BoardInitializer {
   private board;
   private width: number = 400;
   private height: number = 300;
-  private selectedBody = {height: 0, width: 0, top: 0, left: 0};
+  private selectedBody;
   private bgColorPicker;
   
   private currentBackgroundUrl = '';
@@ -38,6 +38,13 @@ export class BoardInitializer {
     this.board = new fabric.Canvas('board');
     this.board.setDimensions({width: __this.width, height: __this.height});
     this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target});
+    this.board.on('selection:cleared', function(evt) {__this.selectedBody = null;});
+    this.board.on('object:added', function (evt) {
+      let obj = evt.target;
+      obj.center();
+      obj.setCoords();
+      __this.board.setActiveObject(obj);
+    });
     this.bgColorPicker = new jscolor('jscolortest', {valueElement: null});
     this.bgColorPicker.onFineChange = function() { __this.updatebgcolor() };
   }
@@ -96,10 +103,4 @@ export class BoardInitializer {
     this.subscriber.dispose();
   }
 
-}
-
-function closeModal() {
-  // unselect element
-  // close modal
-  // close collapse
 }
