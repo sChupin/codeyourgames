@@ -29,3 +29,7 @@ export class GameInfo {
     });
   }
 }
+
+export class EditorFocus {
+  constructor(public focused: boolean) { }
+}

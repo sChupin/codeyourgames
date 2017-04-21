@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {GameInfo, CodeUpdated} from '../messages';
+import {GameInfo, CodeUpdated, EditorFocus} from '../messages';
 
 @inject(EventAggregator)
 export class Editor {
@@ -55,6 +55,16 @@ export class Editor {
       this.collisionEditor.setValue(this.defaultCollision + '\n' + this.worldBoundsCollision);
       this.updateEditor = this.updateAceEditor.au.ace.viewModel.editor;
       this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
+
+      // Ask Phaser to disabled key capture
+      this.createEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
+      this.createEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
+      this.collisionEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
+      this.collisionEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
+      this.updateEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
+      this.updateEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
+      this.functionEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
+      this.functionEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
   }
 
   private addNewFunction() {
@@ -95,7 +105,10 @@ function preloadCodeFromInfo(gameInfo) {
 
 function createCodeFromInfo(gameInfo) {
   let code = "this.scale.setGameSize(" + gameInfo.gameWidth + ", " + gameInfo.gameHeight + ");\n";
-  code += "this.cursors = this.input.keyboard.createCursorKeys();\n";
+  code += "this.left = this.input.keyboard.createCursorKeys().left;\n";
+  code += "this.right = this.input.keyboard.createCursorKeys().right;\n";
+  code += "this.up = this.input.keyboard.createCursorKeys().up;\n";
+  code += "this.down = this.input.keyboard.createCursorKeys().down;\n";
  
   if (gameInfo.backgroundColor) {
     code += "this.game.stage.backgroundColor = '" + gameInfo.backgroundColor + "';\n";
@@ -112,6 +125,7 @@ function createCodeFromInfo(gameInfo) {
     code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
     code += "this.bodies." + body.name + ".height = " + body.height + ";\n";
     code += "this.bodies." + body.name + ".width = " + body.width + ";\n";
+    code += "this.physics.arcade.enable(this.bodies." + body.name + ");"
   });
   
   return code;
