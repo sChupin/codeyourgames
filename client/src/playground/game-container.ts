@@ -122,10 +122,7 @@ class GameWorld extends Phaser.State {
     this.Keyboard['RIGHT'] = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     this.Keyboard['LEFT'] = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 
-    this.Keyboard['SPACEBAR'] = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);    
-    
-    this.game.onPause.add(() => {console.log("game pause"); this.input.enabled = false;}, this);
-    this.game.onResume.add(() => {console.log("game resumed"); this.input.enabled = true;}, this);
+    this.Keyboard['SPACEBAR'] = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     this.userCreate();
   }
