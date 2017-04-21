@@ -59,6 +59,10 @@ export class BoardInitializer {
     fabric.Image.fromURL(url, function(img) {
       img.key = name;
       img.name = 'my' + name.charAt(0).toUpperCase() + name.slice(1);
+      img.set({
+        originX: "center", 
+        originY: "center"
+    });
       __this.board.add(img);
       __this.bodies.push(img);
     });
