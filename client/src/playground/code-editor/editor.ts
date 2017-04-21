@@ -108,8 +108,10 @@ function createCodeFromInfo(gameInfo) {
   }
 
   gameInfo.bodies.forEach(body => {
-    code += "this.bodies['" + body.name + "'] = this.add.sprite(" + (body.x + body.width/2) + ", " + (body.y + body.height/2) + ", '" + body.key + "');\n"
+    code += "this.bodies['" + body.name + "'] = this.add.sprite(" + (body.x) + ", " + (body.y) + ", '" + body.key + "');\n"
     code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
+    code += "this.bodies." + body.name + ".height = " + body.height + ";\n";
+    code += "this.bodies." + body.name + ".width = " + body.width + ";\n";
   });
   
   return code;

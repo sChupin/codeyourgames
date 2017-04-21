@@ -19,9 +19,8 @@ export class GameInfo {
       let _body: any = {};
       _body.key = body.key;
       _body.name = body.name;
-      _body.height = body.height;
-      _body.width = body.width;
-      _body.width = body.width;
+      _body.height = Math.round(body.height * body.scaleY);
+      _body.width = Math.round(body.width * body.scaleX);
       _body.x = body.left;
       _body.y = body.top;
       _body.url = body._element.src;

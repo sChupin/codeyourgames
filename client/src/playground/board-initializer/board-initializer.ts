@@ -37,7 +37,7 @@ export class BoardInitializer {
 
     this.board = new fabric.Canvas('board');
     this.board.setDimensions({width: __this.width, height: __this.height});
-    this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target});
+    this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target; console.log(evt.target);});
     this.board.on('selection:cleared', function(evt) {__this.selectedBody = null;});
     this.board.on('object:added', function (evt) {
       let obj = evt.target;
