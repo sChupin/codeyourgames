@@ -6,13 +6,19 @@ import {GameInfo, CodeUpdated} from '../messages';
 export class Editor {
 
   private createAceEditor;
+  private collisionAceEditor;
   private updateAceEditor;
   private functionAceEditor;
   private createEditor;
+  private collisionEditor;
   private updateEditor;
   private functionEditor;
 
   private newFunction = "function myFunction() {\n// Your code goes here\n}\n";
+  private newCollisionPair = "Collide: /*first body/group*/ and /*second body/group*/\n";
+
+  private defaultCollision = "Collide: group.platforms and group.bodies\n";
+  private worldBoundsCollision = "Collide: Board.bounds and List(/*list of bodies/groups*/)\n";
 
   private preloadCode: string = ""; // Not editable by user
 
@@ -31,6 +37,10 @@ export class Editor {
     return this.createEditor.getValue();
   }
 
+  private getCollisionCode() {
+      return this.collisionEditor.getValue();
+  }
+
   private getUpdateCode() {
       return this.updateEditor.getValue();
   }
@@ -41,6 +51,8 @@ export class Editor {
 
   private attached() {
       this.createEditor = this.createAceEditor.au.ace.viewModel.editor;
+      this.collisionEditor = this.collisionAceEditor.au.ace.viewModel.editor;
+      this.collisionEditor.setValue(this.defaultCollision + '\n' + this.worldBoundsCollision);
       this.updateEditor = this.updateAceEditor.au.ace.viewModel.editor;
       this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
   }
@@ -48,6 +60,11 @@ export class Editor {
   private addNewFunction() {
     let code = this.functionEditor.getValue() ? this.functionEditor.getValue() + "\n" + this.newFunction : this.newFunction;
     this.functionEditor.setValue(code, 1);
+  }
+
+  private addNewCollisionPair() {
+    let code = this.collisionEditor.getValue() ? this.collisionEditor.getValue() + "\n" + this.newCollisionPair : this.newCollisionPair;
+    this.collisionEditor.setValue(code, 1);
   }
 
 }
