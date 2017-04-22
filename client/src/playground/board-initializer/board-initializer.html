@@ -88,7 +88,13 @@
 
               <!--Bodies properties-->
               <div class="well" if.bind="selectedBody.key">
-                <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name" required="required" pattern="[a-z]+[aA-zZ|0-9]*">
+                <div>
+                <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validate">
+                <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBody()">Delete Body</button>
+                </div>
+                <div if.bind="controller.errors">
+                    <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
+                </div>
                 <hr>
                 <div>Key: ${selectedBody.key}</div>
                 <div>Height: ${selectedBody.height * selectedBody.scaleY}</div>

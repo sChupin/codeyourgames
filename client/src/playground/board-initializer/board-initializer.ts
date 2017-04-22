@@ -1,7 +1,8 @@
-import {autoinject} from 'aurelia-framework';
+import {autoinject, inject, bindable} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 import {ImageInfo, GameInfo} from '../messages';
 import {BackendService} from '../../backend-service';
+import {ValidationControllerFactory, ValidationRules} from '../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 import jscolor = require('EastDesire/jscolor');
 
@@ -11,18 +12,25 @@ import {fabric} from 'fabric';
 @autoinject
 export class BoardInitializer {
   private subscriber: Subscription;
+  private controller;
   
   private board;
   private width: number = 400;
   private height: number = 300;
-  private selectedBody;
+
+  @bindable
+  private selectedBody = {};
+  private id: number = 0;
+
   private bgColorPicker;
   
   private currentBackgroundUrl = '';
 
   private bodies = [];
 
-  constructor(private ea : EventAggregator) { }
+  constructor(private ea : EventAggregator, private controllerFactory: ValidationControllerFactory) {
+    this.controller = controllerFactory.createForCurrentScope();
+  }
 
   attached() {
     this.subscriber = this.ea.subscribe(ImageInfo, msg => {
@@ -37,8 +45,8 @@ export class BoardInitializer {
 
     this.board = new fabric.Canvas('board');
     this.board.setDimensions({width: __this.width, height: __this.height});
-    this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target; console.log(evt.target);});
-    this.board.on('selection:cleared', function(evt) {__this.selectedBody = null;});
+    this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target;});
+    this.board.on('selection:cleared', function(evt) {__this.selectedBody = {};});
     this.board.on('object:added', function (evt) {
       let obj = evt.target;
       obj.center();
@@ -57,6 +65,7 @@ export class BoardInitializer {
   private addImageToBoard(name: string, url: string) {
     let __this = this;
     fabric.Image.fromURL(url, function(img) {
+      img.id = __this.getId();
       img.key = name;
       img.name = 'my' + name.charAt(0).toUpperCase() + name.slice(1);
       img.set({
@@ -66,6 +75,39 @@ export class BoardInitializer {
       __this.board.add(img);
       __this.bodies.push(img);
     });
+  }
+
+  private getId() {
+    return ++this.id;
+  }
+
+  selectedBodyChanged(oldval, newval) {
+    if (this.controller.errors) {
+      this.controller.reset();
+    }
+    ValidationRules.ensure('name')
+      .required().withMessage("Sprite name is required")
+      .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
+      .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
+      .on(this.selectedBody);
+  }
+
+  private deleteSelectedBody() {
+    let bodyPos = this.bodies.map(body => body.id).indexOf(this.board.getActiveObject().id);
+    this.bodies.splice(bodyPos, 1);
+    this.board.getActiveObject().remove();
+    this.selectedBody = {};
+    let nBodies = this.bodies.length;
+    if (nBodies !== 0) {
+      let selectObj;
+      if (bodyPos == 0) {
+        selectObj = this.bodies[bodyPos]
+      } else {
+        selectObj = this.bodies[bodyPos-1];
+      }
+      this.board.setActiveObject(selectObj);
+      this.selectedBody = selectObj;
+    }
   }
 
   private selectObj(obj) {
