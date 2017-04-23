@@ -85,11 +85,11 @@
                 </modal-view>
                 </div>
               </div>
-
+              
               <!--Bodies properties-->
               <div class="well" if.bind="selectedBody.key">
                 <div>
-                <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validate">
+                <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validateOnChange">
                 <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBody()">Delete Body</button>
                 </div>
                 <div if.bind="controller.errors">

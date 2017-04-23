@@ -27,6 +27,7 @@ export class BoardInitializer {
   private currentBackgroundUrl = '';
 
   private bodies = [];
+  private bodyNames = [];
 
   constructor(private ea : EventAggregator, private controllerFactory: ValidationControllerFactory) {
     this.controller = controllerFactory.createForCurrentScope();
@@ -67,7 +68,7 @@ export class BoardInitializer {
     fabric.Image.fromURL(url, function(img) {
       img.id = __this.getId();
       img.key = name;
-      img.name = 'my' + name.charAt(0).toUpperCase() + name.slice(1);
+      img.name = __this.createName('my' + name.charAt(0).toUpperCase() + name.slice(1));
       img.set({
         originX: "center", 
         originY: "center"
@@ -75,6 +76,25 @@ export class BoardInitializer {
       __this.board.add(img);
       __this.bodies.push(img);
     });
+  }
+
+  /**
+   * Ensure unique body name creation
+   * 
+   * @private
+   * @param {any} baseName name prefix
+   * @returns name appended by suffix to uniquify name
+   * 
+   * @memberOf BoardInitializer
+   */
+  private createName(baseName) {
+    let newName = baseName;
+    let suffix = 2;
+    while (this.bodies.map(body => body.name).indexOf(newName) !== -1) {
+      newName = baseName + suffix;
+      suffix++;
+    }
+    return newName;
   }
 
   private getId() {
@@ -89,6 +109,13 @@ export class BoardInitializer {
       .required().withMessage("Sprite name is required")
       .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
       .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
+      .satisfies((selectedBodyName: string, selectedBody: any) => {
+        return this.bodies.map(body => {
+          if (body.id !== selectedBody.id)
+            return body.name
+        }).indexOf(selectedBodyName) == -1;
+      })
+      .withMessage("Sprite name should be unique")
       .on(this.selectedBody);
   }
 
