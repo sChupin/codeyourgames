@@ -75,7 +75,9 @@ class GameWorld extends Phaser.State {
   
   private background;
 
-  private bodies: any = {};
+  private bodies: BodyMap = {};
+
+  private events: EventMap = {};
 
   private cursors: Phaser.CursorKeys;
   private left;
@@ -83,7 +85,7 @@ class GameWorld extends Phaser.State {
   private up;
   private down;
 
-  private Keyboard = {};
+  private Keyboard: KeyMap = {};
 
   preload() {
     this.userPreload();
@@ -130,4 +132,16 @@ class GameWorld extends Phaser.State {
   update() {
     this.userUpdate();
   }
+}
+
+interface BodyMap {
+  [key: string]: Phaser.Sprite;
+}
+
+interface EventMap {
+  [key: string]: Phaser.Signal;
+}
+
+interface KeyMap {
+  [key: string]: Phaser.Key;
 }
