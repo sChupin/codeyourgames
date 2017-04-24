@@ -107,6 +107,10 @@ class GameWorld extends Phaser.State {
     
     this.test.anchor.setTo(0.5);
     //this.test.angle = 45;
+
+    // this.test.inputEnabled = true;
+    // this.test.events.onInputUp.add((dude) => dude.body.velocity.x += 25);
+
   }
   private toggleFollow = function () {
     this.follow = !this.follow;

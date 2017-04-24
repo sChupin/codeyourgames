@@ -87,10 +87,10 @@
               </div>
               
               <!--Bodies properties-->
-              <div class="well" if.bind="selectedBody.key">
+              <div class="well" if.bind="oneObjectSelected">
                 <div>
-                <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validateOnChange">
-                <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBody()">Delete Body</button>
+                  <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validateOnChange">
+                  <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBody()">Delete Body</button>
                 </div>
                 <div if.bind="controller.errors">
                     <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
@@ -103,6 +103,12 @@
                 <div>y: ${selectedBody.top}</div>
               </div>
 
+              <div class="well" if.bind="severalObjectsSelected">
+                <div>
+                  <input type="text" class="input-sm" class="form-control" value="test">
+                  <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
+                </div>
+              </div>
                     
             </div>
           </div>

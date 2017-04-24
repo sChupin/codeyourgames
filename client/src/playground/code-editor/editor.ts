@@ -1,28 +1,33 @@
-import {inject} from 'aurelia-framework';
+import {autoinject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {GameInfo, CodeUpdated, EditorFocus} from '../messages';
+import {TranspilerService} from '../transpiler-service';
 
-@inject(EventAggregator)
+@autoinject
 export class Editor {
 
   private createAceEditor;
   private collisionAceEditor;
+  private eventAceEditor;
   private updateAceEditor;
   private functionAceEditor;
+
   private createEditor;
   private collisionEditor;
+  private eventEditor;
   private updateEditor;
   private functionEditor;
 
-  private newFunction = "function myFunction() {\n// Your code goes here\n}\n";
+  private newEvent = "when /*event*/\nthen /*action*/\n";
   private newCollisionPair = "Collide: /*first body/group*/ and /*second body/group*/\n";
+  private newFunction = "function myFunction() {\n// Your code goes here\n}\n";
 
   private defaultCollision = "Collide: group.platforms and group.bodies\n";
   private worldBoundsCollision = "Collide: Board.bounds and List(/*list of bodies/groups*/)\n";
 
   private preloadCode: string = ""; // Not editable by user
 
-  constructor(private ea: EventAggregator) {
+  constructor(private ea: EventAggregator, private transpiler: TranspilerService) {
     this.ea.subscribe(GameInfo, msg => {
       this.preloadCode = preloadCodeFromInfo(msg);
       this.createEditor.setValue(createCodeFromInfo(msg));
@@ -31,6 +36,7 @@ export class Editor {
 
   public runCode() {
     this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
+    console.log(this.transpiler.parseEvents(this.getEventCode()));
   }
 
   private getCreateCode() {
@@ -39,6 +45,10 @@ export class Editor {
 
   private getCollisionCode() {
       return this.collisionEditor.getValue();
+  }
+
+  private getEventCode() {
+    return this.eventEditor.getValue();
   }
 
   private getUpdateCode() {
@@ -53,6 +63,7 @@ export class Editor {
       this.createEditor = this.createAceEditor.au.ace.viewModel.editor;
       this.collisionEditor = this.collisionAceEditor.au.ace.viewModel.editor;
       this.collisionEditor.setValue(this.defaultCollision + '\n' + this.worldBoundsCollision);
+      this.eventEditor = this.eventAceEditor.au.ace.viewModel.editor;
       this.updateEditor = this.updateAceEditor.au.ace.viewModel.editor;
       this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
 
@@ -61,15 +72,12 @@ export class Editor {
       this.createEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
       this.collisionEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
       this.collisionEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
+      this.eventEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
+      this.eventEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
       this.updateEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
       this.updateEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
       this.functionEditor.on('focus', () => this.ea.publish(new EditorFocus(true)));
       this.functionEditor.on('blur', () => this.ea.publish(new EditorFocus(false)));
-  }
-
-  private addNewFunction() {
-    let code = this.functionEditor.getValue() ? this.functionEditor.getValue() + "\n" + this.newFunction : this.newFunction;
-    this.functionEditor.setValue(code, 1);
   }
 
   private addNewCollisionPair() {
@@ -77,6 +85,15 @@ export class Editor {
     this.collisionEditor.setValue(code, 1);
   }
 
+  private addNewEvent() {
+    let code = this.eventEditor.getValue() ? this.eventEditor.getValue() + "\n" + this.newEvent : this.newEvent;
+    this.eventEditor.setValue(code, 1);
+  }
+
+  private addNewFunction() {
+    let code = this.functionEditor.getValue() ? this.functionEditor.getValue() + "\n" + this.newFunction : this.newFunction;
+    this.functionEditor.setValue(code, 1);
+  }
 }
 
 function preloadCodeFromInfo(gameInfo) {

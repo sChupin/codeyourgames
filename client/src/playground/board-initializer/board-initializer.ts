@@ -1,7 +1,6 @@
 import {autoinject, inject, bindable} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 import {ImageInfo, GameInfo} from '../messages';
-import {BackendService} from '../../backend-service';
 import {ValidationControllerFactory, ValidationRules} from '../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 import jscolor = require('EastDesire/jscolor');
@@ -20,6 +19,8 @@ export class BoardInitializer {
 
   @bindable
   private selectedBody = {};
+  private oneObjectSelected: boolean = false;
+  private severalObjectsSelected: boolean = false;
   private id: number = 0;
 
   private bgColorPicker;
@@ -102,6 +103,11 @@ export class BoardInitializer {
   }
 
   selectedBodyChanged(oldval, newval) {
+
+    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
+
+    this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
+
     if (this.controller.errors) {
       this.controller.reset();
     }
@@ -120,10 +126,7 @@ export class BoardInitializer {
   }
 
   private deleteSelectedBody() {
-    let bodyPos = this.bodies.map(body => body.id).indexOf(this.board.getActiveObject().id);
-    this.bodies.splice(bodyPos, 1);
-    this.board.getActiveObject().remove();
-    this.selectedBody = {};
+    let bodyPos = this.deleteBody(this.board.getActiveObject());
     let nBodies = this.bodies.length;
     if (nBodies !== 0) {
       let selectObj;
@@ -137,9 +140,34 @@ export class BoardInitializer {
     }
   }
 
-  private selectObj(obj) {
-    this.board.setActiveObject(obj);
+  private deleteBody(body): number {
+    // Remove body from list of bodies
+    let bodyPos = this.bodies.map(body => body.id).indexOf(body.id);
+    this.bodies.splice(bodyPos, 1);
+    
+    // Remove body from canvas
+    body.remove();
+
+    return bodyPos;
   }
+
+  private deleteSelectedBodies() {
+    let curSelectedObjects = this.board.getActiveGroup().getObjects();
+    this.board.discardActiveGroup();
+
+    for (let i = 0; i < curSelectedObjects.length; i++)
+    {
+        this.deleteBody(curSelectedObjects[i]);
+    }
+
+    let nBodies = this.bodies.length;
+    if (nBodies !== 0) {
+      let selectObj = this.bodies[0];
+      this.board.setActiveObject(selectObj);
+      this.selectedBody = selectObj;
+    }
+  }
+
 
   public setBackgroundFromUrl(url) {
     let __this = this;
