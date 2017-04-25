@@ -36,9 +36,72 @@ export class Editor {
   }
 
   public runCode() {
-    this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
+    //this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
     //console.log(this.transpiler.parseEvents(this.getEventCode()));
-    this.backend.parseEventCode(this.getEventCode()).then(data => {console.log(data.response)});
+    console.log(this.getEventCode());
+    let parseEventCodePromise = this.backend.parseEventCode(this.getEventCode());
+    let parseFunctionCodePromise = this.backend.parseFunctionCode(this.getFunctionCode());
+
+    Promise.all([parseEventCodePromise, parseFunctionCodePromise])
+      .then(values => {
+        console.log(values);
+        let eventData = values[0];
+        let functionData = values[1];
+        // Add events to code
+        let eventCode = this.addEvents(JSON.parse(eventData.response));
+        let functionCode = this.addFunctions(JSON.parse(functionData.response));
+
+        let createCode = this.getCreateCode() + functionCode + eventCode.create;
+        let updateCode = this.getUpdateCode() + eventCode.update;
+
+        console.log(createCode);
+        console.log(updateCode);
+
+        // Publish codes to game-container
+        this.ea.publish(new CodeUpdated(this.preloadCode, createCode, updateCode));
+        //console.log(data.response)
+
+      })
+
+  }
+
+  private addFunctions(functions) {
+    let create = '';
+    console.log(functions);
+    functions.forEach(func => {
+      let name = func[0];
+      let body = func[1];
+
+      create += "this.userFunctions." + name + " = function() {\n";
+      create += "\t" + body + ";\n";
+      create += "}\n";
+      create += "\n";
+    });
+
+    return create;
+  }
+
+  private addEvents(events: Array<any>): EventCode {
+    let create = '';
+    let update = '';
+    console.log(events);
+    if (events) {
+      events.forEach((event, i) => {
+        let condition = event[0];
+        let action = event[1];
+
+        create += "this.userEvents.push(new Phaser.Signal());\n";
+        create += "this.userEvents[" + i + "].add(this.userFunctions." + action + ", this);\n";
+        create += "\n";
+
+        update += "if (" + condition + ") {\n";
+        update += "\tthis.userEvents[" + i + "].dispatch();\n";
+        update += "}\n";
+        update += "\n";
+      });
+    }
+
+    return {create: create, update: update};
   }
 
   private getCreateCode() {
@@ -117,8 +180,6 @@ function preloadCodeFromInfo(gameInfo) {
     }
   });
 
-  console.log('Preload Code is:');
-  console.log(code);
   return code;
 }
 
@@ -144,8 +205,13 @@ function createCodeFromInfo(gameInfo) {
     code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
     code += "this.bodies." + body.name + ".height = " + body.height + ";\n";
     code += "this.bodies." + body.name + ".width = " + body.width + ";\n";
-    code += "this.physics.arcade.enable(this.bodies." + body.name + ");"
+    code += "this.physics.arcade.enable(this.bodies." + body.name + ");\n";
   });
-  
+
   return code;
+}
+
+interface EventCode {
+  create: string;
+  update: string;
 }
