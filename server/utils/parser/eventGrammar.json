@@ -1,0 +1,20 @@
+{
+  "lex": {
+    "rules": [
+      ["\\s+",      "/* skip whitespace */"],
+      ["when\b",    "return 'WHEN'"],
+      ["then\b",    "return 'THEN'"],
+      ["$",         "return 'EOF'"],
+      ["\\w*\b",     "return 'WORD'"]
+      
+    ]
+  },
+
+  "bnf": {
+    "events": [
+      ["events event",    "var arr = $1; arr.push($2); $$ = arr"],
+      ["event",           "$$ = $1"],
+      ["events EOF",      "return $1"]
+      ]
+  }
+}

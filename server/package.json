@@ -17,6 +17,7 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-jwt": "^5.1.0",
+    "jison": "^0.4.17",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.9.3",
