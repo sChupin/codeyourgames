@@ -136,8 +136,11 @@ export class BoardInitializer {
         selectObj = this.bodies[bodyPos-1];
       }
       this.board.setActiveObject(selectObj);
-      this.selectedBody = selectObj;
     }
+  }
+
+  private selectObj(obj) {
+    this.board.setActiveObject(obj);
   }
 
   private deleteBody(body): number {
