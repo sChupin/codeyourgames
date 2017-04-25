@@ -2,6 +2,7 @@ import {autoinject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {GameInfo, CodeUpdated, EditorFocus} from '../messages';
 import {TranspilerService} from '../transpiler-service';
+import {BackendService} from '../../backend-service';
 
 @autoinject
 export class Editor {
@@ -27,7 +28,7 @@ export class Editor {
 
   private preloadCode: string = ""; // Not editable by user
 
-  constructor(private ea: EventAggregator, private transpiler: TranspilerService) {
+  constructor(private ea: EventAggregator, private transpiler: TranspilerService, private backend: BackendService) {
     this.ea.subscribe(GameInfo, msg => {
       this.preloadCode = preloadCodeFromInfo(msg);
       this.createEditor.setValue(createCodeFromInfo(msg));
@@ -36,7 +37,8 @@ export class Editor {
 
   public runCode() {
     this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
-    console.log(this.transpiler.parseEvents(this.getEventCode()));
+    //console.log(this.transpiler.parseEvents(this.getEventCode()));
+    this.backend.parseEventCode(this.getEventCode()).then(data => {console.log(data.response)});
   }
 
   private getCreateCode() {
