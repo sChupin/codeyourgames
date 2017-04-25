@@ -8,7 +8,8 @@
 "when"                return 'WHEN'
 "then"                return 'THEN'
 <<EOF>>               return 'EOF'
-\w*                   return 'WORD'
+\w*(\.\w*)+(\(\))?   return 'CONDITION'
+[a-z]\w*              return 'WORD'
 "("                   return '('
 ")"                   return ')'
 .                     return 'INVALID'
@@ -37,5 +38,7 @@ expressions
 
 event
     : WHEN WORD THEN WORD
+        {$$ = [$2, $4];}
+    | WHEN CONDITION THEN WORD
         {$$ = [$2, $4];}
     ;

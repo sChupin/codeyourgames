@@ -23,5 +23,11 @@ export class BackendService {
     postBody.code = code;
     return this.http.post('transpiler/event', postBody);
   }
+  
+  parseFunctionCode(code) {
+    let postBody: any = {};
+    postBody.code = code;
+    return this.http.post('transpiler/function', postBody);
+  }
 
 }
