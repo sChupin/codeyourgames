@@ -32,6 +32,8 @@ class GameWorld extends Phaser.State {
   private scoreText: Phaser.Text;
 
   private cursors: Phaser.CursorKeys;
+
+  private mySignal: Phaser.Signal;
   
   private test: Phaser.Sprite;
 
@@ -104,6 +106,11 @@ class GameWorld extends Phaser.State {
 
     this.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.space.onDown.add(this.toggleFollow, this);
+
+    this.mySignal = new Phaser.Signal();
+    this.mySignal.add(() => {
+      console.log('mySignalCallback');
+    }, this);
     
     this.test.anchor.setTo(0.5);
     //this.test.angle = 45;
@@ -138,6 +145,9 @@ class GameWorld extends Phaser.State {
 
     if (this.cursors.left.isDown) {
 
+      this.mySignal.dispatch();
+      this.mySignal.active = false;
+
       this.myDude.body.velocity.x = -150;
 
       if (this.myDude.body.touching.down) {
@@ -159,6 +169,7 @@ class GameWorld extends Phaser.State {
 
     } else {
 
+      this.mySignal.active = true;
       this.myDude.body.velocity.x = 0;
 
       this.myDude.animations.stop();
