@@ -20,7 +20,12 @@ let parseFunction = function(req, res) {
     let functionPairs = [];
     if (code) {
         code.split("\n").forEach(function(func) {
-            functionPairs.push(func.split(" = "));
+            // func == "" if several \n
+            if (func) {
+                let pair = func.split(/ = (.+)/);
+                pair.pop();
+                functionPairs.push(pair);
+            }
         }, this);
     }
     res.type('application/json').status(200).json(functionPairs);

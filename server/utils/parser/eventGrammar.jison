@@ -6,9 +6,13 @@
 
 \s+                   /* skip whitespace */
 "when"                return 'WHEN'
+"while"               return 'WHILE'
+"once"                return 'ONCE'
 "then"                return 'THEN'
+"and"                 return 'AND'
+"or"                  return 'OR'
 <<EOF>>               return 'EOF'
-\w*(\.\w*)+(\(\))?   return 'CONDITION'
+\w*(\.\w*)+(\(\))?    return 'COMPOSED_WORD'
 [a-z]\w*              return 'WORD'
 "("                   return '('
 ")"                   return ')'
@@ -37,8 +41,31 @@ expressions
     ;
 
 event
-    : WHEN WORD THEN WORD
-        {$$ = [$2, $4];}
-    | WHEN CONDITION THEN WORD
-        {$$ = [$2, $4];}
+    : type composed_condition THEN WORD
+        {$$ = [$2, $4, $1];}
+    ;
+
+condition
+    : WORD
+        {$$ = $1}
+    | COMPOSED_WORD
+        {$$ = $1}
+    ;
+
+composed_condition
+    : condition
+        {$$ = $1}
+    | composed_condition AND condition
+        {$$ = $1 + " && " + $3}
+    | composed_condition OR condition
+        {$$ = $1 + " || " + $3}
+    ;
+
+type
+    : WHEN
+        {$$ = "when"}
+    | WHILE
+        {$$ = "while"}
+    | ONCE
+        {$$ = "once"}
     ;

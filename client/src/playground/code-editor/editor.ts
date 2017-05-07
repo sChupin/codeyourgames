@@ -89,6 +89,7 @@ export class Editor {
       events.forEach((event, i) => {
         let condition = event[0];
         let action = event[1];
+        let type = event[2];
 
         create += "this.userEvents.push(new Phaser.Signal());\n";
         create += "this.userEvents[" + i + "].add(this.userFunctions." + action + ", this);\n";
@@ -96,7 +97,12 @@ export class Editor {
 
         update += "if (" + condition + ") {\n";
         update += "\tthis.userEvents[" + i + "].dispatch();\n";
-        update += "}\n";
+        if (type === "when") {
+          update += "\tthis.userEvents[" + i + "].active = false;\n";
+          update += "} else {\n";
+          update += "\tthis.userEvents[" + i + "].active = true;\n";
+        }
+        update += "}\n"
         update += "\n";
       });
     }

@@ -6,7 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   meta: {
     "bootstrap": {
       "deps": [
@@ -14,7 +13,6 @@ System.config({
       ]
     }
   },
-
   map: {
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
     "abalmus/aurelia-ace-editor": "github:abalmus/aurelia-ace-editor@master",

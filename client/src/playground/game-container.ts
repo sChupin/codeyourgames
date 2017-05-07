@@ -59,6 +59,13 @@ class Game extends Phaser.Game {
     GameWorld.prototype.userCreate = Function(createCode);
     GameWorld.prototype.userUpdate = Function(updateCode);
 
+    Phaser.Sprite['setPosition'] = function(x: number, y: number) {
+      // this.x = position.x;
+      // this.y = position.y;
+      this.x = x;
+      this.y = y;
+    }
+
     this.state.add('main', GameWorld);
     this.state.start('main');
   }
@@ -72,7 +79,7 @@ interface GameWorld {
 }
 
 class GameWorld extends Phaser.State {
-  
+
   private background;
 
   private bodies: BodyMap = {};
