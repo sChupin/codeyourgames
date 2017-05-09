@@ -92,7 +92,11 @@ export class Editor {
         let type = event[2];
 
         create += "this.userEvents.push(new Phaser.Signal());\n";
-        create += "this.userEvents[" + i + "].add(this.userFunctions." + action + ", this);\n";
+        if (type === "once") {
+          create += "this.userEvents[" + i + "].addOnce(this.userFunctions." + action + ", this);\n";          
+        } else {
+          create += "this.userEvents[" + i + "].add(this.userFunctions." + action + ", this);\n";
+        }
         create += "\n";
 
         update += "if (" + condition + ") {\n";
