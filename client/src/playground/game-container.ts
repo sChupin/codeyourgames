@@ -12,8 +12,6 @@ export class GameContainer {
 
   private game: Game;
 
-  private gamePaused = false;
-
   constructor(private ea: EventAggregator) { }
 
   attached() {
@@ -45,8 +43,7 @@ export class GameContainer {
 
   private pauseGame() {
     if (this.game) {
-      this.game.paused = !this.gamePaused;
-      this.gamePaused = !this.gamePaused;
+      this.game.paused = !this.game.paused;
     }
   }
 
