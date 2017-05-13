@@ -7,6 +7,9 @@ import {BackendService} from '../../backend-service';
 @autoinject
 export class Editor {
 
+  private gameWidth: number;
+  private gameHeight: number;
+
   private createAceEditor;
   private collisionAceEditor;
   private eventAceEditor;
@@ -30,21 +33,19 @@ export class Editor {
 
   constructor(private ea: EventAggregator, private transpiler: TranspilerService, private backend: BackendService) {
     this.ea.subscribe(GameInfo, msg => {
+      this.gameWidth = msg.gameWidth;
+      this.gameHeight = msg.gameHeight;
       this.preloadCode = preloadCodeFromInfo(msg);
       this.createEditor.setValue(createCodeFromInfo(msg));
     });
   }
 
   public runCode() {
-    //this.ea.publish(new CodeUpdated(this.preloadCode, this.getCreateCode(), this.getUpdateCode()));
-    //console.log(this.transpiler.parseEvents(this.getEventCode()));
-    console.log(this.getEventCode());
     let parseEventCodePromise = this.backend.parseEventCode(this.getEventCode());
     let parseFunctionCodePromise = this.backend.parseFunctionCode(this.getFunctionCode());
 
     Promise.all([parseEventCodePromise, parseFunctionCodePromise])
       .then(values => {
-        console.log(values);
         let eventData = values[0];
         let functionData = values[1];
         // Add events to code
@@ -54,14 +55,9 @@ export class Editor {
         let createCode = this.getCreateCode() + functionCode + eventCode.create;
         let updateCode = this.getUpdateCode() + eventCode.update;
 
-        console.log(createCode);
-        console.log(updateCode);
-
         // Publish codes to game-container
-        this.ea.publish(new CodeUpdated(this.preloadCode, createCode, updateCode));
-        //console.log(data.response)
-
-      })
+        this.ea.publish(new CodeUpdated(this.preloadCode, createCode, updateCode, this.gameWidth, this.gameHeight));
+      });
 
   }
 
@@ -194,12 +190,8 @@ function preloadCodeFromInfo(gameInfo) {
 }
 
 function createCodeFromInfo(gameInfo) {
-  let code = "this.scale.setGameSize(" + gameInfo.gameWidth + ", " + gameInfo.gameHeight + ");\n";
-  code += "this.left = this.input.keyboard.createCursorKeys().left;\n";
-  code += "this.right = this.input.keyboard.createCursorKeys().right;\n";
-  code += "this.up = this.input.keyboard.createCursorKeys().up;\n";
-  code += "this.down = this.input.keyboard.createCursorKeys().down;\n";
- 
+  let code = "";
+  
   if (gameInfo.backgroundColor) {
     code += "this.game.stage.backgroundColor = '" + gameInfo.backgroundColor + "';\n";
   }

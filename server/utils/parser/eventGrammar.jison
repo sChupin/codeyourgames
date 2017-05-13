@@ -1,7 +1,11 @@
 /* description: Parses end executes mathematical expressions. */
 
 /* lexical grammar */
+
 %lex
+%options flex
+%x code
+
 %%
 
 \s+                   /* skip whitespace */
@@ -14,6 +18,8 @@
 <<EOF>>               return 'EOF'
 \w*(\.\w*)+(\(\))?    return 'COMPOSED_WORD'
 [a-z]\w*              return 'WORD'
+[{]                   return 'BEGIN_CODE'
+[}]                   return 'END_CODE'
 "("                   return '('
 ")"                   return ')'
 .                     return 'INVALID'
@@ -43,7 +49,23 @@ expressions
 event
     : type composed_condition THEN WORD
         {$$ = [$2, $4, $1];}
+    | type composed_condition THEN BEGIN_CODE code END_CODE
+        {$$ = [$2, $5, $1];}
     ;
+
+code
+    : code_line
+        {$$ = $1}
+    | code code_line
+        {$$ = $1 + "\n" + $2}
+    ;
+
+code_line
+    : WORD
+        {$$ = $1}
+    | COMPOSED_WORD
+        {$$ = $1}
+    ; 
 
 condition
     : WORD
