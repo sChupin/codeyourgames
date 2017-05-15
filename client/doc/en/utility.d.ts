@@ -21,3 +21,7 @@ declare class Orientation {
   static LEFT: number;
   static RIGHT: number;
 }
+
+declare class _Math {
+  //todo
+}

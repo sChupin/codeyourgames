@@ -39,7 +39,7 @@ declare class Body extends Sprite {
   public moveBy(x: number, y: number): void;
 
   public moveTo(x: number, y: number): void;
-  public moveTo(point: Point): void;
+  public moveToPoint(point: Point): void;
 
   public slideBy(x: number, y: number, duration: number): void;
 
@@ -84,4 +84,12 @@ declare class Body extends Sprite {
 
   public pointTowards(x: number, y: number): void;
   public pointTowards(point: Point): void;
+
+   /*
+   **************
+   * Appearence *
+   **************
+   */
+  // hide/show (Phaser visibility)
+  // destroy/kill
 }
