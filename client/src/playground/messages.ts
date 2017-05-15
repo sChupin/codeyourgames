@@ -1,5 +1,5 @@
 export class CodeUpdated {
-  constructor(public preloadCode: string, public createCode: string, public updateCode: string, public gameWidth: number, public gameHeight: number) { }
+  constructor(public preloadCode: string, public createCode: string, public updateCode: string) { }
 }
 
 export class ImageInfo {
@@ -28,8 +28,4 @@ export class GameInfo {
       _this.bodies.push(_body);
     });
   }
-}
-
-export class EditorFocus {
-  constructor(public focused: boolean) { }
 }

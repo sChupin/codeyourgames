@@ -63,6 +63,10 @@ export class BoardInitializer {
     this.bgColorPicker.onFineChange = function() { __this.updatebgcolor() };
   }
 
+  detached() {
+    this.subscriber.dispose();
+  }
+
   /**
    * Update canvas background color from color picker
    * 
@@ -281,9 +285,4 @@ export class BoardInitializer {
       }).withMessage("Sprite name should be unique")
       .on(this.selectedBody);
   }
-
-  detached() {
-    this.subscriber.dispose();
-  }
-
 }

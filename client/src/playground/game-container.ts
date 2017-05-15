@@ -1,7 +1,7 @@
 import {EventAggregator, Subscription} from "aurelia-event-aggregator";
 import {autoinject} from "aurelia-framework";
 
-import {CodeUpdated, EditorFocus} from "./messages";
+import {CodeUpdated} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
 import {Body} from "../lib/sprite";
 
@@ -9,25 +9,38 @@ import Phaser = require('phaser');
 
 @autoinject
 export class GameContainer {
+  private container: HTMLDivElement;
+
   private codeUpdateSubscriber: Subscription;
-  private editorFocusSubscriber: Subscription;
 
   private game: Game;
 
   constructor(private ea: EventAggregator) { }
 
   attached() {
-    this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdated, msg => this.update(msg.preloadCode, msg.createCode, msg.updateCode, msg.gameWidth, msg.gameHeight));
+    // Refresh game with new code
+    this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdated, msg => this.update(msg.preloadCode, msg.createCode, msg.updateCode));
     
-    // Disable/enable key capture when editor is focused/blur
-    this.editorFocusSubscriber = this.ea.subscribe(EditorFocus, msg => {
+    // Disable key capture when click outside game
+    window.addEventListener('click', (e) => {
       if (this.game) {
-        this.game.input.enabled = !msg.focused;
+        if (this.container.contains(<Node> e.target)) {
+          this.game.input.enabled = true;
+        } else {
+          this.game.input.enabled = false;
+        }
       }
     });
   }
 
-  private update(preloadCode: string, createCode: string, updateCode: string, gameWidth: number, gameHeight: number) {    
+  detached() {
+    this.codeUpdateSubscriber.dispose();
+    if (this.game != null) {
+      this.game.destroy();
+    }
+  }
+
+  private update(preloadCode: string, createCode: string, updateCode: string) {    
     if (this.game != null) {
       this.game.destroy();
     }
@@ -39,15 +52,7 @@ export class GameContainer {
     console.log('update:');
     console.log(updateCode);
 
-    this.game = new Game(preloadCode, createCode, updateCode, gameWidth, gameHeight);
-  }
-
-  detached() {
-    this.codeUpdateSubscriber.dispose();
-    if (this.game != null) {
-      this.game.destroy();
-    }
-    this.editorFocusSubscriber.dispose();
+    this.game = new Game(preloadCode, createCode, updateCode);
   }
 
   private pauseGame() {
@@ -59,11 +64,11 @@ export class GameContainer {
 }
 
 class Game extends Phaser.Game {
-  constructor(preloadCode: string, createCode: string, updateCode: string, width: number, height: number) {
+  constructor(preloadCode: string, createCode: string, updateCode: string, width: number = 400, height: number = 300) {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Bodies', createCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Bodies', createCode);
     GameWorld.prototype.userUpdate = Function('Keyboard', 'Mouse', updateCode);
 
     this.state.add('main', GameWorld);
@@ -91,7 +96,7 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.bodies);
+    this.userCreate(this, this.bodies);
   }
 
   update() {
@@ -105,13 +110,23 @@ class GameWorld extends Phaser.State {
   private initMouse() {
     this.mouse = new Mouse(this.input);
   }
-
+  
   private addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
     let phaserSprite = this.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
     phaserSprite.height = height;
     phaserSprite.width = width;
     this.bodies[name] = new Body(phaserSprite);
+  }
+
+  private setBackground(backgroundKey: string) {
+    this.background = this.add.sprite(0, 0, backgroundKey);
+    this.background.width = this.world.width;
+    this.background.height = this.world.height;
+  }
+
+  private setBackgroundColor(color: string) {
+    this.game.stage.backgroundColor = color;
   }
 }
 
