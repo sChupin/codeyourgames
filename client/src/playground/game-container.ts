@@ -3,6 +3,7 @@ import {autoinject} from "aurelia-framework";
 
 import {CodeUpdated, EditorFocus} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
+import {Body} from "../lib/sprite";
 
 import Phaser = require('phaser');
 
@@ -74,7 +75,7 @@ class GameWorld extends Phaser.State {
 
   private background;
 
-  private bodies: Array<Body>;
+  private bodies: BodyMap = {};
 
   private userEvents: Array<Phaser.Signal> = [];
   private userFunctions: FunctionMap = {};
@@ -104,6 +105,14 @@ class GameWorld extends Phaser.State {
   private initMouse() {
     this.mouse = new Mouse(this.input);
   }
+
+  private addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
+    let phaserSprite = this.add.sprite(x, y, key);
+    phaserSprite.anchor.setTo(0.5, 0.5);
+    phaserSprite.height = height;
+    phaserSprite.width = width;
+    this.bodies[name] = new Body(phaserSprite);
+  }
 }
 
 interface GameWorld {
@@ -113,7 +122,7 @@ interface GameWorld {
 }
 
 interface BodyMap {
-  [key: string]: Phaser.Sprite;
+  [key: string]: Body;
 }
 
 interface FunctionMap {

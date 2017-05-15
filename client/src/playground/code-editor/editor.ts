@@ -203,11 +203,12 @@ function createCodeFromInfo(gameInfo) {
   }
 
   gameInfo.bodies.forEach(body => {
-    code += "this.bodies['" + body.name + "'] = this.add.sprite(" + (body.x) + ", " + (body.y) + ", '" + body.key + "');\n"
-    code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
-    code += "this.bodies." + body.name + ".height = " + body.height + ";\n";
-    code += "this.bodies." + body.name + ".width = " + body.width + ";\n";
-    code += "this.physics.arcade.enable(this.bodies." + body.name + ");\n";
+    code += "this.addBody('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");"
+    // code += "this.bodies['" + body.name + "'] = this.add.sprite(" + (body.x) + ", " + (body.y) + ", '" + body.key + "');\n"
+    // code += "this.bodies." + body.name + ".anchor.setTo(0.5, 0.5);\n";
+    // code += "this.bodies." + body.name + ".height = " + body.height + ";\n";
+    // code += "this.bodies." + body.name + ".width = " + body.width + ";\n";
+    // code += "this.physics.arcade.enable(this.bodies." + body.name + ");\n";
   });
 
   return code;
