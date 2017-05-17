@@ -1,5 +1,5 @@
 declare class Mouse {
-  static POINTER: Point;
+  static position: Point;
 
   static isPressed: boolean;
   // or isDown & isUp ?

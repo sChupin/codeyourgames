@@ -1,7 +1,5 @@
 declare class Sprite {
   public position: Point;
-  public positionX: number;
-  public positionY: number;
 
   public orientation: number | Angle;
 }
@@ -27,13 +25,15 @@ declare class Body extends Sprite {
    */
 
   // Translation
-  public slideForward(duration: number, velocity?: number | Velocity);
-  public slideBackward(duration: number, velocity?: number | Velocity);
+  public moveForward(duration: number, velocity?: number | Velocity);
+  public moveBackward(duration: number, velocity?: number | Velocity);
 
-  public slideUp(duration: number, velocity?: number | Velocity);
-  public slideDown(duration: number, velocity?: number | Velocity);
-  public slideLeft(duration: number, velocity?: number | Velocity);
-  public slideRight(duration: number, velocity?: number | Velocity);
+  public moveUp(duration: number, velocity?: number | Velocity);
+  public moveDown(duration: number, velocity?: number | Velocity);
+  public moveLeft(duration: number, velocity?: number | Velocity);
+  public moveRight(duration: number, velocity?: number | Velocity);
+
+  public moveTowards(x: number, y: number);
 
   // given both direction
   public moveBy(x: number, y: number): void;
@@ -43,13 +43,13 @@ declare class Body extends Sprite {
 
   public slideBy(x: number, y: number, duration: number): void;
 
-  public slideTo(x: number, y: number, duration: number): void;
-  public slideTo(point: Point, duration: number): void;
-  
-  public slideBy(x: number, y: number, velocity?: number | Velocity): void;
-
   public slideTo(x: number, y: number, velocity?: number | Velocity): void;
   public slideTo(point: Point, velocity?: number | Velocity): void;
+
+  public slideToIn(x: number, y: number, duration: number): void;
+  public slideToPointIn(point: Point, duration: number): void;
+  
+  public slideBy(x: number, y: number, velocity?: number | Velocity): void;
 
   // given x direction
   public moveXBy(x: number): void;
@@ -83,13 +83,34 @@ declare class Body extends Sprite {
   public pointIn(degree: number | Orientation): void;
 
   public pointTowards(x: number, y: number): void;
-  public pointTowards(point: Point): void;
+  public pointTowardsPoint(point: Point): void;
 
    /*
    **************
    * Appearence *
    **************
    */
-  // hide/show (Phaser visibility)
-  // destroy/kill
+  public hide(): void;
+  public show(): void;
+
+  public destroy(): void;
+
+  // Animation
+  //todo
+
+  // Size
+  public changeSizeBy(scale: number);
+  public resetSize();
+  public goFront();
+  public goUp();
+  public goToBack();
+  public goDown();
+
+  // Events
+  public isClicked: boolean;
+  public isTouched: boolean;
+
+  
+  //
+
 }

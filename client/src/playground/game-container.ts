@@ -68,8 +68,8 @@ class Game extends Phaser.Game {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Bodies', createCode);
-    GameWorld.prototype.userUpdate = Function('Keyboard', 'Mouse', updateCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Bodies', 'Mouse', createCode);
+    GameWorld.prototype.userUpdate = Function('Keyboard', 'Mouse', 'Bodies', updateCode);
 
     this.state.add('main', GameWorld);
     this.state.start('main');
@@ -96,11 +96,14 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this, this.bodies);
+    this.userCreate(this, this.bodies, this.mouse);
   }
 
   update() {
-    this.userUpdate(this.keyboard, this.mouse);
+    // Ensure onInputOver/Out are dispatched even if mouse is not moving
+    this.input.activePointer.dirty = true;
+
+    this.userUpdate(this.keyboard, this.mouse, this.bodies);
   }
 
   private initKeyboard() {

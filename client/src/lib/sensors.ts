@@ -1,3 +1,5 @@
+import {Point} from './utility';
+
 export class Keyboard {
 
   public A: Keyboard.Key;
@@ -128,10 +130,13 @@ export namespace Keyboard {
 }
 
 export class Mouse {
+  public position: Point;
+
   private isDown: boolean;
   private isUp: boolean;
 
   constructor(private phaserInput: Phaser.Input) {
+    this.position = phaserInput.activePointer.position;
     phaserInput.onDown.add(() => {this.isDown = true; this.isUp = false;});
     phaserInput.onUp.add(() => {this.isUp = true; this.isDown = false;});
   }
