@@ -29,7 +29,7 @@ export class Body extends Sprite {
     phaserSprite.game.physics.arcade.enable(phaserSprite);
     this.phaserBody = phaserSprite.body;
 
-    // Set clicked properties on sprite clicked
+    // Set touched/clicked properties on sprite touched/clicked
     phaserSprite.inputEnabled = true;
     phaserSprite.events.onInputOver.add(() => this.touchMouse = true);
     phaserSprite.events.onInputOut.add(() => {this.touchMouse = false; this.clicked = false;});

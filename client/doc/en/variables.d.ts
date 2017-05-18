@@ -1,3 +1,7 @@
-declare class _Number {
+declare class Numbers {
   
+}
+
+declare class Texts {
+
 }

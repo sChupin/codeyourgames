@@ -4,6 +4,7 @@ import {autoinject} from "aurelia-framework";
 import {CodeUpdated} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
 import {Body} from "../lib/sprite";
+import {GameProps} from "../lib/game";
 
 import Phaser = require('phaser');
 
@@ -68,8 +69,8 @@ class Game extends Phaser.Game {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Bodies', 'Mouse', createCode);
-    GameWorld.prototype.userUpdate = Function('Keyboard', 'Mouse', 'Bodies', updateCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Mouse', 'Bodies', createCode);
+    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', updateCode);
 
     this.state.add('main', GameWorld);
     this.state.start('main');
@@ -78,14 +79,23 @@ class Game extends Phaser.Game {
 
 class GameWorld extends Phaser.State {
 
-  private background;
+  // Game properties handler accessed by global Game in user code
+  private gameProps: GameProps;
 
+  private background: any;
+
+  // List of sprite accessed by global Bodies in user code
   private bodies: BodyMap = {};
 
   private userEvents: Array<Phaser.Signal> = [];
+
+  // List of functions accessed by global Functions in user code
   private userFunctions: FunctionMap = {};
 
+  // Keyboard events handler accessed by global Keyboard in user code
   private keyboard: Keyboard;
+
+  // Mouse events handler accessed by global Mouse in user code
   private mouse: Mouse;
 
   preload() {
@@ -93,17 +103,22 @@ class GameWorld extends Phaser.State {
   }
 
   create() {
+    this.initGameProps();
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this, this.bodies, this.mouse);
+    this.userCreate(this.gameProps, this.mouse, this.bodies);
   }
 
   update() {
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
-    this.userUpdate(this.keyboard, this.mouse, this.bodies);
+    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies);
+  }
+
+  private initGameProps() {
+    this.gameProps = new GameProps(this.game, this.background, this.bodies);
   }
 
   private initKeyboard() {
@@ -112,24 +127,6 @@ class GameWorld extends Phaser.State {
 
   private initMouse() {
     this.mouse = new Mouse(this.input);
-  }
-  
-  private addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
-    let phaserSprite = this.add.sprite(x, y, key);
-    phaserSprite.anchor.setTo(0.5, 0.5);
-    phaserSprite.height = height;
-    phaserSprite.width = width;
-    this.bodies[name] = new Body(phaserSprite);
-  }
-
-  private setBackground(backgroundKey: string) {
-    this.background = this.add.sprite(0, 0, backgroundKey);
-    this.background.width = this.world.width;
-    this.background.height = this.world.height;
-  }
-
-  private setBackgroundColor(color: string) {
-    this.game.stage.backgroundColor = color;
   }
 }
 

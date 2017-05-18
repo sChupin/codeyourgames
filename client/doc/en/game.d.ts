@@ -1,4 +1,4 @@
-declare class Game {
+declare class GameProps {
   static Center: Point;
   static CenterX: number;
   static CenterY: number;
