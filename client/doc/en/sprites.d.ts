@@ -34,31 +34,32 @@ declare class Body extends Sprite {
   public moveRight(duration: number, velocity?: number | Velocity);
 
   public moveTowards(x: number, y: number);
+  public moveTowards(point: Point);
 
   // given both direction
-  public moveBy(x: number, y: number): void;
+  public moveByXY(x: number, y: number): void;
 
-  public moveTo(x: number, y: number): void;
-  public moveToPoint(point: Point): void;
+  public moveToXY(x: number, y: number): void;
+  public moveTo(point: Point): void;
 
-  public slideBy(x: number, y: number, duration: number): void;
+  public slideByXY(x: number, y: number, duration: number): void;
 
-  public slideTo(x: number, y: number, velocity?: number | Velocity): void;
+  public slideToXY(x: number, y: number, velocity?: number | Velocity): void;
   public slideTo(point: Point, velocity?: number | Velocity): void;
 
-  public slideToIn(x: number, y: number, duration: number): void;
-  public slideToPointIn(point: Point, duration: number): void;
+  public slideToXYIn(x: number, y: number, duration: number): void;
+  public slideToIn(point: Point, duration: number): void;
   
-  public slideBy(x: number, y: number, velocity?: number | Velocity): void;
+  public slideByXY(x: number, y: number, velocity?: number | Velocity): void;
 
   // given x direction
   public moveXBy(x: number): void;
 
   public moveXTo(x: number): void;
 
-  public slideXBy(x: number, duration: number): void;
+  public slideXByIn(x: number, duration: number): void;
 
-  public slideXTo(x: number, duration: number): void;
+  public slideXToIn(x: number, duration: number): void;
   
   public slideXBy(x: number, velocity?: number | Velocity): void;
 
