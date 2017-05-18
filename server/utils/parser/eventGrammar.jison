@@ -12,7 +12,7 @@
 "when"                return 'WHEN'
 "while"               return 'WHILE'
 "once"                return 'ONCE'
-"then"                return 'THEN'
+"do"                  return 'DO'
 "and"                 return 'AND'
 "or"                  return 'OR'
 <<EOF>>               return 'EOF'
@@ -47,9 +47,9 @@ expressions
     ;
 
 event
-    : type composed_condition THEN WORD
+    :doype composed_condition DO WORD
         {$$ = [$2, $4, $1];}
-    | type composed_condition THEN BEGIN_CODE code END_CODE
+    |doype composed_condition DO BEGIN_CODE code END_CODE
         {$$ = [$2, $5, $1];}
     ;
 
