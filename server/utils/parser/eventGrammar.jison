@@ -47,9 +47,9 @@ expressions
     ;
 
 event
-    :doype composed_condition DO WORD
+    : type composed_condition DO WORD
         {$$ = [$2, $4, $1];}
-    |doype composed_condition DO BEGIN_CODE code END_CODE
+    | type composed_condition DO BEGIN_CODE code END_CODE
         {$$ = [$2, $5, $1];}
     ;
 
