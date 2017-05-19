@@ -1,6 +1,8 @@
 import {Point} from './utility';
 import {Body} from './sprite';
 
+import {BodyMap, NumberMap, TextMap, BooleanMap} from '../playground/game-container';
+
 export class GameProps {
   public center: Point;
   public centerX: number;
@@ -61,20 +63,4 @@ export class GameProps {
   public setBackgroundColor(color: string) {
     this.game.stage.backgroundColor = color;
   }
-}
-
-interface BodyMap {
-  [key: string]: Body;
-}
-
-interface NumberMap {
-  [key: string]: number;
-}
-
-interface TextMap {
-  [key: string]: string;
-}
-
-interface BooleanMap {
-  [key: string]: boolean;
 }

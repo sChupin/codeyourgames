@@ -145,22 +145,22 @@ interface GameWorld {
   userUpdate: Function;
 }
 
-interface BodyMap {
+export interface BodyMap {
   [key: string]: Body;
 }
 
-interface FunctionMap {
+export interface FunctionMap {
   [key: string]: Function;
 }
 
-interface NumberMap {
+export interface NumberMap {
   [key: string]: number;
 }
 
-interface TextMap {
+export interface TextMap {
   [key: string]: string;
 }
 
-interface BooleanMap {
+export interface BooleanMap {
   [key: string]: boolean;
 }
