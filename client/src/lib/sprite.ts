@@ -1,4 +1,4 @@
-import {Point, Angle, Velocity, Orientation} from './utility';
+import {Point, Angle, Velocity, Direction} from './utility';
 
 export class Sprite {
   public readonly position: Point;
@@ -44,39 +44,109 @@ export class Body extends Sprite {
    */
 
   // Translation
-  public moveForward(duration: number, velocity?: number | Velocity) {
-    //this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: this.phaserBody.sprite.x + 100}, 2000, "Linear", true);
-  }
-
-  public moveForwardBy(steps: number, velocity?: number | Velocity) {
+  public moveForward(velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
     
+    let ySpeed = speed * Math.sin(this.phaserBody.sprite.angle * Math.PI / 180);
+    let xSpeed = speed;
+    if (ySpeed != 0) {
+      xSpeed = ySpeed / Math.tan(this.phaserBody.sprite.angle * Math.PI / 180);
+    }
+
+    this.phaserBody.velocity.x = xSpeed;
+    this.phaserBody.velocity.y = ySpeed;
   }
 
-  public moveBackward(duration: number, velocity?: number | Velocity) {
+  public moveForwardBy(steps: number) {
+    let y = steps * Math.sin(this.phaserBody.sprite.angle * Math.PI / 180);
+    let x = steps;
+    if (y != 0) {
+      x = y /  Math.tan(this.phaserBody.sprite.angle * Math.PI / 180);
+    }
 
+    this.phaserBody.sprite.x += x;
+    this.phaserBody.sprite.y += y;
   }
 
-  public moveUp(duration: number, velocity?: number | Velocity) {
-
-  }
-  public moveDown(duration: number, velocity?: number | Velocity) {
-
+  public moveBackward(velocity: number) {
+    this.moveForward(-velocity);
   }
 
-  public moveLeft(duration: number, velocity?: number | Velocity) {
-
+  public moveBackwardBy(steps: number) {
+    this.moveForwardBy(-steps);
   }
 
-  public moveRight(duration: number, velocity?: number | Velocity) {
-
+  public stop() {
+    this.phaserBody.velocity.setTo(0);
   }
 
-  public moveTowardsXY(x: number, y: number) {
-
+  public moveUp(velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
+    
+    this.phaserBody.velocity.y = -speed;
   }
 
-  public moveTowards(point: Point) {
-    this.moveTowardsXY(point.x, point.y);
+  public moveDown(velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
+    
+    this.phaserBody.velocity.y = speed;
+  }
+
+  public moveLeft(velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
+
+    this.phaserBody.velocity.x = -speed;
+  }
+
+  public moveRight(velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
+
+    this.phaserBody.velocity.x = speed;
+  }
+
+    public moveUpBy(steps: number) {
+    this.phaserBody.sprite.y -= steps;
+  }
+
+  public moveDownBy(steps: number) {
+    this.phaserBody.sprite.y += steps;
+  }
+
+  public moveLeftBy(steps: number) {
+    this.phaserBody.sprite.x -= steps;
+  }
+
+  public moveRightBy(steps: number) {
+    this.phaserBody.sprite.x += steps;
+  }
+
+  public moveTowardsXY(x: number, y: number, velocity?: number) {
+    let speed = velocity || this.phaserBody.speed;
+    
+    let deltaX = this.phaserBody.sprite.x - x;
+    let deltaY = this.phaserBody.sprite.y - y;
+
+    let signX = Math.sign(deltaX);
+    let signY = Math.sign(deltaY);
+
+    let alpha = ( Math.atan(deltaY/deltaX) * 180 ) / Math.PI;
+
+    if (signX !== -1) {
+      alpha -= signY * 180;
+    }
+
+    let ySpeed = speed * Math.sin(alpha * Math.PI / 180);
+    let xSpeed = speed;
+    if (ySpeed != 0) {
+      xSpeed = ySpeed / Math.tan(alpha * Math.PI / 180);
+    }
+
+    this.phaserBody.velocity.x = xSpeed;
+    this.phaserBody.velocity.y = ySpeed;
+  }
+
+  public moveTowards(point: Point, velocity?: number) {
+    this.moveTowardsXY(point.x, point.y, velocity);
   }
 
   // given both direction

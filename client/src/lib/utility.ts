@@ -13,7 +13,7 @@ export class Velocity {
   static FAST: number = 100;
 }
 
-export class Orientation {
+export class Direction {
   static RIGHT: number = 0;
   static DOWN: number = 90;
   static LEFT: number = -180;
