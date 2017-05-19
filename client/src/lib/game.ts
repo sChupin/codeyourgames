@@ -32,7 +32,7 @@ export class GameProps {
 
   // }
 
-  private addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
+  public addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
     let phaserSprite = this.game.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
     phaserSprite.height = height;
@@ -40,13 +40,13 @@ export class GameProps {
     this.bodies[name] = new Body(phaserSprite);
   }
 
-  private setBackground(backgroundKey: string) {
+  public setBackground(backgroundKey: string) {
     this.background = this.game.add.sprite(0, 0, backgroundKey);
     this.background.width = this.game.world.width;
     this.background.height = this.game.world.height;
   }
 
-  private setBackgroundColor(color: string) {
+  public setBackgroundColor(color: string) {
     this.game.stage.backgroundColor = color;
   }
 }

@@ -36,10 +36,10 @@ export class TranspilerService {
       let name = func[0];
       let body = func[1];
 
+      create += "\n";
       create += "this.userFunctions." + name + " = function() {\n";
       create += "\t" + body + ";\n";
       create += "}\n";
-      create += "\n";
     });
 
     return create;
@@ -49,6 +49,7 @@ export class TranspilerService {
     let create = '';
     let update = '';
     console.log(events);
+
     if (events) {
       events.forEach((event, i) => {
         let condition = event[0];
@@ -56,11 +57,11 @@ export class TranspilerService {
         let type = event[2];
 
         create += "this.userEvents.push(new Phaser.Signal());\n";
+        create += "this.userEvents[" + i + "].add";
         if (type === "once") {
-          create += "this.userEvents[" + i + "].addOnce(this.userFunctions." + action + ", this);\n";          
-        } else {
-          create += "this.userEvents[" + i + "].add(this.userFunctions." + action + ", this);\n";
+          create += "Once";
         }
+        create += "(() => {\n" + action + "\n}, this);\n";
         create += "\n";
 
         update += "if (" + condition + ") {\n";

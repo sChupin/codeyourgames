@@ -47,7 +47,7 @@ expressions
     ;
 
 event
-    : type composed_condition DO WORD
+    : type composed_condition DO code
         {$$ = [$2, $4, $1];}
     | type composed_condition DO BEGIN_CODE code END_CODE
         {$$ = [$2, $5, $1];}
