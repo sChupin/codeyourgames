@@ -8,7 +8,7 @@ export class GameProps {
 
   public paused: boolean = false;
 
-  constructor(private game: Phaser.Game, private background: any, private bodies: BodyMap) {
+  constructor(private game: Phaser.Game, private background: any, private bodies: BodyMap, private numbers: NumberMap, private texts: TextMap, private booleans: BooleanMap) {
     this.center = {x: game.world.centerX, y: game.world.centerY};
     this.centerX = game.world.centerX;
     this.centerY = game.world.centerY;
@@ -32,6 +32,18 @@ export class GameProps {
 
   // }
 
+  public addNumber(name: string, value?: number) {
+    this.numbers[name] = value ? value : 0;
+  }
+
+  public addText(name: string, value?: string) {
+    this.texts[name] = value ? value : "";
+  }
+
+  public addBoolean(name: string, value?: boolean) {
+    this.booleans[name] = value ? value : false;
+  }
+
   public addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
     let phaserSprite = this.game.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
@@ -53,4 +65,16 @@ export class GameProps {
 
 interface BodyMap {
   [key: string]: Body;
+}
+
+interface NumberMap {
+  [key: string]: number;
+}
+
+interface TextMap {
+  [key: string]: string;
+}
+
+interface BooleanMap {
+  [key: string]: boolean;
 }

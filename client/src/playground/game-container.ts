@@ -69,8 +69,8 @@ class Game extends Phaser.Game {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Mouse', 'Bodies', createCode);
-    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', updateCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Mouse', 'Bodies', 'Numbers', 'Texts', 'Booleans', createCode);
+    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Numbers', 'Texts', 'Booleans', updateCode);
 
     this.state.add('main', GameWorld);
     this.state.start('main');
@@ -86,6 +86,15 @@ class GameWorld extends Phaser.State {
 
   // List of sprite accessed by global Bodies in user code
   private bodies: BodyMap = {};
+
+  // List of number variables accessed by global Numbers in user code
+  private numbers: NumberMap = {};
+
+  // List of text variables accessed by global Texts in user code
+  private texts: TextMap = {};
+
+  // List of boolean variables accessed by global booleans in user code
+  private booleans: BooleanMap = {};
 
   private userEvents: Array<Phaser.Signal> = [];
 
@@ -107,18 +116,18 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies);
+    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, this.numbers, this.texts, this.booleans);
   }
 
   update() {
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
-    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies);
+    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, this.numbers, this.texts, this.booleans);
   }
 
   private initGameProps() {
-    this.gameProps = new GameProps(this.game, this.background, this.bodies);
+    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.numbers, this.texts, this.booleans);
   }
 
   private initKeyboard() {
@@ -142,4 +151,16 @@ interface BodyMap {
 
 interface FunctionMap {
   [key: string]: Function;
+}
+
+interface NumberMap {
+  [key: string]: number;
+}
+
+interface TextMap {
+  [key: string]: string;
+}
+
+interface BooleanMap {
+  [key: string]: boolean;
 }
