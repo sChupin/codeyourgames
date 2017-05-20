@@ -5,6 +5,7 @@ import {CodeUpdated} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
 import {Body} from "../lib/sprite";
 import {GameProps} from "../lib/game";
+import {NumberMap, TextMap, BooleanMap} from "../lib/variables";
 
 import Phaser = require('phaser');
 
@@ -87,15 +88,6 @@ class GameWorld extends Phaser.State {
   // List of sprite accessed by global Bodies in user code
   private bodies: BodyMap = {};
 
-  // List of number variables accessed by global Numbers in user code
-  private numbers: NumberMap = {};
-
-  // List of text variables accessed by global Texts in user code
-  private texts: TextMap = {};
-
-  // List of boolean variables accessed by global booleans in user code
-  private booleans: BooleanMap = {};
-
   private userEvents: Array<Phaser.Signal> = [];
 
   // List of functions accessed by global Functions in user code
@@ -107,6 +99,9 @@ class GameWorld extends Phaser.State {
   // Mouse events handler accessed by global Mouse in user code
   private mouse: Mouse;
 
+  // List of groups accessed by global Groups in user code
+  private groups: GroupMap;
+
   preload() {
     this.userPreload();
   }
@@ -116,18 +111,18 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, this.numbers, this.texts, this.booleans);
+    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, NumberMap, TextMap, BooleanMap);
   }
 
   update() {
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
-    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, this.numbers, this.texts, this.booleans);
+    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, NumberMap, TextMap, BooleanMap);
   }
 
   private initGameProps() {
-    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.numbers, this.texts, this.booleans);
+    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.groups);
   }
 
   private initKeyboard() {
@@ -153,14 +148,7 @@ export interface FunctionMap {
   [key: string]: Function;
 }
 
-export interface NumberMap {
-  [key: string]: number;
-}
-
-export interface TextMap {
-  [key: string]: string;
-}
-
-export interface BooleanMap {
-  [key: string]: boolean;
+export interface GroupMap {
+  // todo: replace by new Group class
+  [key: string]: Phaser.Group;
 }

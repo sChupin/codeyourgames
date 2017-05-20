@@ -27,6 +27,8 @@ declare class Body extends Sprite {
   // Translation
   public moveForward(duration: number, velocity?: number | Velocity);
   public moveBackward(duration: number, velocity?: number | Velocity);
+  
+  public stop();
 
   public moveUp(duration: number, velocity?: number | Velocity);
   public moveDown(duration: number, velocity?: number | Velocity);
