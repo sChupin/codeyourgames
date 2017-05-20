@@ -5,13 +5,24 @@ export class Sprite {
 
   public readonly orientation: number | Angle;
 
-  constructor(private phaserSprite: Phaser.Sprite) {
+  // todo set phaserSprite private if possible
+  constructor(public phaserSprite: Phaser.Sprite) {
     this.position = phaserSprite.position;
   }
 }
 
-export class Platform {
+export class Platform extends Sprite {
+  private phaserBody: Phaser.Physics.Arcade.Body = null;
 
+  constructor(phaserSprite: Phaser.Sprite) {
+    super(phaserSprite);
+    phaserSprite.game.physics.arcade.enable(phaserSprite);
+    this.phaserBody = phaserSprite.body;
+
+    // Set immovable and no gravity
+    this.phaserBody.allowGravity = false;
+    this.phaserBody.immovable = false;
+  }
 }
 
 export class Body extends Sprite {
@@ -104,7 +115,7 @@ export class Body extends Sprite {
     this.phaserBody.velocity.x = speed;
   }
 
-    public moveUpBy(steps: number) {
+  public moveUpBy(steps: number) {
     this.phaserBody.sprite.y -= steps;
   }
 
@@ -165,28 +176,31 @@ export class Body extends Sprite {
   }
 
   public slideByXYIn(x: number, y: number, duration: number): void {
-    let props = {x: this.phaserBody.sprite.x + x, y: this.phaserBody.sprite.y + y};
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    //let props = {x: this.phaserBody.sprite.x + x, y: this.phaserBody.sprite.y + y};
+    //this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    
+    let distance = Math.sqrt(x*x + y*y);
+    let direction = Math.atan(y/x) * 180 / Math.PI;
+
+    this.phaserBody.moveTo(duration*1000, distance, direction);
   }
 
   public slideByXY(x: number, y: number, velocity?: number): void {
     let speed = velocity || this.phaserBody.speed;
 
-    let nextX = this.phaserBody.sprite.x + x;
-    let nextY = this.phaserBody.sprite.y + y;
+    let distance = Math.sqrt(x*x + y*y);
+    let duration = distance / speed;
 
-    let deltaX = this.phaserBody.sprite.x - nextX;
-    let deltaY = this.phaserBody.sprite.y - nextY;
-
-    let dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
-
-    let duration = dist / speed;
-    
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: nextX, y: nextY}, duration, "Linear", true);
+    this.slideByXYIn(x, y, duration);
+    //this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: nextX, y: nextY}, duration, "Linear", true);
   }
 
   public slideToXYIn(x: number, y: number, duration: number): void {
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x, y: y}, duration, "Linear", true);
+    //this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x, y: y}, duration, "Linear", true);
+    let distanceX = this.phaserBody.sprite.x - x;
+    let distanceY = this.phaserBody.sprite.y - y;
+
+    this.slideByXYIn(distanceX, distanceY, duration);
   }
 
   public slideToXY(x: number, y: number, velocity?: number): void {
@@ -194,11 +208,12 @@ export class Body extends Sprite {
     let deltaX = this.phaserBody.sprite.x - x;
     let deltaY = this.phaserBody.sprite.y - y;
 
-    let dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    let distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    let duration = distance / speed;
 
-    let duration = dist / speed;
+    this.slideToXYIn(x, y, duration);
     
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x, y: y}, duration, "Linear", true);
+    //this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x, y: y}, duration, "Linear", true);
   }
 
   public slideToIn(point: Point, duration: number): void {
@@ -219,33 +234,22 @@ export class Body extends Sprite {
   }
 
   public slideXByIn(x: number, duration: number): void {
-    let props = {x: this.phaserBody.sprite.x + x};
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    // let props = {x: this.phaserBody.sprite.x + x};
+    // this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    this.slideByXYIn(x, 0, duration);
   }
 
   public slideXToIn(x: number, duration: number): void {
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x}, duration, "Linear", true);
+    // this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x}, duration, "Linear", true);
+    this.slideToXYIn(x, 0, duration);
   }
   
   public slideXBy(x: number, velocity?: number) {
-    let speed = velocity || this.phaserBody.speed;
-
-    let nextX = this.phaserBody.sprite.x + x;
-
-    let dist = this.phaserBody.sprite.x - nextX;
-
-    let duration = dist / speed;
-    
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: nextX}, duration, "Linear", true);
+    this.slideByXY(x, 0, velocity);
   }
 
   public slideXTo(x: number, velocity?: number): void {
-    let speed = velocity || this.phaserBody.speed;
-    let dist = this.phaserBody.sprite.x - x;
-
-    let duration = dist / speed;
-    
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({x: x}, duration, "Linear", true);
+    this.slideToXY(x, 0, velocity);
   }
 
   // given y direction
@@ -258,33 +262,22 @@ export class Body extends Sprite {
   }
 
   public slideYByIn(y: number, duration: number): void {
-    let props = {y: this.phaserBody.sprite.y + y};
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    // let props = {y: this.phaserBody.sprite.y + y};
+    // this.phaserBody.game.add.tween(this.phaserBody.sprite).to(props, duration, "Linear", true);
+    this.slideByXYIn(0, y, duration);
   }
 
   public slideYToIn(y: number, duration: number): void {
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({y: y}, duration, "Linear", true);
+    // this.phaserBody.game.add.tween(this.phaserBody.sprite).to({y: y}, duration, "Linear", true);
+    this.slideToXYIn(0, y, duration);
   }
   
   public slideYBy(y: number, velocity?: number): void {
-    let speed = velocity || this.phaserBody.speed;
-
-    let nextY = this.phaserBody.sprite.y + y;
-
-    let dist = this.phaserBody.sprite.y - nextY;
-
-    let duration = dist / speed;
-    
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({y: nextY}, duration, "Linear", true);
+    this.slideByXY(0, y, velocity);
   }
 
   public slideYTo(y: number, velocity?: number): void {
-    let speed = velocity || this.phaserBody.speed;
-    let dist = this.phaserBody.sprite.y - y;
-
-    let duration = dist / speed;
-    
-    this.phaserBody.game.add.tween(this.phaserBody.sprite).to({y: y}, duration, "Linear", true);
+    this.slideToXY(0, y, velocity);
   }
 
   // Rotation
@@ -331,4 +324,13 @@ export class Body extends Sprite {
   // public touchMouse(): boolean {
   //   return this.phaserBody.sprite.input.pointerOver();
   // }
+}
+
+
+export class Group {
+  constructor(private phaserGroup: Phaser.Group) { }
+
+  public add(sprite: Sprite) {
+    this.phaserGroup.add(sprite.phaserSprite);
+  }
 }

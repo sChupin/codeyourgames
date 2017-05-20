@@ -3,7 +3,7 @@ import {autoinject} from "aurelia-framework";
 
 import {CodeUpdated} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
-import {Body} from "../lib/sprite";
+import {Body, Platform, Group} from "../lib/sprite";
 import {GameProps} from "../lib/game";
 import {NumberMap, TextMap, BooleanMap} from "../lib/variables";
 
@@ -70,8 +70,8 @@ class Game extends Phaser.Game {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Mouse', 'Bodies', 'Numbers', 'Texts', 'Booleans', createCode);
-    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Numbers', 'Texts', 'Booleans', updateCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', createCode);
+    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', updateCode);
 
     this.state.add('main', GameWorld);
     this.state.start('main');
@@ -88,6 +88,8 @@ class GameWorld extends Phaser.State {
   // List of sprite accessed by global Bodies in user code
   private bodies: BodyMap = {};
 
+  private platforms: PlatformMap = {};
+
   private userEvents: Array<Phaser.Signal> = [];
 
   // List of functions accessed by global Functions in user code
@@ -100,7 +102,7 @@ class GameWorld extends Phaser.State {
   private mouse: Mouse;
 
   // List of groups accessed by global Groups in user code
-  private groups: GroupMap;
+  private groups: GroupMap = {};
 
   preload() {
     this.userPreload();
@@ -111,18 +113,18 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, NumberMap, TextMap, BooleanMap);
+    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
   }
 
   update() {
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
-    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, NumberMap, TextMap, BooleanMap);
+    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
   }
 
   private initGameProps() {
-    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.groups);
+    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.platforms, this.groups);
   }
 
   private initKeyboard() {
@@ -144,11 +146,15 @@ export interface BodyMap {
   [key: string]: Body;
 }
 
+export interface PlatformMap {
+  [key: string]: Platform;
+}
+
 export interface FunctionMap {
   [key: string]: Function;
 }
 
 export interface GroupMap {
   // todo: replace by new Group class
-  [key: string]: Phaser.Group;
+  [key: string]: Group;
 }

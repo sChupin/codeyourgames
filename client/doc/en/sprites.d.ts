@@ -14,7 +14,7 @@ declare class Platform extends Sprite {
 
 declare class Body extends Sprite {
   // Default speed if not specified when sliding
-  public speed: number | Velocity;
+  public speed: number;
 
   public hitBounds: boolean;
 
