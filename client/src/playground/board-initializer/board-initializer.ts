@@ -57,9 +57,9 @@ export class BoardInitializer {
     // Initialize fabric canvas and associated events
     this.board = new fabric.Canvas('board');
     this.board.setDimensions({width: __this.width, height: __this.height});
-    this.board.on('object:selected', (evt) => {console.log('object:selected'); console.log(evt.target); __this.selectedBody = evt.target;});
-    this.board.on('selection:created', (evt) => {console.log('selection:created'); console.log(evt.target); __this.selectedBodies = evt.target._objects;});
-    this.board.on('selection:cleared', () => {console.log('selection:cleared'); __this.selectedBody = {}; __this.selectedBodies = [];});
+    this.board.on('object:selected', (evt) => __this.selectedBody = evt.target);
+    this.board.on('selection:created', (evt) => __this.selectedBodies = evt.target._objects);
+    this.board.on('selection:cleared', () => {__this.selectedBody = {}; __this.selectedBodies = [];});
     this.board.on('object:added', function (evt) {
       let obj = evt.target;
       obj.center();
@@ -300,6 +300,7 @@ export class BoardInitializer {
   public saveBoard() {
     console.log('Board info');
     console.log(this.board);
+    this.board.deactivateAll().renderAll();
     this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
   }
   
