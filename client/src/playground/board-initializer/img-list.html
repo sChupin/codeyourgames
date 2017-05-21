@@ -1,0 +1,21 @@
+<template>
+<require from="../modal-view"></require>
+<require from="../image-gallery"></require>
+<div class="row">
+  <div repeat.for="body of list">
+    <div class="col-md-2">
+      <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(body)">
+        <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
+          <img src.bind="body._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="body.name">
+          <span if.bind="body.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${body.grpName}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#image-gallery" style="border-color: #ddd; height: 80px; width: 86.13px; margin-bottom: 20px;">
+    <span class="glyphicon glyphicon-plus" style="font-size: 25px"></span>
+  </button>
+  </div>
+</div>
+</template>

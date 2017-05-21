@@ -13,6 +13,8 @@ import {ImageInfo, GameInfo} from '../messages';
 export class BoardInitializer {
   private subscriber: Subscription;
   private controller;
+
+  private currentTab;
   
   private board;
   private width: number = 400;
@@ -29,6 +31,8 @@ export class BoardInitializer {
   private bgColorPicker;
   
   private bodies = [];
+  private platforms = [];
+  private decors = [];
   private bodyNames = [];
 
   private currentGroupName: string = "groupName";
@@ -76,6 +80,10 @@ export class BoardInitializer {
     this.subscriber.dispose();
   }
 
+  private setCurrentTab(tabName: string) {
+    this.currentTab = tabName;
+  }
+
   /**
    * Update canvas background color from color picker
    * 
@@ -114,7 +122,17 @@ export class BoardInitializer {
       });
       
       __this.board.add(img);
-      __this.bodies.push(img);
+      switch (__this.currentTab) {
+        case "decor":
+          __this.decors.push(img);
+          break;
+        case "platform":
+          __this.platforms.push(img);
+          break;        
+        case "body":
+          __this.bodies.push(img);
+          break;
+      }
     });
   }
 

@@ -4,6 +4,7 @@
   <require from="../../utils/value-converter/string-to-number"></require>
   <require from="../image-gallery"></require>
   <require from="../modal-view"></require>
+  <require from="./img-list"></require>
   <div class="full-height">
 
     <!--Board initializer-->
@@ -24,9 +25,9 @@
         <div class="panel-heading">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tabbackground" data-toggle="tab">Background</a></li>
-            <li><a href="#tabdecor" data-toggle="tab">Decors</a></li>
-            <li><a href="#tabplatform" data-toggle="tab">Platforms</a></li>
-            <li><a href="#tabbodies" data-toggle="tab">Bodies</a></li>
+            <li><a href="#tabdecor" data-toggle="tab" click.delegate="setCurrentTab('decor')">Decors</a></li>
+            <li><a href="#tabplatform" data-toggle="tab" click.delegate="setCurrentTab('platform')">Platforms</a></li>
+            <li><a href="#tabbodies" data-toggle="tab" click.delegate="setCurrentTab('body')">Bodies</a></li>
             <button type="button" class="btn btn-success pull-right" style="margin: 1px;" click.delegate="saveBoard()">Save this board</button>
           </ul>
         </div>
@@ -37,14 +38,9 @@
             <!--Backgound initializer-->
             <div class="tab-pane fade in active" id="tabbackground">
               <button id="jscolortest" type="button" class="btn btn-secondary">Set background color</button>
-              <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-modal'" btnstyle.bind="''">
-                <template replace-part="button-content">
-                  Set background image
-                </template>
-                <template replace-part="modal-content">
-                  <image-gallery background.bind="true"></image-gallery>
-                </template>
-              </modal-view>
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#background-gallery" style="border-color: #ddd;">
+                Set background image
+              </button>
               <br>
               <br>
               <input id="file" type="file" change.delegate="setBackground($event.target.files[0])" style="display:none">
@@ -58,34 +54,26 @@
             </div>
 
             <!--Decor initializer-->
-            <div class="tab-pane fade" id="tabdecor">Decor</div>
+            <div class="tab-pane fade" id="tabdecor">
+
+              <!--Decors List-->
+              <img-list list.bind="decors"></img-list>
+
+            </div>
 
             <!--Platforms initializer-->
-            <div class="tab-pane fade" id="tabplatform">Platforms</div>
+            <div class="tab-pane fade" id="tabplatform">
+
+              <!--Platforms list-->
+              <img-list list.bind="platforms"></img-list>
+
+            </div>
 
             <!--Bodies initializer-->
             <div class="tab-pane fade" id="tabbodies">
 
               <!--Bodies list-->
-              <div class="row">
-                <div repeat.for="body of bodies">
-                  <div class="col-md-2">
-                    <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(body)">
-                      <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
-                        <img src.bind="body._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="body.name">
-                        <span if.bind="body.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${body.grpName}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-modal'" btnstyle.bind="'height: 80px; width: 86.13px; margin-bottom: 20px;'">
-                  <template replace-part="modal-content">
-                    <image-gallery background.bind="false"></image-gallery>
-                  </template>
-                </modal-view>
-                </div>
-              </div>
+              <img-list list.bind="bodies"></img-list>
               
               <!--Bodies properties-->
               <div class="well" if.bind="oneObjectSelected">
@@ -112,9 +100,22 @@
                   <!--<button type="button" class.bind="existingGroup ? 'btn btn-danger' : 'btn btn-default'" class style="margin-top: -2px;" click.delegate="createGroup()">${existingGroup ? "Delete Group" : "Create Group"}</button>-->
                   <button type="button" class="btn btn-default pull-right" style="margin-top: -2px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
                 </div>
-              </div>
-                    
+              </div>        
             </div>
+
+            <!--Image gallery modal view-->
+            <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-gallery'">
+              <template replace-part="modal-content">
+                <image-gallery background.bind="false"></image-gallery>
+              </template>
+            </modal-view>
+
+            <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-gallery'">
+              <template replace-part="modal-content">
+                <image-gallery background.bind="true" caller.bind="currentTab"></image-gallery>
+              </template>
+            </modal-view>
+
           </div>
         </div>
       </div>
