@@ -88,31 +88,31 @@ export class Body extends Sprite {
   }
 
   public stop() {
-    this.phaserBody.velocity.setTo(0);
+    this.phaserBody.velocity.setTo(0, 0);
   }
 
   public moveUp(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
     
-    this.phaserBody.velocity.y = -speed;
+    this.phaserBody.velocity.setTo(0, -speed);
   }
 
   public moveDown(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
     
-    this.phaserBody.velocity.y = speed;
+    this.phaserBody.velocity.setTo(0, speed);
   }
 
   public moveLeft(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
 
-    this.phaserBody.velocity.x = -speed;
+    this.phaserBody.velocity.setTo(-speed, 0);
   }
 
   public moveRight(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
 
-    this.phaserBody.velocity.x = speed;
+    this.phaserBody.velocity.setTo(speed, 0);
   }
 
   public moveUpBy(steps: number) {

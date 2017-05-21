@@ -70,7 +70,7 @@ class Game extends Phaser.Game {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', createCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', createCode);
     GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', updateCode);
 
     this.state.add('main', GameWorld);
@@ -113,7 +113,7 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
+    this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
   }
 
   update() {

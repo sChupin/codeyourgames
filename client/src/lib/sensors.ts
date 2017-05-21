@@ -57,6 +57,8 @@ export class Keyboard {
   public PLUS: Keyboard.Key;
   public MINUS: Keyboard.Key;
 
+  public ARROWS: Keyboard.Arrows;
+
   constructor(private phaserKeyboard: Phaser.Keyboard) {
     this.A = new Keyboard.Key(this.phaserKeyboard.addKey(Phaser.Keyboard.A));
     this.B = new Keyboard.Key(this.phaserKeyboard.addKey(Phaser.Keyboard.B));
@@ -113,6 +115,13 @@ export class Keyboard {
     
     this.PLUS = new Keyboard.Key(this.phaserKeyboard.addKey(Phaser.Keyboard.NUMPAD_ADD));
     this.MINUS = new Keyboard.Key(this.phaserKeyboard.addKey(Phaser.Keyboard.NUMPAD_SUBTRACT));
+
+    this.ARROWS = new Keyboard.Arrows(
+      this.phaserKeyboard.addKey(Phaser.Keyboard.UP),
+      this.phaserKeyboard.addKey(Phaser.Keyboard.DOWN),
+      this.phaserKeyboard.addKey(Phaser.Keyboard.LEFT),
+      this.phaserKeyboard.addKey(Phaser.Keyboard.RIGHT)
+    );
   }
 }
 
@@ -125,6 +134,22 @@ export namespace Keyboard {
     constructor(private phaserKey: Phaser.Key) {
       phaserKey.onDown.add(() => {this.isDown = true; this.isUp = false;});
       phaserKey.onUp.add(() => {this.isUp = true; this.isDown = false;});
+    }
+  }
+
+  export class Arrows {
+    private areUp: boolean = true;
+    
+    constructor(private up: Phaser.Key, private down: Phaser.Key, private left: Phaser.Key, private right: Phaser.Key) {
+      up.onDown.add(() => {this.areUp = false;});
+      down.onDown.add(() => {this.areUp = false;});
+      left.onDown.add(() => {this.areUp = false;});
+      right.onDown.add(() => {this.areUp = false;});
+
+      up.onUp.add(() => {if (down.isUp && left.isUp && right.isUp) {this.areUp = true;}});
+      down.onUp.add(() => {if (up.isUp && left.isUp && right.isUp) {this.areUp = true;}});
+      left.onUp.add(() => {if (down.isUp && up.isUp && right.isUp) {this.areUp = true;}});
+      right.onUp.add(() => {if (down.isUp && left.isUp && up.isUp) {this.areUp = true;}});
     }
   }
 }
