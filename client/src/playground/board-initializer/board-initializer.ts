@@ -24,7 +24,6 @@ export class BoardInitializer {
   private selectedBody = {};
   @bindable
   private selectedBodies = [];
-  private oneObjectSelected: boolean = false;
   private severalObjectsSelected: boolean = false;
   private id: number = 0;
 
@@ -169,32 +168,6 @@ export class BoardInitializer {
     return ++this.id;
   }
 
-
-  /**
-   * Delete current active body
-   * 
-   * @private
-   * 
-   * @memberof BoardInitializer
-   */
-  private deleteSelectedBody() {
-    let bodyPos = this.deleteBody(this.board.getActiveObject());
-    let nBodies = this.bodies.length;
-    if (nBodies !== 0) {
-      let selectObj;
-      if (bodyPos == 0) {
-        selectObj = this.bodies[bodyPos]
-      } else {
-        selectObj = this.bodies[bodyPos-1];
-      }
-      this.board.setActiveObject(selectObj);
-    }
-  }
-
-  private selectObj(obj) {
-    this.board.setActiveObject(obj);
-  }
-
   /**
    * Delete a body from canvas and list of bodies
    * 
@@ -322,42 +295,11 @@ export class BoardInitializer {
     this.board.deactivateAll().renderAll();
     this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
   }
-<<<<<<< Updated upstream
-  
-  
+
+
   // Properties listeners
-
-  selectedBodyChanged(newval, oldval) {
-    // Determine if several objects are selected
-    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
-    this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
-
-    console.log('selectedBodyChanged');
-    console.log(newval);
-
-    if (this.controller.errors) {
-      this.controller.reset();
-    }
-
-    // Define validation rules
-    ValidationRules.ensure('name')
-      .required().withMessage("Sprite name is required")
-      .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
-      .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
-      .satisfies((selectedBodyName: string, selectedBody: any) => {
-        return this.bodies.map(body => {
-          if (body.id !== selectedBody.id)
-            return body.name
-        }).indexOf(selectedBodyName) == -1;
-      }).withMessage("Sprite name should be unique")
-      .on(this.selectedBody);
-  }
-=======
->>>>>>> Stashed changes
-
   selectedBodiesChanged(newval, oldval) {
     // Determine if several objects are selected
-    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
     this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
 
     console.log('selectedBodiesChanged');

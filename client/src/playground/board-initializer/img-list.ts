@@ -1,9 +1,9 @@
-import {bindable} from 'aurelia-framework';
+import {bindable, autoinject} from 'aurelia-framework';
+import {ValidationControllerFactory, ValidationRules} from '../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
+@autoinject
 export class ImgList {
   @bindable list;
-<<<<<<< Updated upstream
-=======
   @bindable canvas;
   @bindable selectedObj;
 
@@ -85,6 +85,4 @@ export class ImgList {
       }).withMessage("Sprite name should be unique")
       .on(this.selectedObj);
   }
-
->>>>>>> Stashed changes
 }
