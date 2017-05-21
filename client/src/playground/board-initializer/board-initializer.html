@@ -57,7 +57,7 @@
             <div class="tab-pane fade" id="tabdecor">
 
               <!--Decors List-->
-              <img-list list.bind="decors"></img-list>
+              <img-list list.bind="decors" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
 
             </div>
 
@@ -65,7 +65,7 @@
             <div class="tab-pane fade" id="tabplatform">
 
               <!--Platforms list-->
-              <img-list list.bind="platforms"></img-list>
+              <img-list list.bind="platforms" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
 
             </div>
 
@@ -73,34 +73,8 @@
             <div class="tab-pane fade" id="tabbodies">
 
               <!--Bodies list-->
-              <img-list list.bind="bodies"></img-list>
-              
-              <!--Bodies properties-->
-              <div class="well" if.bind="oneObjectSelected">
-                <div>
-                  <input type="text" class="input-sm" class="form-control" value.bind="selectedBody.name & validateOnChange">
-                  <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBody()">Delete Body</button>
-                </div>
-                <div if.bind="controller.errors">
-                    <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
-                </div>
-                <hr>
-                <div>Key: ${selectedBody.key}</div>
-                <div>Height: ${selectedBody.height * selectedBody.scaleY}</div>
-                <div>Width: ${selectedBody.width * selectedBody.scaleX}</div>
-                <div>x: ${selectedBody.left}</div>
-                <div>y: ${selectedBody.top}</div>
-              </div>
+              <img-list list.bind="bodies" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
 
-              <div class="well" if.bind="severalObjectsSelected">
-                <div>
-                  <input type="text" class="input-sm" class="form-control" value.bind="currentGroupName" disabled.bind="existingGroup">
-                  <button if.bind="!existingGroup && !subGroup" type="button" class="btn btn-default" style="margin-top: -2px;" click.delegate="createGroup()" disabled.bind="notFromSameGroup">Create Group</button>
-                  <button if.bind="existingGroup || subGroup" type="button" class="btn btn-danger" style="margin-top: -2px;" click.delegate="deleteGroup()" disabled.bind="subGroup">Delete Group</button>
-                  <!--<button type="button" class.bind="existingGroup ? 'btn btn-danger' : 'btn btn-default'" class style="margin-top: -2px;" click.delegate="createGroup()">${existingGroup ? "Delete Group" : "Create Group"}</button>-->
-                  <button type="button" class="btn btn-default pull-right" style="margin-top: -2px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
-                </div>
-              </div>        
             </div>
 
             <!--Image gallery modal view-->

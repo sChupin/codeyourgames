@@ -1,13 +1,15 @@
 <template>
 <require from="../modal-view"></require>
 <require from="../image-gallery"></require>
+
+<!--Objects List-->
 <div class="row">
-  <div repeat.for="body of list">
+  <div repeat.for="obj of list">
     <div class="col-md-2">
-      <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(body)">
+      <div class="panel" class.bind="obj.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(obj)">
         <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
-          <img src.bind="body._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="body.name">
-          <span if.bind="body.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${body.grpName}</span>
+          <img src.bind="obj._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="obj.name">
+          <span if.bind="obj.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${obj.grpName}</span>
         </div>
       </div>
     </div>
@@ -18,4 +20,33 @@
   </button>
   </div>
 </div>
+
+<!--Objects Properties-->
+<div class="well" if.bind="oneObjectSelected">
+  <div>
+    <input type="text" class="input-sm" class="form-control" value.bind="selectedObj.name & validateOnChange">
+    <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
+  </div>
+  <div if.bind="controller.errors">
+      <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
+  </div>
+  <hr>
+  <div>Key: ${selectedObj.key}</div>
+  <div>Height: ${selectedObj.height * selectedObj.scaleY}</div>
+  <div>Width: ${selectedObj.width * selectedObj.scaleX}</div>
+  <div>x: ${selectedObj.left}</div>
+  <div>y: ${selectedObj.top}</div>
+</div>
+
+<!--Group Properties-->
+<div class="well" if.bind="severalObjectsSelected">
+  <div>
+    <input type="text" class="input-sm" class="form-control" value.bind="currentGroupName" disabled.bind="existingGroup">
+    <button if.bind="!existingGroup && !subGroup" type="button" class="btn btn-default" style="margin-top: -2px;" click.delegate="createGroup()" disabled.bind="notFromSameGroup">Create Group</button>
+    <button if.bind="existingGroup || subGroup" type="button" class="btn btn-danger" style="margin-top: -2px;" click.delegate="deleteGroup()" disabled.bind="subGroup">Delete Group</button>
+    <!--<button type="button" class.bind="existingGroup ? 'btn btn-danger' : 'btn btn-default'" class style="margin-top: -2px;" click.delegate="createGroup()">${existingGroup ? "Delete Group" : "Create Group"}</button>-->
+    <button type="button" class="btn btn-default pull-right" style="margin-top: -2px;" click.delegate="deleteSelectedObjs()">Delete Bodies</button>
+  </div>
+</div>
+
 </template>

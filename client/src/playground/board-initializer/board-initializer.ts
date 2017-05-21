@@ -186,7 +186,7 @@ export class BoardInitializer {
       } else {
         selectObj = this.bodies[bodyPos-1];
       }
-      this.board.setActiveObject(selectObj);
+      this.selectObj(selectObj);
     }
   }
 
@@ -320,69 +320,5 @@ export class BoardInitializer {
     console.log(this.board);
     this.board.deactivateAll().renderAll();
     this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
-  }
-  
-  
-  // Properties listeners
-
-  selectedBodyChanged(newval, oldval) {
-    // Determine if several objects are selected
-    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
-    this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
-
-    console.log('selectedBodyChanged');
-    console.log(newval);
-
-    if (this.controller.errors) {
-      this.controller.reset();
-    }
-
-    // Define validation rules
-    ValidationRules.ensure('name')
-      .required().withMessage("Sprite name is required")
-      .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
-      .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
-      .satisfies((selectedBodyName: string, selectedBody: any) => {
-        return this.bodies.map(body => {
-          if (body.id !== selectedBody.id)
-            return body.name
-        }).indexOf(selectedBodyName) == -1;
-      }).withMessage("Sprite name should be unique")
-      .on(this.selectedBody);
-  }
-
-  selectedBodiesChanged(newval, oldval) {
-    // Determine if several objects are selected
-    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
-    this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
-
-    console.log('selectedBodiesChanged');
-    console.log(newval);
-
-    if (newval !== undefined && newval.length !== 0) {
-      let grpName = newval[0].grpName;
-      if (newval.every((el) => el.grpName == grpName)) {
-        this.notFromSameGroup = false;
-        if (grpName == "") {
-          this.existingGroup = false;
-          this.subGroup = false;
-          this.currentGroupName = "groupName";
-        } else if (this.groups[grpName].length == newval.length) {
-          // All elements belong to the same existing group
-          this.existingGroup = true;
-          this.subGroup = false;
-          this.currentGroupName = grpName;
-        } else {
-          this.existingGroup = false;
-          this.subGroup = true;
-          this.currentGroupName = grpName;
-        }
-      } else {
-        this.existingGroup = false;
-        this.subGroup = false;
-        this.notFromSameGroup = true;
-        this.currentGroupName = "";
-      }
-    }
   }
 }
