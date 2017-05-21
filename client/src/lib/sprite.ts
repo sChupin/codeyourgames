@@ -330,7 +330,9 @@ export class Body extends Sprite {
 export class Group {
   constructor(private phaserGroup: Phaser.Group) { }
 
-  public add(sprite: Sprite) {
-    this.phaserGroup.add(sprite.phaserSprite);
+  public add(...sprites) {
+    sprites.forEach(sprite => {
+      this.phaserGroup.add(sprite.phaserSprite);
+    });
   }
 }

@@ -124,6 +124,19 @@ function createCodeFromInfo(gameInfo) {
     code += "Game.addBody('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");\n"
   });
 
+  gameInfo.groups.forEach(group => {
+    code += "Game.addGroup('" + group.name + "');\n";
+    
+    code += "Group." + group.name + ".add("
+    group.forEach((child, index, array) => {
+      code += "Group." + group.name + "Bodies." + child.name;
+      if (index != array.length - 1) {
+        code += ", ";
+      }
+    });
+    code += ");\n";
+  });
+
   return code;
 }
 

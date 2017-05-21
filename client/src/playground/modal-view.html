@@ -1,7 +1,7 @@
 <template>
-<button type="button" class="btn btn-default" data-toggle="modal" data-target.bind="'#' + id" style="border-color: #ddd">
+<button type="button" class="btn btn-default" data-toggle="modal" data-target.bind="'#' + id" style.bind="'border-color: #ddd;' + btnstyle">
   <template replaceable part="button-content">
-   <span class="glyphicon glyphicon-plus"></span>
+   <span class="glyphicon glyphicon-plus" style="font-size: 25px"></span>
   </template>
 </button>
 

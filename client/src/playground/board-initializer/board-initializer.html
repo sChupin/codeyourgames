@@ -37,7 +37,7 @@
             <!--Backgound initializer-->
             <div class="tab-pane fade in active" id="tabbackground">
               <button id="jscolortest" type="button" class="btn btn-secondary">Set background color</button>
-              <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-modal'">
+              <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-modal'" btnstyle.bind="''">
                 <template replace-part="button-content">
                   Set background image
                 </template>
@@ -69,16 +69,17 @@
               <!--Bodies list-->
               <div class="row">
                 <div repeat.for="body of bodies">
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <div class="panel" class.bind="body.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(body)">
-                      <div class="panel-body" style="width: 55px; height: 75px; margin: auto;">
-                        <img src.bind="body._element.src" class="img-responsive" alt="body.name">
+                      <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
+                        <img src.bind="body._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="body.name">
+                        <span if.bind="body.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${body.grpName}</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
-                <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-modal'">
+                <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-modal'" btnstyle.bind="'height: 80px; width: 86.13px; margin-bottom: 20px;'">
                   <template replace-part="modal-content">
                     <image-gallery background.bind="false"></image-gallery>
                   </template>
@@ -105,8 +106,11 @@
 
               <div class="well" if.bind="severalObjectsSelected">
                 <div>
-                  <input type="text" class="input-sm" class="form-control" value="test">
-                  <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
+                  <input type="text" class="input-sm" class="form-control" value.bind="currentGroupName" disabled.bind="existingGroup">
+                  <button if.bind="!existingGroup && !subGroup" type="button" class="btn btn-default" style="margin-top: -2px;" click.delegate="createGroup()" disabled.bind="notFromSameGroup">Create Group</button>
+                  <button if.bind="existingGroup || subGroup" type="button" class="btn btn-danger" style="margin-top: -2px;" click.delegate="deleteGroup()" disabled.bind="subGroup">Delete Group</button>
+                  <!--<button type="button" class.bind="existingGroup ? 'btn btn-danger' : 'btn btn-default'" class style="margin-top: -2px;" click.delegate="createGroup()">${existingGroup ? "Delete Group" : "Create Group"}</button>-->
+                  <button type="button" class="btn btn-default pull-right" style="margin-top: -2px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
                 </div>
               </div>
                     

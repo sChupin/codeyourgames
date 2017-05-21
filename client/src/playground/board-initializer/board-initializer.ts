@@ -20,6 +20,8 @@ export class BoardInitializer {
 
   @bindable
   private selectedBody = {};
+  @bindable
+  private selectedBodies = [];
   private oneObjectSelected: boolean = false;
   private severalObjectsSelected: boolean = false;
   private id: number = 0;
@@ -28,6 +30,12 @@ export class BoardInitializer {
   
   private bodies = [];
   private bodyNames = [];
+
+  private currentGroupName: string = "groupName";
+  private existingGroup: boolean = false;
+  private notFromSameGroup: boolean = false;
+  private subGroup: boolean = false;
+  private groups = {};
 
   constructor(private ea : EventAggregator, private controllerFactory: ValidationControllerFactory) {
     this.controller = controllerFactory.createForCurrentScope();
@@ -49,8 +57,9 @@ export class BoardInitializer {
     // Initialize fabric canvas and associated events
     this.board = new fabric.Canvas('board');
     this.board.setDimensions({width: __this.width, height: __this.height});
-    this.board.on('object:selected', function(evt) {__this.selectedBody = evt.target;});
-    this.board.on('selection:cleared', function(evt) {__this.selectedBody = {};});
+    this.board.on('object:selected', (evt) => {console.log('object:selected'); console.log(evt.target); __this.selectedBody = evt.target;});
+    this.board.on('selection:created', (evt) => {console.log('selection:created'); console.log(evt.target); __this.selectedBodies = evt.target._objects;});
+    this.board.on('selection:cleared', () => {console.log('selection:cleared'); __this.selectedBody = {}; __this.selectedBodies = [];});
     this.board.on('object:added', function (evt) {
       let obj = evt.target;
       obj.center();
@@ -96,6 +105,7 @@ export class BoardInitializer {
       img.id = __this.getId();
       img.key = name;
       img.name = __this.createName('my' + name.charAt(0).toUpperCase() + name.slice(1));
+      img.grpName = "";
       
       // Set anchor to 0.5 in both direction
       img.set({
@@ -166,7 +176,6 @@ export class BoardInitializer {
     this.board.setActiveObject(obj);
   }
 
-  
   /**
    * Delete a body from canvas and list of bodies
    * 
@@ -210,6 +219,40 @@ export class BoardInitializer {
       this.board.setActiveObject(selectObj);
       this.selectedBody = selectObj;
     }
+  }
+
+  /**
+   * Create a group composed of the currently selected bodies
+   * 
+   * @private
+   * 
+   * @memberof BoardInitializer
+   */
+  private createGroup() {
+    let curSelectedObjects = this.board.getActiveGroup().getObjects();
+
+    this.groups[this.currentGroupName] = [];
+    curSelectedObjects.forEach(body => {
+      body.grpName = this.currentGroupName;
+      this.groups[this.currentGroupName].push(body.name);
+    });
+
+    this.existingGroup = true;
+    
+    console.log('group ' + this.currentGroupName + ' created!');
+  }
+
+  private deleteGroup() {
+    let curSelectedObjects = this.board.getActiveGroup().getObjects();
+
+    this.groups[this.currentGroupName] = [];
+    curSelectedObjects.forEach(body => {
+      body.grpName = "";
+    });
+
+    this.existingGroup = false;
+
+    console.log('group ' + this.currentGroupName + ' deleted!');
   }
 
 
@@ -263,10 +306,13 @@ export class BoardInitializer {
   
   // Properties listeners
 
-  selectedBodyChanged(oldval, newval) {
+  selectedBodyChanged(newval, oldval) {
     // Determine if several objects are selected
     this.oneObjectSelected = this.board.getActiveObject() ? true : false;
     this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
+
+    console.log('selectedBodyChanged');
+    console.log(newval);
 
     if (this.controller.errors) {
       this.controller.reset();
@@ -284,5 +330,40 @@ export class BoardInitializer {
         }).indexOf(selectedBodyName) == -1;
       }).withMessage("Sprite name should be unique")
       .on(this.selectedBody);
+  }
+
+  selectedBodiesChanged(newval, oldval) {
+    // Determine if several objects are selected
+    this.oneObjectSelected = this.board.getActiveObject() ? true : false;
+    this.severalObjectsSelected = this.board.getActiveGroup() ? true : false;
+
+    console.log('selectedBodiesChanged');
+    console.log(newval);
+
+    if (newval !== undefined && newval.length !== 0) {
+      let grpName = newval[0].grpName;
+      if (newval.every((el) => el.grpName == grpName)) {
+        this.notFromSameGroup = false;
+        if (grpName == "") {
+          this.existingGroup = false;
+          this.subGroup = false;
+          this.currentGroupName = "groupName";
+        } else if (this.groups[grpName].length == newval.length) {
+          // All elements belong to the same existing group
+          this.existingGroup = true;
+          this.subGroup = false;
+          this.currentGroupName = grpName;
+        } else {
+          this.existingGroup = false;
+          this.subGroup = true;
+          this.currentGroupName = grpName;
+        }
+      } else {
+        this.existingGroup = false;
+        this.subGroup = false;
+        this.notFromSameGroup = true;
+        this.currentGroupName = "";
+      }
+    }
   }
 }
