@@ -239,40 +239,6 @@ export class BoardInitializer {
     }
   }
 
-  /**
-   * Create a group composed of the currently selected bodies
-   * 
-   * @private
-   * 
-   * @memberof BoardInitializer
-   */
-  private createGroup() {
-    let curSelectedObjects = this.board.getActiveGroup().getObjects();
-
-    this.groups[this.currentGroupName] = [];
-    curSelectedObjects.forEach(body => {
-      body.grpName = this.currentGroupName;
-      this.groups[this.currentGroupName].push(body.name);
-    });
-
-    this.existingGroup = true;
-    
-    console.log('group ' + this.currentGroupName + ' created!');
-  }
-
-  private deleteGroup() {
-    let curSelectedObjects = this.board.getActiveGroup().getObjects();
-
-    this.groups[this.currentGroupName] = [];
-    curSelectedObjects.forEach(body => {
-      body.grpName = "";
-    });
-
-    this.existingGroup = false;
-
-    console.log('group ' + this.currentGroupName + ' deleted!');
-  }
-
 
   /**
    * Set canvas background from url

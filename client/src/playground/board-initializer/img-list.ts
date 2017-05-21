@@ -91,6 +91,40 @@ export class ImgList {
     return objPos;
   }
 
+  /**
+   * Create a group composed of the currently selected bodies
+   * 
+   * @private
+   * 
+   * @memberof BoardInitializer
+   */
+  private createGroup() {
+    let curSelectedObjects = this.canvas.getActiveGroup().getObjects();
+
+    this.groups[this.currentGroupName] = [];
+    curSelectedObjects.forEach(body => {
+      body.grpName = this.currentGroupName;
+      this.groups[this.currentGroupName].push(body.name);
+    });
+
+    this.existingGroup = true;
+    
+    console.log('group ' + this.currentGroupName + ' created!');
+  }
+
+  private deleteGroup() {
+    let curSelectedObjects = this.canvas.getActiveGroup().getObjects();
+
+    this.groups[this.currentGroupName] = [];
+    curSelectedObjects.forEach(body => {
+      body.grpName = "";
+    });
+
+    this.existingGroup = false;
+
+    console.log('group ' + this.currentGroupName + ' deleted!');
+  }
+
   // Properties listeners
   selectedObjChanged(newval, oldval) {
     if (this.list !== undefined && this.list.length != 0 && this.list.includes(newval)) {
