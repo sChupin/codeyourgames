@@ -10,7 +10,7 @@ export class GameInfo {
   public backgroundImage;
   public bodies = [];
 
-  constructor(public gameWidth: number, public gameHeight: number, public backgroundColor: string, backgroundImage, bodies) { 
+  constructor(public gameWidth: number, public gameHeight: number, public backgroundColor: string, backgroundImage, bodies, public groups) { 
     if (backgroundImage) {
       this.backgroundImage = backgroundImage._element.src;
     }

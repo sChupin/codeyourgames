@@ -300,7 +300,7 @@ export class BoardInitializer {
   public saveBoard() {
     console.log('Board info');
     console.log(this.board);
-    this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects));
+    this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
   }
   
   

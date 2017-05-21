@@ -124,18 +124,21 @@ function createCodeFromInfo(gameInfo) {
     code += "Game.addBody('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");\n"
   });
 
-  gameInfo.groups.forEach(group => {
-    code += "Game.addGroup('" + group.name + "');\n";
-    
-    code += "Group." + group.name + ".add("
-    group.forEach((child, index, array) => {
-      code += "Group." + group.name + "Bodies." + child.name;
-      if (index != array.length - 1) {
-        code += ", ";
-      }
-    });
-    code += ");\n";
-  });
+  for (var grpName in gameInfo.groups) {
+    if (gameInfo.groups.hasOwnProperty(grpName)) {
+      code += "Game.addGroup('" + grpName + "');\n";
+
+      var group = gameInfo.groups[grpName];
+      code += "Groups." + grpName + ".add("
+      group.forEach((child, index, array) => {
+        code += "Bodies." + child;
+        if (index != array.length - 1) {
+          code += ", ";
+        }
+      });
+      code += ");\n";
+    }
+  }
 
   return code;
 }
