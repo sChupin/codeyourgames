@@ -65,6 +65,7 @@ export class BoardInitializer {
     this.board.on('selection:created', (evt) => __this.selectedBodies = evt.target._objects);
     this.board.on('selection:cleared', () => {__this.selectedBody = {}; __this.selectedBodies = [];});
     this.board.on('object:added', function (evt) {
+      __this.board.discardActiveGroup();
       let obj = evt.target;
       obj.center();
       obj.setCoords();
@@ -321,6 +322,7 @@ export class BoardInitializer {
     this.board.deactivateAll().renderAll();
     this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
   }
+<<<<<<< Updated upstream
   
   
   // Properties listeners
@@ -350,6 +352,8 @@ export class BoardInitializer {
       }).withMessage("Sprite name should be unique")
       .on(this.selectedBody);
   }
+=======
+>>>>>>> Stashed changes
 
   selectedBodiesChanged(newval, oldval) {
     // Determine if several objects are selected

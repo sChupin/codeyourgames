@@ -18,4 +18,25 @@
   </button>
   </div>
 </div>
+<<<<<<< Updated upstream
+=======
+
+<!--Objects Properties-->
+<div class="well" if.bind="oneObjectSelected">
+  <div>
+    <input type="text" class="input-sm" class="form-control" value.bind="selectedObj.name & validateOnChange">
+    <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
+  </div>
+  <div if.bind="controller.errors">
+      <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
+  </div>
+  <hr>
+  <div>Key: ${selectedObj.key}</div>
+  <div>Height: ${selectedObj.height * selectedObj.scaleY}</div>
+  <div>Width: ${selectedObj.width * selectedObj.scaleX}</div>
+  <div>x: ${selectedObj.left}</div>
+  <div>y: ${selectedObj.top}</div>
+</div>
+
+>>>>>>> Stashed changes
 </template>

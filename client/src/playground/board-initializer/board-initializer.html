@@ -103,6 +103,17 @@
               </div>        
             </div>
 
+            <!--Group Properties-->
+            <div class="well" if.bind="severalObjectsSelected">
+              <div>
+                <input type="text" class="input-sm" class="form-control" value.bind="currentGroupName" disabled.bind="existingGroup">
+                <button if.bind="!existingGroup && !subGroup" type="button" class="btn btn-default" style="margin-top: -2px;" click.delegate="createGroup()" disabled.bind="notFromSameGroup">Create Group</button>
+                <button if.bind="existingGroup || subGroup" type="button" class="btn btn-danger" style="margin-top: -2px;" click.delegate="deleteGroup()" disabled.bind="subGroup">Delete Group</button>
+                <!--<button type="button" class.bind="existingGroup ? 'btn btn-danger' : 'btn btn-default'" class style="margin-top: -2px;" click.delegate="createGroup()">${existingGroup ? "Delete Group" : "Create Group"}</button>-->
+                <button type="button" class="btn btn-default pull-right" style="margin-top: -2px;" click.delegate="deleteSelectedBodies()">Delete Bodies</button>
+              </div>
+            </div>
+
             <!--Image gallery modal view-->
             <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-gallery'">
               <template replace-part="modal-content">
