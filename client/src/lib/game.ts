@@ -77,6 +77,7 @@ export class GameProps {
     this.background = this.game.add.sprite(0, 0, backgroundKey);
     this.background.width = this.game.world.width;
     this.background.height = this.game.world.height;
+    this.background.sendToBack();
   }
 
   public setBackgroundColor(color: string) {

@@ -24,6 +24,7 @@ export class GameInfo {
       _body.x = body.left;
       _body.y = body.top;
       _body.url = body._element.src;
+      _body.type = body.type;
       
       _this.bodies.push(_body);
     });

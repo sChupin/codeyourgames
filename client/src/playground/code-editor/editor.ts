@@ -121,7 +121,7 @@ function createCodeFromInfo(gameInfo) {
 
   // Add each body on the board
   gameInfo.bodies.forEach(body => {
-    code += "Game.addBody('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");\n"
+    code += "Game.add" + body.type.charAt(0).toUpperCase() + body.type.slice(1) + "('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");\n"
   });
 
   code += "\n";

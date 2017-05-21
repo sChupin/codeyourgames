@@ -35,10 +35,6 @@ export class BoardInitializer {
   private decors = [];
   private bodyNames = [];
 
-  private currentGroupName: string = "groupName";
-  private existingGroup: boolean = false;
-  private notFromSameGroup: boolean = false;
-  private subGroup: boolean = false;
   private groups = {};
 
   constructor(private ea : EventAggregator, private controllerFactory: ValidationControllerFactory) {
@@ -121,7 +117,7 @@ export class BoardInitializer {
         originY: "center"
       });
       
-      __this.board.add(img);
+      img.type = __this.currentTab;
       switch (__this.currentTab) {
         case "decor":
           __this.decors.push(img);
@@ -133,6 +129,8 @@ export class BoardInitializer {
           __this.bodies.push(img);
           break;
       }
+
+      __this.board.add(img);
     });
   }
 
