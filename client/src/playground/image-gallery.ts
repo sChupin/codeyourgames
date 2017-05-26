@@ -1,6 +1,6 @@
 import {BackendService} from '../backend-service';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {ImageInfo} from './messages';
+import {ImgMsg} from './messages';
 import {autoinject, bindable} from 'aurelia-framework';
 
 @autoinject
@@ -48,7 +48,7 @@ export class ImageGallery {
   }
 
   public addImage(image) {
-    this.ea.publish(new ImageInfo(this.background, image.name, image.url));
+    this.ea.publish(new ImgMsg(this.background, image));
     
     // Deselect image
     if (this.selectedImg) {
@@ -58,4 +58,21 @@ export class ImageGallery {
 
   }
 
+}
+
+
+export class ImageInfo {
+  public name: string;
+  public url: string;
+  public spritesheet: SpriteSheetInfo;
+}
+
+export interface SpriteSheetInfo {
+  sheetUrl: string;
+  spriteWidth: number;
+  spriteHeight: number;
+  horizontalNbr: number;
+  verticalNbr: number;
+  spriteNbr: number;
+  defaultSpriteNo: number;
 }

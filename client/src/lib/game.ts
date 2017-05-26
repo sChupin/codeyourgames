@@ -1,5 +1,5 @@
 import {Point} from './utility';
-import {Body, Platform, Group} from './sprite';
+import {Sprite, Body, Platform, Group} from './sprite';
 
 import {BodyMap, PlatformMap, GroupMap} from '../playground/game-container';
 
@@ -57,7 +57,6 @@ export class GameProps {
   }
 
   public addPlatform(name: string, x: number, y: number, key: string, height: number, width: number) {
-    //todo
     let phaserSprite = this.game.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
     phaserSprite.height = height;
@@ -82,5 +81,53 @@ export class GameProps {
 
   public setBackgroundColor(color: string) {
     this.game.stage.backgroundColor = color;
+  }
+
+  public collision(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
+    let arg1;
+    let arg2;
+    if (obj1 instanceof Group) {
+      arg1 = obj1.phaserGroup;
+    } else {
+      arg1 = obj1.phaserSprite;
+    }
+
+    if (obj2 instanceof Group) {
+      arg2 = obj2.phaserGroup;
+    } else {
+      arg2 = obj2.phaserSprite;
+    }
+    
+    if (callback === undefined) {
+      return this.game.physics.arcade.collide(arg1, arg2);
+    } else {
+      return this.game.physics.arcade.collide(arg1, arg2, callback);
+    }
+  }
+
+  public overlap(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
+    let arg1;
+    let arg2;
+    if (obj1 instanceof Group) {
+      arg1 = obj1.phaserGroup;
+    } else {
+      arg1 = obj1.phaserSprite;
+    }
+
+    if (obj2 instanceof Group) {
+      arg2 = obj2.phaserGroup;
+    } else {
+      arg2 = obj2.phaserSprite;
+    }
+    
+    if (callback === undefined) {
+      return this.game.physics.arcade.overlap(arg1, arg2);
+    } else {
+      return this.game.physics.arcade.overlap(arg1, arg2, callback);
+    }
+  }
+
+  public setGravity(g: number) {
+    this.game.physics.arcade.gravity.y = g ? g : 100;
   }
 }

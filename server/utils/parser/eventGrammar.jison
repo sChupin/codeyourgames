@@ -9,6 +9,7 @@
 %%
 
 \s+                   /* skip whitespace */
+[\/\/].*              /* skip comments */
 "when"                return 'WHEN'
 "while"               return 'WHILE'
 "once"                return 'ONCE'

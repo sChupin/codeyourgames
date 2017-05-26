@@ -21,7 +21,7 @@ export class Platform extends Sprite {
 
     // Set immovable and no gravity
     this.phaserBody.allowGravity = false;
-    this.phaserBody.immovable = false;
+    this.phaserBody.immovable = true;
   }
 }
 
@@ -91,28 +91,37 @@ export class Body extends Sprite {
     this.phaserBody.velocity.setTo(0, 0);
   }
 
+  public stopX() {
+    this.phaserBody.velocity.x = 0;
+  }
+
+  public stopY() {
+    this.phaserBody.velocity.y = 0;
+  }
+
   public moveUp(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
     
-    this.phaserBody.velocity.setTo(0, -speed);
+    //this.phaserBody.velocity.setTo(0, -speed);
+    this.phaserBody.velocity.y = -speed;
   }
 
   public moveDown(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
     
-    this.phaserBody.velocity.setTo(0, speed);
+    this.phaserBody.velocity.y = speed;
   }
 
   public moveLeft(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
 
-    this.phaserBody.velocity.setTo(-speed, 0);
+    this.phaserBody.velocity.x = -speed;
   }
 
   public moveRight(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
 
-    this.phaserBody.velocity.setTo(speed, 0);
+    this.phaserBody.velocity.x = speed;
   }
 
   public moveUpBy(steps: number) {
@@ -309,6 +318,27 @@ export class Body extends Sprite {
     this.pointTowardsXY(point.x, point.y);
   }
 
+  // Appearance
+  public scaleToPercent(scale: number) {
+    this.phaserSprite.scale.setTo(scale/100);
+  }
+
+  public enlargeBy(scale: number) {
+    this.phaserSprite.scale.setTo(this.phaserSprite.scale.x + scale/100);
+  }
+
+  public enlarge() {
+    this.enlargeBy(10);
+  }
+
+  public reduceBy(scale: number) {
+    this.enlargeBy(-scale);
+  }
+
+  public reduce() {
+    this.reduceBy(10);
+  }
+
   // would be better in variable rather than in function
   // use collision obj instead?
   // public isTouched(): boolean {
@@ -328,7 +358,7 @@ export class Body extends Sprite {
 
 
 export class Group {
-  constructor(private phaserGroup: Phaser.Group) { }
+  constructor(public phaserGroup: Phaser.Group) { }
 
   public add(...sprites) {
     sprites.forEach(sprite => {

@@ -16,7 +16,6 @@
         <li><a href="#create-editor" data-toggle="tab">Create</a></li>
         <li><a href="#collision-editor" data-toggle="tab">Collision</a></li>
         <li class="active"><a href="#event-editor" data-toggle="tab">Events</a></li>
-        <li><a href="#update-editor" data-toggle="tab">Update</a></li>
         <li><a href="#function-editor" data-toggle="tab">Function</a></li>
       </ul>
     </div>
@@ -50,15 +49,6 @@ when Keyboard.SPACEBAR.isDown\ndo test
           
         </ace>
         <button type="button" class="btn btn-default" click.delegate="addNewEvent()">Add new event</button>        
-      </div>
-      <div id="update-editor" class="tab-pane fade full-height">
-        <ace config-theme="ace/theme/monokai"
-            config-mode="ace/mode/typescript"
-            config-read-only="false"
-            ref="updateAceEditor">
-          
-          
-        </ace>
       </div>
       <div id="function-editor" class="tab-pane fade full-height">
         <ace config-theme="ace/theme/monokai"

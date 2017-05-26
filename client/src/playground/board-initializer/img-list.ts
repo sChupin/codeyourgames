@@ -71,7 +71,7 @@ export class ImgList {
     }
   }
 
-    /**
+  /**
    * Delete a object from canvas and list of bodies
    * 
    * @private

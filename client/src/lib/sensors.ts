@@ -128,8 +128,8 @@ export class Keyboard {
 export namespace Keyboard {
 
   export class Key {
-    private isDown: boolean;
-    private isUp: boolean;
+    private isDown: boolean = false;
+    private isUp: boolean = true;
 
     constructor(private phaserKey: Phaser.Key) {
       phaserKey.onDown.add(() => {this.isDown = true; this.isUp = false;});

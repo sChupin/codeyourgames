@@ -23,5 +23,9 @@
     "mongoose": "^4.9.3",
     "morgan": "^1.7.0",
     "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "image-size": "^0.5.4",
+    "request": "^2.81.0"
   }
 }

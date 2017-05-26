@@ -1,5 +1,6 @@
 declare class Sprite {
   public position: Point;
+  public phaserSprite: Phaser.Sprite;
 
   public orientation: number | Angle;
 }

@@ -72,17 +72,21 @@ let getGalleryBySection = function (req, res) {
 }
 exports.getGalleryBySection = getGalleryBySection;
 
-function getImgList(str) {
-    var imgList = [];
-
+function getImgUrlList(imgList, spriteSheetList, url, str) {
     var parser = new htmlparser.Parser({
         onopentag: function(name, attribs) {
+            // If href link
             if (name === "a") {
                 var href = attribs.href;
+                // if img
                 if (href.match(/.*\.png/i)) {
-                    let url = "http://" + imgServer + "/images/rpgxp/single/" + attribs.href;
-                    // let urlSprites = "http://" + imgServer + "/images/rpgxp/" + attribs.href;
+                    let imgUrl = url + "single/" + attribs.href;
+                    let spriteSheetUrl = url + attribs.href;
                     imgList.push({"url": url});
+                    spriteSheetList.push({"url": spriteSheetList});
+                } else if (href.match(/.*\//)) {
+                    // recursive call on directories
+                    getImgList(imgList, spriteSheetList, url + href);
                 }
             }
         }

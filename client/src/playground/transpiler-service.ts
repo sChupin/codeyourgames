@@ -9,20 +9,24 @@ export class TranspilerService {
 
   constructor(private ea: EventAggregator, private backend: BackendService) { }
 
-  transpile(preloadCode, createCode, eventCode, functionCode) {
+  transpile(preloadCode, createCode, eventCode, functionCode, collisionCode) {
     let parseEventCodePromise = this.backend.parseEventCode(eventCode);
     let parseFunctionCodePromise = this.backend.parseFunctionCode(functionCode);
+    let parseCollisionCodePromise = this.backend.parseCollisionCode(collisionCode);
 
-    Promise.all([parseEventCodePromise, parseFunctionCodePromise])
+    Promise.all([parseEventCodePromise, parseFunctionCodePromise, parseCollisionCodePromise])
       .then(values => {
         let eventData = values[0];
         let functionData = values[1];
-        // Add events to code
+        let collisionData = values[2];
+
+        // Add events, functions and collision to code
         let eventCode = this.addEvents(JSON.parse(eventData.response));
         let functionCode = this.addFunctions(JSON.parse(functionData.response));
+        let collisionCode = this.addCollisions(JSON.parse(collisionData.response));
 
         let create = createCode + functionCode + eventCode.create;
-        let update = eventCode.update;
+        let update = eventCode.update + collisionCode;
 
         // Publish codes to game-container
         this.ea.publish(new CodeUpdated(preloadCode, create, update));
@@ -79,6 +83,39 @@ export class TranspilerService {
     return {create: create, update: update};
   }
   
+  private addCollisions(collisions: Array<any>) {
+    let update = '';
+    console.log(collisions);
+
+    if (collisions) {
+      collisions.forEach((collision, i) => {
+        let type = collision[0];
+        let collider1 = collision[1];
+        let collider2 = collision[2];
+        let callbackBody = "";
+        if (collisions.length > 3) {
+          callbackBody = collision[3];
+        }
+
+        switch (type) {
+          case "collision":
+            update += "this.game.physics.arcade.collide(";
+            break;
+          case "overlap":
+            update += "this.game.physics.arcade.overlap(";
+        }
+        update += collider1 + ".phaserBody.sprite, " + collider2 + ".phaserBody.sprite";
+
+        if (callbackBody != "") {
+          update += "(obj1, obj2) => {\n" + callbackBody + "\n}\n";
+        }
+        update += ");\n";
+      });
+    }
+
+    return update;
+  }
+
 }
 
 

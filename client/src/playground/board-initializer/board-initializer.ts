@@ -6,7 +6,8 @@ import jscolor = require('EastDesire/jscolor');
 import {fabric} from 'fabric';
 // import * as fabric from 'fabric';
 
-import {ImageInfo, GameInfo} from '../messages';
+import {ImgMsg, GameInfo} from '../messages';
+import {ImageInfo} from '../image-gallery';
 
 
 @autoinject
@@ -43,11 +44,12 @@ export class BoardInitializer {
 
   attached() {
     // Listen for gallery image/background picking
-    this.subscriber = this.ea.subscribe(ImageInfo, msg => {
+    this.subscriber = this.ea.subscribe(ImgMsg, msg => {
+      let imgInfo: ImageInfo = msg.image;
       if (msg.isBackground) {
-        this.setBackgroundFromUrl(msg.URL);
-      } else {
-        this.addImageToBoard(msg.name, msg.URL);
+        this.setBackgroundFromUrl(imgInfo.url);
+      } else if (msg) {
+        this.addImageToBoard(imgInfo);
       }
     });
     
@@ -102,15 +104,19 @@ export class BoardInitializer {
    * 
    * @memberof BoardInitializer
    */
-  private addImageToBoard(name: string, url: string) {
+  private addImageToBoard(imgInfo: ImageInfo) {
     let __this = this;
 
-    fabric.Image.fromURL(url, function(img) {
+    fabric.Image.fromURL(imgInfo.url, function(img) {
       img.id = __this.getId();
       img.key = name;
-      img.name = __this.createName('my' + name.charAt(0).toUpperCase() + name.slice(1));
+      img.name = __this.createName('my' + imgInfo.name.charAt(0).toUpperCase() + imgInfo.name.slice(1));
       img.grpName = "";
       
+      if (imgInfo.spritesheet !== undefined) {
+        img.spritesheet = imgInfo.spritesheet;
+      }
+
       // Set anchor to 0.5 in both direction
       img.set({
         originX: "center", 

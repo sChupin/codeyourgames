@@ -14,21 +14,16 @@ export class Editor {
   private createAceEditor;
   private collisionAceEditor;
   private eventAceEditor;
-  private updateAceEditor;
   private functionAceEditor;
 
   private createEditor;
   private collisionEditor;
   private eventEditor;
-  private updateEditor;
   private functionEditor;
 
   private newEvent = "when /*event*/\nthen /*action*/\n";
   private newCollisionPair = "Collide: /*first body/group*/ and /*second body/group*/\n";
   private newFunction = "function myFunction() {\n// Your code goes here\n}\n";
-
-  private defaultCollision = "Collide: Group.platforms and Group.bodies\n";
-  private worldBoundsCollision = "Collide: Game.bounds and List(/*list of bodies/groups*/)\n";
 
   private preloadCode: string = ""; // Not editable by user
 
@@ -44,9 +39,7 @@ export class Editor {
     // Initialise editors
     this.createEditor = this.createAceEditor.au.ace.viewModel.editor;
     this.collisionEditor = this.collisionAceEditor.au.ace.viewModel.editor;
-    this.collisionEditor.setValue(this.defaultCollision + '\n' + this.worldBoundsCollision);
     this.eventEditor = this.eventAceEditor.au.ace.viewModel.editor;
-    this.updateEditor = this.updateAceEditor.au.ace.viewModel.editor;
     this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
   }
 
@@ -62,7 +55,8 @@ export class Editor {
       this.preloadCode,
       this.createEditor.getValue(),
       this.eventEditor.getValue(),
-      this.functionEditor.getValue()
+      this.functionEditor.getValue(),
+      this.collisionEditor.getValue()
     );
   }
 

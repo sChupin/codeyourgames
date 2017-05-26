@@ -1,11 +1,11 @@
-var eventParser = require('../utils/parser/parser');
+var parser = require('../utils/parser/parser');
 
 let parseEvent = function(req, res) {
     let code = req.body.code;
     let eventActionPairs = [];
     if (code) {
         try {
-            eventActionPairs = eventParser.parse(code);    
+            eventActionPairs = parser.eventParser.parse(code);    
         } catch (e) {
             console.log(e);
         }
@@ -31,3 +31,18 @@ let parseFunction = function(req, res) {
     res.type('application/json').status(200).json(functionPairs);
 }
 exports.parseFunction = parseFunction;
+
+let parseCollision = function(req, res) {
+    let code = req.body.code;
+    let collisionTuple = [];
+    if (code) {
+        try {
+            collisionTuple = parser.collisionParser.parse(code);    
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    res.type('application/json').status(200).json(collisionTuple);
+}
+exports.parseCollision = parseCollision;

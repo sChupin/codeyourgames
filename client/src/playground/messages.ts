@@ -1,9 +1,11 @@
+import {ImageInfo} from './image-gallery';
+
 export class CodeUpdated {
   constructor(public preloadCode: string, public createCode: string, public updateCode: string) { }
 }
 
-export class ImageInfo {
-  constructor(public isBackground: boolean, public name: string, public URL: string) { }
+export class ImgMsg {
+  constructor(public isBackground: boolean, public image: ImageInfo) { }
 }
 
 export class GameInfo {

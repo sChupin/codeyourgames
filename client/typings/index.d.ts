@@ -1,5 +1,6 @@
-/// <reference path="../jspm_packages/github/photonstorm/phaser@2.6.2/typescript/phaser.d.ts" />
 /// <reference path="../jspm_packages/github/EastDesire/jscolor@2.0.4/jscolor.d.ts" />
+/// <reference path="../jspm_packages/github/photonstorm/phaser@2.6.2/typescript/phaser.d.ts" />
+/// <reference path="globals/jquery/index.d.ts" />
 /// <reference path="modules/aurelia-binding/index.d.ts" />
 /// <reference path="modules/aurelia-bootstrapper/index.d.ts" />
 /// <reference path="modules/aurelia-dependency-injection/index.d.ts" />

@@ -1,6 +1,7 @@
 <template>
 <require from="../modal-view"></require>
 <require from="../image-gallery"></require>
+<require from="./sprite-picker"></require>
 
 <!--Objects List-->
 <div class="row">
@@ -8,6 +9,7 @@
     <div class="col-md-2">
       <div class="panel" class.bind="obj.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(obj)">
         <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
+          <span if.bind="obj.spritesheet" class="glyphicon glyphicon-play-circle" aria-hidden="true" style="position: absolute; right: 16%; top: 5%"></span>
           <img src.bind="obj._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="obj.name">
           <span if.bind="obj.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${obj.grpName}</span>
         </div>
@@ -23,6 +25,7 @@
 
 <!--Objects Properties-->
 <div class="well" if.bind="oneObjectSelected">
+  <!--Sprite name and deleteBody btn-->
   <div>
     <input type="text" class="input-sm" class="form-control" value.bind="selectedObj.name & validateOnChange">
     <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
@@ -31,11 +34,35 @@
       <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
   </div>
   <hr>
-  <div>Key: ${selectedObj.key}</div>
-  <div>Height: ${selectedObj.height * selectedObj.scaleY}</div>
-  <div>Width: ${selectedObj.width * selectedObj.scaleX}</div>
-  <div>x: ${selectedObj.left}</div>
-  <div>y: ${selectedObj.top}</div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-pills custom-nav" role="tablist">
+      <li role="presentation" class="active"><a href="#props" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
+      <li role="presentation" if.bind="selectedObj.spritesheet"><a href="#anim" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin: 10px;">
+      <!-- Tab 1 -->
+      <div role="tabpanel" class="tab-pane active" id="props">
+          <div class="row">
+              <div>Key: ${selectedObj.key}</div>
+              <div>Height: ${selectedObj.height * selectedObj.scaleY}</div>
+              <div>Width: ${selectedObj.width * selectedObj.scaleX}</div>
+              <div>x: ${selectedObj.left}</div>
+              <div>y: ${selectedObj.top}</div>
+          </div>
+      </div>
+      
+      <!-- Tab 2 -->
+      <div role="tabpanel" class="tab-pane" id="anim">
+          <div class="row">
+            Default costume:
+            <sprite-picker sprite.bind="selectedObj.spritesheet"></sprite-picker>
+          </div>
+      </div>
+  </div>
+
 </div>
 
 <!--Group Properties-->

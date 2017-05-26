@@ -14,6 +14,7 @@ System.config({
     }
   },
   map: {
+    "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
     "abalmus/aurelia-ace-editor": "github:abalmus/aurelia-ace-editor@master",
     "ace": "github:ajaxorg/ace-builds@1.2.5",
@@ -40,7 +41,7 @@ System.config({
     "fabric": "npm:fabric@1.7.9",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
-    "jquery": "npm:jquery@2.2.4",
+    "jquery": "npm:jquery@3.2.1",
     "markusslima/bootstrap-filestyle": "github:markusslima/bootstrap-filestyle@1.2.1",
     "phaser": "github:photonstorm/phaser@2.6.2",
     "split.js": "npm:split.js@1.1.1",
@@ -84,7 +85,7 @@ System.config({
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
     "github:twbs/bootstrap@3.3.7": {
-      "jquery": "npm:jquery@2.2.4"
+      "jquery": "npm:jquery@3.2.1"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
