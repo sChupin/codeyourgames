@@ -55,7 +55,7 @@
       </div>
       
       <!-- Tab 2 -->
-      <div role="tabpanel" class="tab-pane" id="anim">
+      <div if.bind="selectedObj.spritesheet" role="tabpanel" class="tab-pane" id="anim">
           <div class="row">
             Default costume:
             <sprite-picker sprite.bind="selectedObj.spritesheet"></sprite-picker>

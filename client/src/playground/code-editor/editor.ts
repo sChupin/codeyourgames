@@ -93,7 +93,12 @@ function preloadCodeFromInfo(gameInfo) {
   gameInfo.bodies.forEach(body => {
     if (keyList.indexOf(body.key) === -1) {
       keyList.push(body.key);
-      code += "this.load.image('" + body.key + "', '" + body.url + "');\n"
+      
+      if (body.spritesheet === undefined) {
+        code += "this.load.image('" + body.key + "', '" + body.url + "');\n"
+      } else {
+        code += "this.load.spritesheet('" + body.key + "', '" + body.spritesheet.sheetUrl + "', " + body.spritesheet.spriteWidth + ", " + body.spritesheet.spriteHeight + ", " + body.spritesheet.spriteNbr + ");\n";
+      }
     }
   });
 
@@ -115,7 +120,12 @@ function createCodeFromInfo(gameInfo) {
 
   // Add each body on the board
   gameInfo.bodies.forEach(body => {
-    code += "Game.add" + body.type.charAt(0).toUpperCase() + body.type.slice(1) + "('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.height + ", " + body.width + ");\n"
+    code += "Game.add" + body.type.charAt(0).toUpperCase() + body.type.slice(1) + "('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.width + ", " + body.height;
+
+    if (body.spritesheet !== undefined) {
+      code += ", " + body.spritesheet.defaultSpriteNo;
+    }
+    code += ");\n";
   });
 
   code += "\n";

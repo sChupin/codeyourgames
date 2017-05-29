@@ -121,8 +121,6 @@ export class ImgList {
     });
 
     this.existingGroup = false;
-
-    console.log('group ' + this.currentGroupName + ' deleted!');
   }
 
   // Properties listeners
@@ -155,9 +153,6 @@ export class ImgList {
     // Determine if several objects are selected
     // this.oneObjectSelected = this.canvas.getActiveObject() ? true : false;
     // this.severalObjectsSelected = this.canvas.getActiveGroup() ? true : false;
-
-    console.log('selectedBodiesChanged');
-    console.log(newval);
 
     if (newval !== undefined && newval.length !== 0) {
       this.severalObjectsSelected = true;

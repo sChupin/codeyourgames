@@ -28,6 +28,10 @@ export class GameInfo {
       _body.url = body._element.src;
       _body.type = body.type;
       
+      if (body.spritesheet !== undefined) {
+        _body.spritesheet = body.spritesheet;
+      }
+      
       _this.bodies.push(_body);
     });
   }

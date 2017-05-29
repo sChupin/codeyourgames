@@ -38,29 +38,29 @@ export class GameProps {
 
   // }
 
-  public addDecor(x: number, y: number, key: string, height: number, width: number) {
-    let sprite = this.game.add.sprite(x, y, key);
+  public addDecor(x: number, y: number, key: string, width: number, height: number) {
+    let sprite = this.game.add.image(x, y, key);
     sprite.anchor.setTo(0.5, 0.5);
-    sprite.height = height;
     sprite.width = width;
+    sprite.height = height;
   }
 
-  public addBody(name: string, x: number, y: number, key: string, height: number, width: number) {
-    let phaserSprite = this.game.add.sprite(x, y, key);
+  public addBody(name: string, x: number, y: number, key: string, width: number, height: number, frameNbr?: number) {
+    let phaserSprite = this.game.add.sprite(x, y, key, frameNbr);
     phaserSprite.anchor.setTo(0.5, 0.5);
-    phaserSprite.height = height;
     phaserSprite.width = width;
+    phaserSprite.height = height;
     let body = this.bodies[name] = new Body(phaserSprite);
 
     // Add to body group
     this.groups.bodies.add(body);
   }
 
-  public addPlatform(name: string, x: number, y: number, key: string, height: number, width: number) {
+  public addPlatform(name: string, x: number, y: number, key: string, width: number, height: number) {
     let phaserSprite = this.game.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
-    phaserSprite.height = height;
     phaserSprite.width = width;
+    phaserSprite.height = height;
     let platform = this.platforms[name] = new Platform(phaserSprite);
 
     // Add to platform group
@@ -73,7 +73,7 @@ export class GameProps {
   }
 
   public setBackground(backgroundKey: string) {
-    this.background = this.game.add.sprite(0, 0, backgroundKey);
+    this.background = this.game.add.image(0, 0, backgroundKey);
     this.background.width = this.game.world.width;
     this.background.height = this.game.world.height;
     this.background.sendToBack();

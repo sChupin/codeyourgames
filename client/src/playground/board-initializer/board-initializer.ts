@@ -106,16 +106,23 @@ export class BoardInitializer {
    */
   private addImageToBoard(imgInfo: ImageInfo) {
     let __this = this;
+    
+    if (imgInfo.spritesheet === undefined) {
+      fabric.Image.fromURL(imgInfo.url, callback, {crossOrigin: 'anonymous'});
+    } else {
+      fabric.Image.fromURL(imgInfo.spritesheet.sheetUrl, function(img) {
+        let width = imgInfo.spritesheet.spriteWidth;
+        let height = imgInfo.spritesheet.spriteHeight;
+        fabric.Image.fromURL(img.toDataURL({left: 0, top: 0, width: width, height: height}), callback, {crossOrigin: 'anonymous'});
+      }, {crossOrigin: 'anonymous'});
+    }
 
-    fabric.Image.fromURL(imgInfo.url, function(img) {
+    function callback(img) {
       img.id = __this.getId();
-      img.key = name;
+      img.key = imgInfo.name;
       img.name = __this.createName('my' + imgInfo.name.charAt(0).toUpperCase() + imgInfo.name.slice(1));
       img.grpName = "";
-      
-      if (imgInfo.spritesheet !== undefined) {
-        img.spritesheet = imgInfo.spritesheet;
-      }
+      img.spritesheet = imgInfo.spritesheet;
 
       // Set anchor to 0.5 in both direction
       img.set({
@@ -137,7 +144,7 @@ export class BoardInitializer {
       }
 
       __this.board.add(img);
-    });
+    }
   }
 
   /**

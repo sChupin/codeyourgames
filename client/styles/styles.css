@@ -179,6 +179,14 @@ div.au-stagger {
   border: solid 1px #337ab7;
 }
 
+a.no-underline:hover {
+  text-decoration: none;
+}
+
+a.no-underline:focus {
+  text-decoration: none;
+}
+
 /* animation definitions */
 @-webkit-keyframes fadeInRight {
   0% {
