@@ -122,7 +122,12 @@ export class BoardInitializer {
       img.key = imgInfo.name;
       img.name = __this.createName('my' + imgInfo.name.charAt(0).toUpperCase() + imgInfo.name.slice(1));
       img.grpName = "";
-      img.spritesheet = imgInfo.spritesheet;
+      // img.spritesheet = imgInfo.spritesheet;
+      // Shadow copy
+      img.spritesheet = imgInfo.spritesheet ? {} : undefined;
+      for (let props in imgInfo.spritesheet) {
+        img.spritesheet[props] = imgInfo.spritesheet[props];
+      }
 
       // Set anchor to 0.5 in both direction
       img.set({

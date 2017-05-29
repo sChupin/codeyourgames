@@ -23,46 +23,48 @@
   </div>
 </div>
 
-<!--Objects Properties-->
-<div class="well" if.bind="oneObjectSelected">
-  <!--Sprite name and deleteBody btn-->
-  <div>
-    <input type="text" class="input-sm" class="form-control" value.bind="selectedObj.name & validateOnChange">
-    <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
-  </div>
-  <div if.bind="controller.errors">
-      <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
-  </div>
-  <hr>
+<div repeat.for="obj of list">
+  <!--Objects Properties-->
+  <div class="well" show.bind="obj.active && !severalObjectsSelected">
+    <!--Sprite name and deleteBody btn-->
+    <div>
+      <input type="text" class="input-sm" class="form-control" value.bind="obj.name & validateOnChange">
+      <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
+    </div>
+    <div if.bind="controller.errors">
+        <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
+    </div>
+    <hr>
 
-  <!-- Nav tabs -->
-  <ul class="nav nav-pills custom-nav" role="tablist">
-      <li role="presentation" class="active"><a href="#props" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
-      <li role="presentation" if.bind="selectedObj.spritesheet"><a href="#anim" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>
-  </ul>
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills custom-nav" role="tablist">
+        <li role="presentation" class="active"><a href.bind="'#props-'+obj.id" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
+        <li role="presentation" if.bind="obj.spritesheet"><a href.bind="'#anim-'+obj.id" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>
+    </ul>
 
-  <!-- Tab panes -->
-  <div class="tab-content" style="margin: 10px;">
-      <!-- Tab 1 -->
-      <div role="tabpanel" class="tab-pane active" id="props">
-          <div class="row">
-              <div>Key: ${selectedObj.key}</div>
-              <div>Height: ${selectedObj.height * selectedObj.scaleY}</div>
-              <div>Width: ${selectedObj.width * selectedObj.scaleX}</div>
-              <div>x: ${selectedObj.left}</div>
-              <div>y: ${selectedObj.top}</div>
-          </div>
-      </div>
-      
-      <!-- Tab 2 -->
-      <div if.bind="selectedObj.spritesheet" role="tabpanel" class="tab-pane" id="anim">
-          <div class="row">
-            Default costume:
-            <sprite-picker if.bind="selectedObj.spritesheet" sprite.bind="selectedObj.spritesheet"></sprite-picker>
-          </div>
-      </div>
+    <!-- Tab panes -->
+    <div class="tab-content" style="margin: 10px;">
+        <!-- Tab 1 -->
+        <div role="tabpanel" class="tab-pane active" id.bind="'props-'+obj.id">
+            <div class="row">
+                <div>Key: ${obj.key}</div>
+                <div>Height: ${obj.height * obj.scaleY}</div>
+                <div>Width: ${obj.width * obj.scaleX}</div>
+                <div>x: ${obj.left}</div>
+                <div>y: ${obj.top}</div>
+            </div>
+        </div>
+        
+        <!-- Tab 2 -->
+        <div if.bind="obj.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+obj.id">
+            <div class="row">
+              Default costume:
+              <sprite-picker sprite.bind="obj.spritesheet"></sprite-picker>
+            </div>
+        </div>
+    </div>
+
   </div>
-
 </div>
 
 <!--Group Properties-->
