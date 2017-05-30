@@ -125,7 +125,14 @@ function createCodeFromInfo(gameInfo) {
     if (body.spritesheet !== undefined) {
       code += ", " + body.spritesheet.defaultSpriteNo;
     }
-    code += ");\n";
+    code += ");\n\n";
+
+    if (body.spritesheet !== undefined) {
+      body.spritesheet.animations.forEach(animation => {
+        code += "Bodies." + body.name + ".addAnimation('" + animation.name + "', [" + animation.frameList + "]);\n";
+      });
+      code += "\n";
+    }
   });
 
   code += "\n";

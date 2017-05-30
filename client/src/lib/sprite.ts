@@ -339,6 +339,19 @@ export class Body extends Sprite {
     this.reduceBy(10);
   }
 
+  // Animations
+  public addAnimation(name: string, frames?: Array<number>, frameRate: number = 10) {
+    this.phaserSprite.animations.add(name, frames, frameRate, true);
+  }
+
+  public playAnimation(name: string) {
+    this.phaserSprite.animations.play(name);
+  }
+
+  public stopAnimation() {
+    this.phaserSprite.animations.stop();
+  }
+
   // would be better in variable rather than in function
   // use collision obj instead?
   // public isTouched(): boolean {

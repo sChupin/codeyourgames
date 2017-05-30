@@ -128,7 +128,15 @@ export class BoardInitializer {
       for (let props in imgInfo.spritesheet) {
         img.spritesheet[props] = imgInfo.spritesheet[props];
       }
-
+      // Default animations
+      if (img.spritesheet) {
+        img.spritesheet.animations = [
+          {name: 'moveDown', frameList: [0, 1, 2, 3]},
+          {name: 'moveLeft', frameList: [4, 5, 6, 7]},
+          {name: 'moveRight', frameList: [8, 9, 10, 11]},
+          {name: 'moveUp', frameList: [12, 13, 14, 15]}
+        ];
+      }
       // Set anchor to 0.5 in both direction
       img.set({
         originX: "center", 

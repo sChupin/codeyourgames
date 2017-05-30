@@ -2,6 +2,7 @@
 <require from="../modal-view"></require>
 <require from="../image-gallery"></require>
 <require from="./sprite-picker"></require>
+<require from="./animation-creator"></require>
 
 <!--Objects List-->
 <div class="row">
@@ -60,6 +61,10 @@
             <div class="row">
               Default costume:
               <sprite-picker sprite.bind="obj.spritesheet"></sprite-picker>
+            </div>
+            <div class="row">
+              Animations:
+              <animation-creator spritesheet.bind="obj.spritesheet"></animation-creator>
             </div>
         </div>
     </div>

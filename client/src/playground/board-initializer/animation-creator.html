@@ -1,0 +1,8 @@
+<template>
+<div repeat.for="animation of spritesheet.animations">
+  ${animation.name}:
+  <span repeat.for="frame of animation.frameList">
+    <img src.bind="spritesheet.sheetUrl" css="object-fit: none; object-position: ${offsetX(frame)}px ${offsetY(frame)}px; width: ${spritesheet.spriteWidth}px; height: ${spritesheet.spriteHeight}px;">
+  </span>
+</div>
+</template>
