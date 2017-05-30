@@ -14,7 +14,6 @@
     <div class="col-md-2" style="padding-right: 7px;">
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#create-editor" data-toggle="tab">Create</a></li>
-        <li><a href="#collision-editor" data-toggle="tab">Collision</a></li>
         <li class="active"><a href="#event-editor" data-toggle="tab">Events</a></li>
         <li><a href="#function-editor" data-toggle="tab">Function</a></li>
       </ul>
@@ -29,16 +28,6 @@
           
           
         </ace>
-      </div>
-      <div id="collision-editor" class="tab-pane fade full-height">
-        <ace config-theme="ace/theme/monokai"
-            config-mode="ace/mode/typescript"
-            config-read-only="false"
-            ref="collisionAceEditor">
-          
-          
-        </ace>
-        <button type="button" class="btn btn-default" click.delegate="addNewCollisionPair()">Add new collision pair</button>        
       </div>
       <div id="event-editor" class="tab-pane fade in active full-height">
         <ace config-theme="ace/theme/monokai"

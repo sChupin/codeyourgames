@@ -12,17 +12,14 @@ export class Editor {
   private gameHeight: number;
 
   private createAceEditor;
-  private collisionAceEditor;
   private eventAceEditor;
   private functionAceEditor;
 
   private createEditor;
-  private collisionEditor;
   private eventEditor;
   private functionEditor;
 
   private newEvent = "when /*event*/\nthen /*action*/\n";
-  private newCollisionPair = "Collide: /*first body/group*/ and /*second body/group*/\n";
   private newFunction = "function myFunction() {\n// Your code goes here\n}\n";
 
   private preloadCode: string = ""; // Not editable by user
@@ -38,7 +35,6 @@ export class Editor {
 
     // Initialise editors
     this.createEditor = this.createAceEditor.au.ace.viewModel.editor;
-    this.collisionEditor = this.collisionAceEditor.au.ace.viewModel.editor;
     this.eventEditor = this.eventAceEditor.au.ace.viewModel.editor;
     this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
   }
@@ -55,14 +51,8 @@ export class Editor {
       this.preloadCode,
       this.createEditor.getValue(),
       this.eventEditor.getValue(),
-      this.functionEditor.getValue(),
-      this.collisionEditor.getValue()
+      this.functionEditor.getValue()
     );
-  }
-
-  private addNewCollisionPair() {
-    let code = this.collisionEditor.getValue() ? this.collisionEditor.getValue() + "\n" + this.newCollisionPair : this.newCollisionPair;
-    this.collisionEditor.setValue(code, 1);
   }
 
   private addNewEvent() {
