@@ -25,7 +25,7 @@ export class GameContainer {
     
     // Disable key capture when click outside game
     window.addEventListener('click', (e) => {
-      if (this.game) {
+      if (this.game != null && this.game.input != null) {
         if (this.container.contains(<Node> e.target)) {
           this.game.input.enabled = true;
         } else {

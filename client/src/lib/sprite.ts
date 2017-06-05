@@ -339,6 +339,20 @@ export class Body extends Sprite {
     this.reduceBy(10);
   }
 
+  public changeColorBy() {
+    //todo
+  }
+
+  public randomColor() {
+    this.phaserSprite.tint = Math.random() * 0xFFFFFF
+  }
+
+  public resetColor() {
+    this.phaserSprite.tint = 0xFFFFFF;
+  }
+
+
+
   // Animations
   public addAnimation(name: string, frames?: Array<number>, frameRate: number = 10) {
     this.phaserSprite.animations.add(name, frames, frameRate, true);
