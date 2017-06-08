@@ -1,7 +1,7 @@
 import {EventAggregator, Subscription} from "aurelia-event-aggregator";
 import {autoinject} from "aurelia-framework";
 
-import {CodeUpdated} from "./messages";
+import {CodeUpdated, GameDimensions} from "./messages";
 import {Keyboard, Mouse} from "../lib/sensors";
 import {Body, Platform, Group} from "../lib/sprite";
 import {GameProps} from "../lib/game";
@@ -14,13 +14,17 @@ export class GameContainer {
   private container: HTMLDivElement;
 
   private codeUpdateSubscriber: Subscription;
+  private gameDimensionsSubscriber: Subscription;
 
   private game: Game;
+  private gameWidth: number;
+  private gameHeight: number;
 
   constructor(private ea: EventAggregator) { }
 
   attached() {
     // Refresh game with new code
+    this.gameDimensionsSubscriber = this.ea.subscribe(GameDimensions, msg => {this.gameWidth = msg.gameWidth; this.gameHeight = msg.gameHeight;});
     this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdated, msg => this.update(msg.preloadCode, msg.createCode, msg.updateCode));
     
     // Disable key capture when click outside game
@@ -36,6 +40,7 @@ export class GameContainer {
   }
 
   detached() {
+    this.gameDimensionsSubscriber.dispose();
     this.codeUpdateSubscriber.dispose();
     if (this.game != null) {
       this.game.destroy();
@@ -54,7 +59,7 @@ export class GameContainer {
     console.log('update:');
     console.log(updateCode);
 
-    this.game = new Game(preloadCode, createCode, updateCode);
+    this.game = new Game(preloadCode, createCode, updateCode, this.gameWidth, this.gameHeight);
   }
 
   private pauseGame() {

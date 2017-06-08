@@ -8,9 +8,6 @@ import {TranspilerService} from "../transpiler-service";
 export class Editor {
   private subscriber: Subscription;
 
-  private gameWidth: number;
-  private gameHeight: number;
-
   private createAceEditor;
   private eventAceEditor;
   private functionAceEditor;

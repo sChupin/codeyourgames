@@ -6,7 +6,7 @@ import jscolor = require('EastDesire/jscolor');
 import {fabric} from 'fabric';
 // import * as fabric from 'fabric';
 
-import {ImgMsg, GameInfo} from '../messages';
+import {ImgMsg, GameInfo, GameDimensions} from '../messages';
 import {ImageInfo} from '../image-gallery';
 
 
@@ -20,6 +20,17 @@ export class BoardInitializer {
   private board;
   private width: number = 400;
   private height: number = 300;
+
+  private camEnabled: boolean = false;
+  private camWidth: number = 400;
+  private camHeight: number = 300;
+  private cameraRect = new fabric.Rect({
+    width: 399, height: 299,
+    left: 0, top: 0,
+    hasControls: false, hasBorders: false, selectable: false,
+    fill: 'transparent', stroke: '#ddd', strokeDashArray: [5, 5],
+    camRect: true
+  });
 
   @bindable
   private selectedBody = {};
@@ -64,9 +75,11 @@ export class BoardInitializer {
     this.board.on('selection:cleared', () => {__this.selectedBody = {}; __this.selectedBodies = [];});
     this.board.on('object:added', function (evt) {
       let obj = evt.target;
-      obj.center();
-      obj.setCoords();
-      __this.board.setActiveObject(obj);
+      if (!obj.camRect) {
+        obj.center();
+        obj.setCoords();
+        __this.board.setActiveObject(obj);
+      }
     });
 
     // Initialize background color picker
@@ -293,8 +306,44 @@ export class BoardInitializer {
     let __this = this;
     this.board.setDimensions({width: __this.width, height: __this.height});
     
+    // Resize background to fit new board dimensions
     if (this.board.backgroundImage) {
       this.setBackgroundFromUrl(this.board.backgroundImage);
+    }
+
+    this.setCamDimensions();
+  }
+  
+  /**
+   * 
+   * 
+   * 
+   * @memberof BoardInitializer
+   */
+  public setCamDimensions() {
+    
+    // Ensure camera size is not bigger than board dimensions
+    if (this.board.width < this.camWidth) {
+      this.camWidth = this.board.width;
+    }
+    if (this.board.height < this.camHeight) {
+      this.camHeight = this.board.height;
+    }
+
+    this.cameraRect.set({width: this.camWidth - 1, height: this.camHeight - 1});
+    this.board.renderAll();
+    // this.cameraRect.setWidth(this.camWidth - 1);
+    // this.cameraRect.setHeight(this.camHeight - 1);
+  }
+
+  private camOn: boolean = false;
+  public toggleCamRect() {
+    if (this.camOn) {
+      this.cameraRect.remove();
+      this.camOn = false;
+    } else {
+      this.board.add(this.cameraRect);
+      this.camOn = true;
     }
   }
   
@@ -309,6 +358,8 @@ export class BoardInitializer {
     console.log('Board info');
     console.log(this.board);
     this.board.deactivateAll().renderAll();
-    this.ea.publish(new GameInfo(this.width, this.height, this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
+    this.ea.publish(new GameInfo(this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
+    this.ea.publish(new GameDimensions(this.board.width, this.board.height));
+    console.log(this.width);
   }
 }

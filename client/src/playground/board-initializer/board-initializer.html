@@ -48,9 +48,22 @@
                   <div if.bind="selectedFiles !== undefined">
                     <img src.bind="selectedFiles.item(0) | blobToUrl"><img>
                   </div>-->
-              <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Set dimensions</button>
-                <input type="text" id="board-width" value.bind="width | stringToNumber">x
-                <input type="text" id="board-height" value.bind="height | stringToNumber">
+              Game dimensions:
+              <input type="text" id="board-width" value.bind="width | stringToNumber">x
+              <input type="text" id="board-height" value.bind="height | stringToNumber">
+              <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Ok</button>              
+              <br>
+              <br>
+              <input checked.bind="camEnabled" type="checkbox" value="false" change.delegate="toggleCamRect()"> Enable Camera
+              <a data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">
+                <i class="icon-shopping-cart"></i>
+              </a>
+              <div show.bind="camEnabled">
+                Camera dimensions:
+                <input type="text" id="cam-width" value.bind="camWidth | stringToNumber">x
+                <input type="text" id="cam-height" value.bind="camHeight | stringToNumber">
+                <button type="button" class="btn btn-secondary" click.delegate="setCamDimensions()">Ok</button>
+              </div>
             </div>
 
             <!--Decor initializer-->
