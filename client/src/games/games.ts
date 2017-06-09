@@ -7,6 +7,8 @@ export class Games {
   public configureRouter(config: RouterConfiguration, router: Router) {
     config.map([
       { route: ['', 'phaser-game'], name: 'phaser-game', moduleId: './phaser-game', nav: true, title: 'Platform' },
+      { route: '2d-motion', name: '2d-motion', moduleId: './2d-motion', nav: true, title: '2D Motion'},
+      { route: 'camera', name: 'camera', moduleId: './camera', nav: true, title: 'Camera'},
       { route: 'snake', name: 'snake', moduleId: './snake', nav: true, title: 'Snake' },
       { route: 'pong', name: 'pong', moduleId: './pong', nav: true, title: 'Pong' }
     ]);
