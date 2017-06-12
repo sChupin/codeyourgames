@@ -54,6 +54,68 @@ export class Body extends Sprite {
    **********
    */
 
+   public configMotion(speed: number = 150, animations: boolean = true, mode: string = 'oblique', keys: string = 'arrows') {
+     let keyboard = this.phaserSprite.game.input.keyboard;
+     
+     let upKey: Phaser.Key, downKey: Phaser.Key, leftKey: Phaser.Key, rightKey: Phaser.Key;
+
+     if (keys == 'arrows') {
+      upKey = keyboard.addKey(Phaser.Keyboard.UP);
+      downKey = keyboard.addKey(Phaser.Keyboard.DOWN);
+      leftKey = keyboard.addKey(Phaser.Keyboard.LEFT);
+      rightKey = keyboard.addKey(Phaser.Keyboard.RIGHT);
+     } else if (keys == 'zqsd') {
+      upKey = keyboard.addKey(Phaser.Keyboard.Z);
+      downKey = keyboard.addKey(Phaser.Keyboard.S);
+      leftKey = keyboard.addKey(Phaser.Keyboard.Q);
+      rightKey = keyboard.addKey(Phaser.Keyboard.D);
+     }
+
+     upKey.onDown.add(() => {
+       this.phaserBody.velocity.y = -speed;
+     });
+     upKey.onUp.add(() => {
+       if (!downKey.isDown) {
+         this.phaserBody.velocity.y = 0;
+      } else {
+        this.phaserBody.velocity.y = speed;
+      }
+     });
+     
+     downKey.onDown.add(() => {
+       this.phaserBody.velocity.y = speed;
+     });
+     downKey.onUp.add(() => {
+       if (!upKey.isDown) {
+         this.phaserBody.velocity.y = 0;
+      } else {
+        this.phaserBody.velocity.y = -speed;
+      }
+     });
+
+     leftKey.onDown.add(() => {
+       this.phaserBody.velocity.x = -speed;
+     });
+     leftKey.onUp.add(() => {
+       if (!rightKey.isDown) {
+         this.phaserBody.velocity.x = 0;
+      } else {
+        this.phaserBody.velocity.x = speed;
+      }
+     });
+
+     rightKey.onDown.add(() => {
+       this.phaserBody.velocity.x = speed;
+     });
+     rightKey.onUp.add(() => {
+       if (!leftKey.isDown) {
+         this.phaserBody.velocity.x = 0;
+      } else {
+        this.phaserBody.velocity.x = -speed;
+      }
+     });
+   }
+
   // Translation
   public moveForward(velocity?: number) {
     let speed = velocity || this.phaserBody.speed;
@@ -351,14 +413,16 @@ export class Body extends Sprite {
     this.phaserSprite.tint = 0xFFFFFF;
   }
 
-
+  public changeCostume(costumeNo) {
+    this.phaserSprite.frame = costumeNo;
+  }
 
   // Animations
   public addAnimation(name: string, frames?: Array<number>, frameRate: number = 10) {
     this.phaserSprite.animations.add(name, frames, frameRate, true);
   }
 
-  public playAnimation(name: string) {
+  public playAnimation(name: string, frameRate?: number, loop?: boolean) {
     this.phaserSprite.animations.play(name);
   }
 

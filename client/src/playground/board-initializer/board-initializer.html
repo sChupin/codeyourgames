@@ -54,15 +54,27 @@
               <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Ok</button>              
               <br>
               <br>
-              <input checked.bind="camEnabled" type="checkbox" value="false" change.delegate="toggleCamRect()"> Enable Camera
-              <a data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">
-                <i class="icon-shopping-cart"></i>
-              </a>
-              <div show.bind="camEnabled">
+              <input checked.bind="camera.enabled" type="checkbox" value="false" change.delegate="toggleCamRect()"> Enable Camera
+              <a data-toggle="tooltip" data-html="true" title.one-way="camDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
+              <div show.bind="camera.enabled">
                 Camera dimensions:
-                <input type="text" id="cam-width" value.bind="camWidth | stringToNumber">x
-                <input type="text" id="cam-height" value.bind="camHeight | stringToNumber">
+                <input type="text" id="cam-width" value.bind="camera.width | stringToNumber">x
+                <input type="text" id="cam-height" value.bind="camera.height | stringToNumber">
                 <button type="button" class="btn btn-secondary" click.delegate="setCamDimensions()">Ok</button>
+                <br>
+                Camera mode:
+                <a data-toggle="tooltip" data-html="true" data-placement="bottom" title.one-way="camModeDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
+                <select value.bind="camera.mode">
+                  <option value="basic">Basic mode</option>  
+                  <option value="smooth">Smooth mode</option>  
+                  <option value="deadzone">Deadzone mode</option>  
+                </select>
+                <br>
+                Body to follow:
+                <select value.bind="camera.spriteName">
+                  <option repeat.for="body of bodies" value.bind="body.name">${body.name}</option>
+                </select>
+                <span show.bind="camera.spriteName == ''">No bodies found.</span>
               </div>
             </div>
 

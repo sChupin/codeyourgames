@@ -95,6 +95,8 @@ function preloadCodeFromInfo(gameInfo) {
 function createCodeFromInfo(gameInfo) {
   let code = "";
   
+  code += "Game.setDimensions(" + gameInfo.dimensions.width + ", " + gameInfo.dimensions.height + ");\n";
+
   // Add background color
   if (gameInfo.backgroundColor) {
     code += "Game.setBackgroundColor('" + gameInfo.backgroundColor + "');\n";
@@ -107,14 +109,14 @@ function createCodeFromInfo(gameInfo) {
 
   // Add each body on the board
   gameInfo.bodies.forEach(body => {
-    code += "Game.add" + body.type.charAt(0).toUpperCase() + body.type.slice(1) + "('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.width + ", " + body.height;
+    code += "Game.add" + body.type.charAt(0).toUpperCase() + body.type.slice(1) + "('" + body.name + "', " + body.x + ", " + body.y + ", '" + body.key + "', " + body.width + ", " + body.height + ");\n\n";
 
-    if (body.spritesheet !== undefined) {
-      code += ", " + body.spritesheet.defaultSpriteNo;
+    if (body.angle) {
+      code += "Bodies." + body.name + ".pointIn(" + body.angle + ");\n";
     }
-    code += ");\n\n";
 
     if (body.spritesheet !== undefined) {
+      code += "Bodies." + body.name + ".changeCostume(" + body.spritesheet.defaultSpriteNo + ");\n";
       body.spritesheet.animations.forEach(animation => {
         code += "Bodies." + body.name + ".addAnimation('" + animation.name + "', [" + animation.frameList + "]);\n";
       });
@@ -138,6 +140,11 @@ function createCodeFromInfo(gameInfo) {
       });
       code += ");\n";
     }
+  }
+
+  let camera = gameInfo.camera;
+  if (camera.enabled) {
+    code += "Game.setCamera(" + camera.width + ", " + camera.height + ", Bodies." + camera.spriteName + ", '" + camera.mode + "');\n";
   }
 
   return code;

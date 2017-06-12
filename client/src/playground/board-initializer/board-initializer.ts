@@ -21,9 +21,7 @@ export class BoardInitializer {
   private width: number = 400;
   private height: number = 300;
 
-  private camEnabled: boolean = false;
-  private camWidth: number = 400;
-  private camHeight: number = 300;
+  private camera: CameraInfo = {enabled: false, width: 400, height: 300, mode: 'basic', spriteName: ''};
   private cameraRect = new fabric.Rect({
     width: 399, height: 299,
     left: 0, top: 0,
@@ -31,6 +29,11 @@ export class BoardInitializer {
     fill: 'transparent', stroke: '#ddd', strokeDashArray: [5, 5],
     camRect: true
   });
+  private camDescription: string = "The camera is the portion of the game visible at any time. It can follow one sprite and move over the board.";
+  private camModeDescription: string = 
+    "<b>Basic mode</b>: The camera is centered on one sprite and follows it instantaneously.<br>"
+    + "<b>Smooth mode</b>: The camera is centered on one sprite and follows it with a small delay.<br>"
+    + "<b>Deadzone mode</b>: The camera defines a rectangle inside which the sprite it follows can move without causing the camera to move.";
 
   @bindable
   private selectedBody = {};
@@ -54,6 +57,9 @@ export class BoardInitializer {
   }
 
   attached() {
+    // Enable bootstrap tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
     // Listen for gallery image/background picking
     this.subscriber = this.ea.subscribe(ImgMsg, msg => {
       let imgInfo: ImageInfo = msg.image;
@@ -323,14 +329,14 @@ export class BoardInitializer {
   public setCamDimensions() {
     
     // Ensure camera size is not bigger than board dimensions
-    if (this.board.width < this.camWidth) {
-      this.camWidth = this.board.width;
+    if (this.board.width < this.camera.width) {
+      this.camera.width = this.board.width;
     }
-    if (this.board.height < this.camHeight) {
-      this.camHeight = this.board.height;
+    if (this.board.height < this.camera.height) {
+      this.camera.height = this.board.height;
     }
 
-    this.cameraRect.set({width: this.camWidth - 1, height: this.camHeight - 1});
+    this.cameraRect.set({width: this.camera.width - 1, height: this.camera.height - 1});
     this.board.renderAll();
     // this.cameraRect.setWidth(this.camWidth - 1);
     // this.cameraRect.setHeight(this.camHeight - 1);
@@ -358,8 +364,20 @@ export class BoardInitializer {
     console.log('Board info');
     console.log(this.board);
     this.board.deactivateAll().renderAll();
-    this.ea.publish(new GameInfo(this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups));
-    this.ea.publish(new GameDimensions(this.board.width, this.board.height));
-    console.log(this.width);
+    this.ea.publish(new GameInfo(this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups, {width: this.board.width, height: this.board.height}, this.camera));
+    
+    let gameWidth = this.camera.enabled ? this.camera.width : this.board.width;
+    let gameHeight = this.camera.enabled ? this.camera.height : this.board.height;
+    this.ea.publish(new GameDimensions(gameWidth, gameHeight, this.board.width, this.board.height));
+    console.log('Camera info');
+    console.log(this.camera);
   }
+}
+
+interface CameraInfo {
+  enabled: boolean;
+  width: number;
+  height: number;
+  mode: string;
+  spriteName: string;
 }

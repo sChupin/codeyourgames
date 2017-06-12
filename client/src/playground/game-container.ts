@@ -19,12 +19,14 @@ export class GameContainer {
   private game: Game;
   private gameWidth: number;
   private gameHeight: number;
+  private worldWidth: number;
+  private worldHeight: number;
 
   constructor(private ea: EventAggregator) { }
 
   attached() {
     // Refresh game with new code
-    this.gameDimensionsSubscriber = this.ea.subscribe(GameDimensions, msg => {this.gameWidth = msg.gameWidth; this.gameHeight = msg.gameHeight;});
+    this.gameDimensionsSubscriber = this.ea.subscribe(GameDimensions, msg => {this.gameWidth = msg.gameWidth; this.gameHeight = msg.gameHeight; this.worldWidth = msg.worldWidth; this.worldHeight = msg.worldHeight;});
     this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdated, msg => this.update(msg.preloadCode, msg.createCode, msg.updateCode));
     
     // Disable key capture when click outside game

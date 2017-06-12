@@ -1,5 +1,11 @@
 import {Point} from './utility';
 
+/**
+ * This global keyword provides access to the keys of your keyboard.
+ * 
+ * @export
+ * @class Keyboard
+ */
 export class Keyboard {
 
   public A: Keyboard.Key;

@@ -38,6 +38,27 @@ export class GameProps {
 
   // }
 
+  public setCamera(width: number, height: number, sprite: Body, mode: string, args: any) {
+    let _mode = mode ? mode : 'basic';
+    // this.game.width = width;
+    // this.game.height = height;
+    if (_mode == 'basic' || _mode == 'deadzone') {
+      this.game.camera.follow(sprite.phaserSprite);
+      if (_mode == 'deadzone') {
+        // todo get rectangle size from parameters
+        this.game.camera.deadzone = new Phaser.Rectangle(100, 100, width - 200, height - 200);
+      }
+    } else if (mode == 'smooth') {
+      // todo get smooth value from params
+      this.game.camera.follow(sprite.phaserSprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+    }
+
+  }
+
+  public setDimensions(width: number, height: number) {
+    this.game.world.setBounds(0, 0, width, height);
+  }
+
   public addDecor(x: number, y: number, key: string, width: number, height: number) {
     let sprite = this.game.add.image(x, y, key);
     sprite.anchor.setTo(0.5, 0.5);
@@ -45,8 +66,8 @@ export class GameProps {
     sprite.height = height;
   }
 
-  public addBody(name: string, x: number, y: number, key: string, width: number, height: number, frameNbr?: number) {
-    let phaserSprite = this.game.add.sprite(x, y, key, frameNbr);
+  public addBody(name: string, x: number, y: number, key: string, width: number, height: number) {
+    let phaserSprite = this.game.add.sprite(x, y, key);
     phaserSprite.anchor.setTo(0.5, 0.5);
     phaserSprite.width = width;
     phaserSprite.height = height;
