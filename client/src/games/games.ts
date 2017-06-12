@@ -10,7 +10,8 @@ export class Games {
       { route: '2d-motion', name: '2d-motion', moduleId: './2d-motion', nav: true, title: '2D Motion'},
       { route: 'camera', name: 'camera', moduleId: './camera', nav: true, title: 'Camera'},
       { route: 'snake', name: 'snake', moduleId: './snake', nav: true, title: 'Snake' },
-      { route: 'pong', name: 'pong', moduleId: './pong', nav: true, title: 'Pong' }
+      { route: 'pong', name: 'pong', moduleId: './pong', nav: true, title: 'Pong' },
+      { route: 'mario', name: 'mario', moduleId: './mario', nav: true, title: 'Mario' }
     ]);
 
     this.router = router;

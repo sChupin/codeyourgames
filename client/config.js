@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,6 +14,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
@@ -42,6 +44,7 @@ System.config({
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@3.2.1",
+    "json": "github:systemjs/plugin-json@0.3.0",
     "markusslima/bootstrap-filestyle": "github:markusslima/bootstrap-filestyle@1.2.1",
     "phaser": "github:photonstorm/phaser@2.6.2",
     "split.js": "npm:split.js@1.1.1",

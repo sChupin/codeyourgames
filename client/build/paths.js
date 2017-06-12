@@ -10,7 +10,12 @@ module.exports = {
   style: 'styles/**/*.css',
   output: outputRoot,
   exportSrv: exporSrvtRoot,
-  doc: './doc',
+  doc: appRoot + 'doc/generated/',
+  jsonDoc: appRoot + 'doc/doc.json',
+  mustacheDoc: appRoot + 'doc/mustache/',
+  htmlDoc: appRoot + 'doc/html/',
+  //api: appRoot + 'lib/*.ts',
+  api: appRoot + 'lib/test/*.ts',
   e2eSpecsSrc: 'test/e2e/src/**/*.ts',
   e2eSpecsDist: 'test/e2e/dist/',
   dtsSrc: [

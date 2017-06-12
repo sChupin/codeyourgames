@@ -87,6 +87,7 @@ export class BoardInitializer {
         __this.board.setActiveObject(obj);
       }
     });
+    // this.board.on('object:scaling', (evt) => {evt.target.scaleX = 1; evt.target.scaleY = 1;});
 
     // Initialize background color picker
     this.bgColorPicker = new jscolor('jscolortest', {valueElement: null});
