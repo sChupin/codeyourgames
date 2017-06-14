@@ -124,6 +124,9 @@ class GameWorld extends Phaser.State {
   }
 
   update() {
+    // Bodies always collide with platforms
+    this.physics.arcade.collide(this.groups.bodies, this.groups.platforms);
+
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 

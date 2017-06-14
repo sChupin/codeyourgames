@@ -54,7 +54,58 @@ export class Body extends Sprite {
    **********
    */
 
-   public configMotion(speed: number = 150, animations: boolean = true, mode: string = 'oblique', keys: string = 'arrows') {
+   public disableControls() {
+     // todo: usefull for tetris in order to stop control of a piece
+   }
+
+   public enableMarioMode() {
+     let jumpSpeed = 200;
+     let gravity = 500;
+     let runSpeed = 150;
+
+     this.phaserBody.gravity.y = gravity;
+
+     let keyboard = this.phaserSprite.game.input.keyboard;
+     
+     let jumpKey1: Phaser.Key = keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+     let jumpKey2: Phaser.Key = keyboard.addKey(Phaser.Keyboard.UP);
+     let rightKey: Phaser.Key = keyboard.addKey(Phaser.Keyboard.RIGHT);
+     let leftKey: Phaser.Key = keyboard.addKey(Phaser.Keyboard.LEFT);
+
+     jumpKey1.onDown.add(() => {
+       if (this.phaserBody.touching.down || this.phaserBody.blocked.down) {
+         this.phaserBody.velocity.y = -jumpSpeed;
+       }
+     });
+
+     jumpKey2.onDown.add(() => {
+       this.phaserBody.velocity.y = -jumpSpeed;
+     });
+
+     rightKey.onDown.add(() => {
+       this.phaserBody.velocity.x = runSpeed;
+     });
+     rightKey.onUp.add(() => {
+       if (!leftKey.isDown) {
+         this.phaserBody.velocity.x = 0;
+       } else {
+         this.phaserBody.velocity.x = -runSpeed;
+       } 
+     });
+
+     leftKey.onDown.add(() => {
+       this.phaserBody.velocity.x = -runSpeed;
+     });
+     leftKey.onUp.add(() => {
+       if (!rightKey.isDown) {
+         this.phaserBody.velocity.x = 0;
+       } else {
+         this.phaserBody.velocity.x = runSpeed;
+       } 
+     });
+   }
+
+   public enableControls(speed: number = 150, animations: boolean = true, mode: string = 'oblique', keys: string = 'arrows') {
      let keyboard = this.phaserSprite.game.input.keyboard;
      
      let upKey: Phaser.Key, downKey: Phaser.Key, leftKey: Phaser.Key, rightKey: Phaser.Key;

@@ -148,6 +148,10 @@ export class BoardInitializer {
       for (let props in imgInfo.spritesheet) {
         img.spritesheet[props] = imgInfo.spritesheet[props];
       }
+
+      let controls: ControlsInfo = {enabled: false, keys: 'arrows', speed: 150, mode: 'mario', animations: false, jumpKey: 'spacebar'};
+      img.controls = controls;
+
       // Default animations
       if (img.spritesheet) {
         img.spritesheet.animations = [
@@ -362,17 +366,37 @@ export class BoardInitializer {
    * @memberof BoardInitializer
    */
   public saveBoard() {
-    console.log('Board info');
-    console.log(this.board);
-    this.board.deactivateAll().renderAll();
-    this.ea.publish(new GameInfo(this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups, {width: this.board.width, height: this.board.height}, this.camera));
-    
-    let gameWidth = this.camera.enabled ? this.camera.width : this.board.width;
-    let gameHeight = this.camera.enabled ? this.camera.height : this.board.height;
-    this.ea.publish(new GameDimensions(gameWidth, gameHeight, this.board.width, this.board.height));
-    console.log('Camera info');
-    console.log(this.camera);
+
+    if (this.boardHasErrors()) {
+
+    } else {
+      console.log('Board info');
+      console.log(this.board);
+      this.board.deactivateAll().renderAll();
+      this.ea.publish(new GameInfo(this.board.backgroundColor, this.board.backgroundImage, this.board._objects, this.groups, {width: this.board.width, height: this.board.height}, this.camera));
+      
+      let gameWidth = this.camera.enabled ? this.camera.width : this.board.width;
+      let gameHeight = this.camera.enabled ? this.camera.height : this.board.height;
+      this.ea.publish(new GameDimensions(gameWidth, gameHeight, this.board.width, this.board.height));
+      console.log('Camera info');
+      console.log(this.camera);
+    }
   }
+
+  public boardHasErrors() {
+    if (this.camera.enabled && this.camera.spriteName == '') {
+      console.log('camera has to follow one sprite');
+    }
+  }
+}
+
+interface ControlsInfo {
+  enabled: boolean;
+  keys: string;
+  mode: string;
+  speed: number;
+  animations: boolean;
+  jumpKey: string;
 }
 
 interface CameraInfo {

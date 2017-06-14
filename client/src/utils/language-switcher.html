@@ -1,0 +1,5 @@
+<template>
+<select class="selectpicker" data-width="fit" value.bind="selectedLanguage" change.delegate="switchLanguage()">
+  <option repeat.for="language of languages" data-content.bind="'<span class=&quot;flag-icon ' + language.flag + '&quot;></span> ' + language.text" value.bind="language.value"></option>
+</select>
+</template>

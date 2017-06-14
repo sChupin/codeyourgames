@@ -72,9 +72,12 @@ class GameWorld extends Phaser.State {
     } else if (this.mode == 2) {
       this.modeText.text = 'Snake mode';
       this.snake();
-    } else if (this. mode == 3) {
+    } else if (this.mode == 3) {
       this.modeText.text = 'Mario mode';
       this.mario();
+    } else if (this.mode == 4) {
+      this.modeText.text = 'Rotation mode';
+      this.rotation();
     }
   }
 
@@ -173,5 +176,9 @@ class GameWorld extends Phaser.State {
     if (this.cursors.up.isDown && (this.myDude.body.touching.down || this.myDude.body.blocked.down)) {
       this.myDude.body.velocity.y = -300;
     }
+  }
+
+  rotation() {
+    
   }
 }

@@ -11,7 +11,8 @@ export class Games {
       { route: 'camera', name: 'camera', moduleId: './camera', nav: true, title: 'Camera'},
       { route: 'snake', name: 'snake', moduleId: './snake', nav: true, title: 'Snake' },
       { route: 'pong', name: 'pong', moduleId: './pong', nav: true, title: 'Pong' },
-      { route: 'mario', name: 'mario', moduleId: './mario', nav: true, title: 'Mario' }
+      { route: 'mario', name: 'mario', moduleId: './mario', nav: true, title: 'Mario' },
+      { route: 'zelda', name: 'zelda', moduleId: './zelda', nav: true, title: 'Zelda' }
     ]);
 
     this.router = router;

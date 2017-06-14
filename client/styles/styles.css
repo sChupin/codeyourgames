@@ -54,6 +54,10 @@ section {
   margin: 12px 24px 0 6px;
 }
 
+.navbar-nav li.lng-picker {
+  margin: 8px 25px 0px 6px;
+}
+
 /* animate page transitions */
 .pictureDetail {
   max-width: 425px;
@@ -185,6 +189,56 @@ a.no-underline:hover {
 
 a.no-underline:focus {
   text-decoration: none;
+}
+
+.container.centered {
+  text-align: center;
+}
+
+.container > h1 {
+  margin: 50px;
+  font-size: 42px;
+}
+
+.click-box {
+  padding: 24px;
+  border-radius: 6px;
+  min-height: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  height: 100%
+}
+
+.click-box:hover {
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.click-box:active {
+  background-color: #e8e8e8;
+  box-shadow: inset 0 1px 50px rgba(0,0,0,.05);
+}
+
+.click-box > p {
+  text-align: justify;
+}
+
+.click-box > h1 {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.row.col-same-height {
+  display: table;
+}
+
+.row.col-same-height > [class*="col-"] {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+  height: 100%
 }
 
 /* animation definitions */

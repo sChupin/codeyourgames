@@ -147,6 +147,8 @@ function createCodeFromInfo(gameInfo) {
     code += "Game.setCamera(" + camera.width + ", " + camera.height + ", Bodies." + camera.spriteName + ", '" + camera.mode + "');\n";
   }
 
+  code += "Game.collision(Groups.bodies, Groups.platforms);\n";
+
   return code;
 }
 

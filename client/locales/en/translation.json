@@ -1,0 +1,21 @@
+{
+  "nav-bar": {
+    "playground": "Playground",
+    "doc": "Documentation",
+    "about": "About"
+  },
+  "landing-page": {
+    "title": "Learn programming by developing games!",
+    "description": "Create your own games with a programming language adapted to your knowledge. Even if it's your first time coding, you can easily build a fun and fully functional game!",
+    "go": "Let's go!"
+  },
+  "difficulty": {
+    "title": "Choose your level!",
+    "lvl1": "Beginner",
+    "lvl2": "Intermediate",
+    "lvl3": "Expert",
+    "lvl1-descr": "First time on this app? Never coded or programmed a game before? This is the right choice to begin!",
+    "lvl2-descr": "You have basic knowledge in programmation and you already programmed few games with this app? Don't wait, go to the next level!",
+    "lvl3-descr": "You already know how to code and game development has no secret for you anymore? You want to enjoy yourself with more freedom in your code? Go for it!"
+  }
+}

@@ -55,6 +55,36 @@
                 <div>y: ${obj.top}</div>
                 <div>orientation: ${obj.angle}</div>
             </div>
+            <br>
+            <div class="row">
+              Enable Controls:
+              <input type="checkbox" checked.bind="obj.controls.enabled">
+              <!--<div show.bind="obj.controls.enabled">
+                Keys:
+                <select value.bind="obj.controls.keys">
+                  <option value="arrows">Arrows</option>
+                  <option value="zqsd">Z-Q-S-D</option>
+                </select>
+                <br>
+                Speed: <input type="text" value.bind="obj.controls.speed">
+                <br>
+                Mode:
+                <select value.bind="obj.controls.mode">
+                  <option value="mario">Mario</option>
+                  <option value="oblique">Oblique</option>
+                  <option value="pokemons">Pokemon</option>
+                  <option value="snake">Snake</option>
+                </select>
+                <br>
+                <span show.bind="obj.controls.mode == 'mario'">
+                  Jump key:
+                  <select value.bind="obj.controls.jumpKey">
+                    <option value="up">Up key</option>
+                    <option value="spacebar">Space bar</option>
+                  </select>
+                </span>
+              </div>-->
+            </div>
         </div>
         
         <!-- Tab 2 -->

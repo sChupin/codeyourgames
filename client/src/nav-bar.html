@@ -1,4 +1,5 @@
 <template bindable="router">
+  <require from="./utils/language-switcher"></require>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -16,13 +17,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
-          <a data-toggle="collapse" data-target="#bs-example-navbar-collapse-1.in" href.bind="row.href">${row.title}</a>
+          <a data-toggle="collapse" data-target="#bs-example-navbar-collapse-1.in" href.bind="row.href">${row.title & t}</a>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li class="loader" if.bind="router.isNavigating">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
+        </li>
+        <li class="lng-picker">
+          <language-switcher></language-switcher>
         </li>
       </ul>
     </div>

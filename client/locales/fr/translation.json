@@ -1,0 +1,21 @@
+{
+  "nav-bar": {
+    "playground": "Playground",
+    "doc": "Documentation",
+    "about": "À propos"
+  },
+  "landing-page": {
+    "title": "Apprends à programmer en développant des jeux !",
+    "description": "Crée tes propres jeux avec un language de programmation adapté à ton niveau de connaissance. Même si c'est la première fois que tu codes, tu peux facilement fabriquer un jeu amusant et totalement fonctionnel !",
+    "go": "Allons-y !"
+  },
+  "difficulty": {
+    "title": "Choisis ton niveau !",
+    "lvl1": "Débutant",
+    "lvl2": "Débrouillard",
+    "lvl3": "Expert",
+    "lvl1-descr": "Tu découvres ce site? Tu n'as jamais codé ni créé de jeu? C'est le bon endroit pour démarrer !",
+    "lvl2-descr": "Tu as quelques notions de programmation et tu as déjà créer quelques jeux avec cette application? N'attends plus, passe au niveau supérieur !",
+    "lvl3-descr": "Tu sais déjà coder et la création de jeux n'a plus de secret pour toi? Tu veux t'amuser en ayant le plus de libérté possible dans ton code? Fonce !"
+  }
+}
