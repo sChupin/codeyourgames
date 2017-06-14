@@ -1,0 +1,9 @@
+<template>
+  
+  </span>
+<select class="selectpicker" id="difficulty-picker" data-width="fit" value.bind="selectedLevel">
+  <option repeat.for="difficulty of difficulties" value.bind="difficulty">
+    ${difficulty.name & t}
+  </option>
+</select>
+</template>

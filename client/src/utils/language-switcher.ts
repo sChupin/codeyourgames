@@ -8,8 +8,8 @@ export class LanguageSwitcher {
   }
 
   languages = [
-        { value: 'en', text: 'English', flag: 'flag-icon-us'},
-        { value: 'fr', text: 'Français', flag: 'flag-icon-fr'}
+        { value: 'en', text: 'English', flag: 'flag-icon-us' },
+        { value: 'fr', text: 'Français', flag: 'flag-icon-fr' }
     ];
   selectedLanguage = 'en';
 
