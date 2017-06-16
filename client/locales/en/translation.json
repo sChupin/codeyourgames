@@ -1,7 +1,9 @@
 {
   "nav-bar": {
+    "home": "Home",
     "playground": "Playground",
     "doc": "Documentation",
+    "games": "Games",
     "about": "About"
   },
   "landing-page": {

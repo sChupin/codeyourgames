@@ -3,6 +3,8 @@ import 'EastDesire/jscolor';
 import 'silviomoreto/bootstrap-select';
 import {Aurelia} from 'aurelia-framework';
 import {I18N, Backend, TCustomAttribute} from 'aurelia-i18n';
+import {AppRouter} from 'aurelia-router';
+import {EventAggregator} from 'aurelia-event-aggregator';
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
@@ -29,6 +31,14 @@ export function configure(aurelia: Aurelia) {
         lng : 'en',
         fallbackLng : 'en',
         debug : false
+      }).then(() => {
+        const router = aurelia.container.get(AppRouter);
+        router.transformTitle = title => instance.tr(title);
+        
+        const eventAggregator = aurelia.container.get(EventAggregator);
+        eventAggregator.subscribe('i18n:locale:changed', () => {
+          router.updateTitle();
+        });
       });
     });
 

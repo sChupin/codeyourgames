@@ -325,5 +325,294 @@ System.config({
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
     }
+  },
+  bundles: {
+    "aurelia.js": [
+      "github:github/fetch@1.0.0.js",
+      "github:github/fetch@1.0.0/fetch.js",
+      "github:twbs/bootstrap@3.3.7.js",
+      "github:twbs/bootstrap@3.3.7/css/bootstrap.css!github:systemjs/plugin-text@0.0.8.js",
+      "github:twbs/bootstrap@3.3.7/js/bootstrap.js",
+      "npm:aurelia-animator-css@1.0.1.js",
+      "npm:aurelia-animator-css@1.0.1/aurelia-animator-css.js",
+      "npm:aurelia-binding@1.2.1.js",
+      "npm:aurelia-binding@1.2.1/aurelia-binding.js",
+      "npm:aurelia-bootstrapper@1.0.0.js",
+      "npm:aurelia-bootstrapper@1.0.0/aurelia-bootstrapper.js",
+      "npm:aurelia-dependency-injection@1.3.1.js",
+      "npm:aurelia-dependency-injection@1.3.1/aurelia-dependency-injection.js",
+      "npm:aurelia-event-aggregator@1.0.1.js",
+      "npm:aurelia-event-aggregator@1.0.1/aurelia-event-aggregator.js",
+      "npm:aurelia-fetch-client@1.1.1.js",
+      "npm:aurelia-fetch-client@1.1.1/aurelia-fetch-client.js",
+      "npm:aurelia-framework@1.0.6.js",
+      "npm:aurelia-framework@1.0.6/aurelia-framework.js",
+      "npm:aurelia-history-browser@1.0.0.js",
+      "npm:aurelia-history-browser@1.0.0/aurelia-history-browser.js",
+      "npm:aurelia-history@1.0.0.js",
+      "npm:aurelia-history@1.0.0/aurelia-history.js",
+      "npm:aurelia-loader-default@1.0.0.js",
+      "npm:aurelia-loader-default@1.0.0/aurelia-loader-default.js",
+      "npm:aurelia-loader@1.0.0.js",
+      "npm:aurelia-loader@1.0.0/aurelia-loader.js",
+      "npm:aurelia-logging-console@1.0.0.js",
+      "npm:aurelia-logging-console@1.0.0/aurelia-logging-console.js",
+      "npm:aurelia-logging@1.3.1.js",
+      "npm:aurelia-logging@1.3.1/aurelia-logging.js",
+      "npm:aurelia-metadata@1.0.3.js",
+      "npm:aurelia-metadata@1.0.3/aurelia-metadata.js",
+      "npm:aurelia-pal-browser@1.0.0.js",
+      "npm:aurelia-pal-browser@1.0.0/aurelia-pal-browser.js",
+      "npm:aurelia-pal@1.3.0.js",
+      "npm:aurelia-pal@1.3.0/aurelia-pal.js",
+      "npm:aurelia-path@1.1.1.js",
+      "npm:aurelia-path@1.1.1/aurelia-path.js",
+      "npm:aurelia-polyfills@1.1.1.js",
+      "npm:aurelia-polyfills@1.1.1/aurelia-polyfills.js",
+      "npm:aurelia-route-recognizer@1.1.0.js",
+      "npm:aurelia-route-recognizer@1.1.0/aurelia-route-recognizer.js",
+      "npm:aurelia-router@1.2.1.js",
+      "npm:aurelia-router@1.2.1/aurelia-router.js",
+      "npm:aurelia-task-queue@1.2.0.js",
+      "npm:aurelia-task-queue@1.2.0/aurelia-task-queue.js",
+      "npm:aurelia-templating-binding@1.0.0.js",
+      "npm:aurelia-templating-binding@1.0.0/aurelia-templating-binding.js",
+      "npm:aurelia-templating-resources@1.4.0.js",
+      "npm:aurelia-templating-resources@1.4.0/abstract-repeater.js",
+      "npm:aurelia-templating-resources@1.4.0/analyze-view-factory.js",
+      "npm:aurelia-templating-resources@1.4.0/array-repeat-strategy.js",
+      "npm:aurelia-templating-resources@1.4.0/attr-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/aurelia-hide-style.js",
+      "npm:aurelia-templating-resources@1.4.0/aurelia-templating-resources.js",
+      "npm:aurelia-templating-resources@1.4.0/binding-mode-behaviors.js",
+      "npm:aurelia-templating-resources@1.4.0/binding-signaler.js",
+      "npm:aurelia-templating-resources@1.4.0/compose.js",
+      "npm:aurelia-templating-resources@1.4.0/css-resource.js",
+      "npm:aurelia-templating-resources@1.4.0/debounce-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/dynamic-element.js",
+      "npm:aurelia-templating-resources@1.4.0/focus.js",
+      "npm:aurelia-templating-resources@1.4.0/hide.js",
+      "npm:aurelia-templating-resources@1.4.0/html-resource-plugin.js",
+      "npm:aurelia-templating-resources@1.4.0/html-sanitizer.js",
+      "npm:aurelia-templating-resources@1.4.0/if.js",
+      "npm:aurelia-templating-resources@1.4.0/map-repeat-strategy.js",
+      "npm:aurelia-templating-resources@1.4.0/null-repeat-strategy.js",
+      "npm:aurelia-templating-resources@1.4.0/number-repeat-strategy.js",
+      "npm:aurelia-templating-resources@1.4.0/repeat-strategy-locator.js",
+      "npm:aurelia-templating-resources@1.4.0/repeat-utilities.js",
+      "npm:aurelia-templating-resources@1.4.0/repeat.js",
+      "npm:aurelia-templating-resources@1.4.0/replaceable.js",
+      "npm:aurelia-templating-resources@1.4.0/sanitize-html.js",
+      "npm:aurelia-templating-resources@1.4.0/self-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/set-repeat-strategy.js",
+      "npm:aurelia-templating-resources@1.4.0/show.js",
+      "npm:aurelia-templating-resources@1.4.0/signal-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/throttle-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/update-trigger-binding-behavior.js",
+      "npm:aurelia-templating-resources@1.4.0/with.js",
+      "npm:aurelia-templating-router@1.0.0.js",
+      "npm:aurelia-templating-router@1.0.0/aurelia-templating-router.js",
+      "npm:aurelia-templating-router@1.0.0/route-href.js",
+      "npm:aurelia-templating-router@1.0.0/route-loader.js",
+      "npm:aurelia-templating-router@1.0.0/router-view.js",
+      "npm:aurelia-templating@1.4.2.js",
+      "npm:aurelia-templating@1.4.2/aurelia-templating.js",
+      "npm:jquery@3.2.1.js",
+      "npm:jquery@3.2.1/dist/jquery.js"
+    ],
+    "app-build.js": [
+      "about.html!github:systemjs/plugin-text@0.0.8.js",
+      "about.js",
+      "app.html!github:systemjs/plugin-text@0.0.8.js",
+      "app.js",
+      "backend-service.js",
+      "difficulty.html!github:systemjs/plugin-text@0.0.8.js",
+      "difficulty.js",
+      "doc/documentation.html!github:systemjs/plugin-text@0.0.8.js",
+      "doc/documentation.js",
+      "doc/generated/assets/css/main.css!github:systemjs/plugin-text@0.0.8.js",
+      "doc/generated/classes/_test_.test.html!github:systemjs/plugin-text@0.0.8.js",
+      "doc/generated/globals.html!github:systemjs/plugin-text@0.0.8.js",
+      "doc/generated/index.html!github:systemjs/plugin-text@0.0.8.js",
+      "doc/generated/modules/_test_.html!github:systemjs/plugin-text@0.0.8.js",
+      "doc/html/doc.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/2d-motion.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/2d-motion.js",
+      "games/camera.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/camera.js",
+      "games/games.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/games.js",
+      "games/mario.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/mario.js",
+      "games/phaser-game-old.js",
+      "games/phaser-game.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/phaser-game.js",
+      "games/phaser-mario.js",
+      "games/pong.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/pong.js",
+      "games/snake.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/snake.js",
+      "games/zelda.html!github:systemjs/plugin-text@0.0.8.js",
+      "games/zelda.js",
+      "landing.html!github:systemjs/plugin-text@0.0.8.js",
+      "landing.js",
+      "lib/game.js",
+      "lib/sensors.js",
+      "lib/sprite.js",
+      "lib/test/test.js",
+      "lib/utility.js",
+      "lib/variables.js",
+      "main.js",
+      "nav-bar.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/board-initializer/animation-creator.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/board-initializer/animation-creator.js",
+      "playground/board-initializer/board-initializer.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/board-initializer/board-initializer.js",
+      "playground/board-initializer/img-list.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/board-initializer/img-list.js",
+      "playground/board-initializer/sprite-picker.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/board-initializer/sprite-picker.js",
+      "playground/code-editor/code-editor.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/code-editor/code-editor.js",
+      "playground/code-editor/editor.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/code-editor/editor.js",
+      "playground/game-container.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/game-container.js",
+      "playground/game-viewer/game-viewer.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/game-viewer/game-viewer.js",
+      "playground/image-gallery.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/image-gallery.js",
+      "playground/media-creator/creator.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/media-creator/creator.js",
+      "playground/media-creator/media-creator.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/media-creator/media-creator.js",
+      "playground/messages.js",
+      "playground/modal-view.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/modal-view.js",
+      "playground/playground.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/playground.js",
+      "playground/split-view.html!github:systemjs/plugin-text@0.0.8.js",
+      "playground/split-view.js",
+      "playground/transpiler-service.js",
+      "utils/difficulty-picker.html!github:systemjs/plugin-text@0.0.8.js",
+      "utils/difficulty-picker.js",
+      "utils/image.js",
+      "utils/language-switcher.html!github:systemjs/plugin-text@0.0.8.js",
+      "utils/language-switcher.js",
+      "utils/value-converter/blob-to-url.js",
+      "utils/value-converter/file-list-to-array.js",
+      "utils/value-converter/string-to-number.js",
+      "utils/value-converter/to-json.js"
+    ]
+  },
+  depCache: {
+    "backend-service.js": [
+      "aurelia-http-client",
+      "aurelia-framework"
+    ],
+    "difficulty.js": [
+      "aurelia-i18n"
+    ],
+    "games/2d-motion.js": [
+      "phaser"
+    ],
+    "games/camera.js": [
+      "phaser"
+    ],
+    "games/mario.js": [
+      "phaser"
+    ],
+    "games/phaser-game-old.js": [
+      "phaser"
+    ],
+    "games/phaser-game.js": [
+      "phaser"
+    ],
+    "games/phaser-mario.js": [
+      "phaser"
+    ],
+    "games/pong.js": [
+      "phaser"
+    ],
+    "games/snake.js": [
+      "phaser"
+    ],
+    "games/zelda.js": [
+      "phaser"
+    ],
+    "landing.js": [
+      "aurelia-i18n"
+    ],
+    "lib/game.js": [
+      "./sprite"
+    ],
+    "main.js": [
+      "aurelia-i18n",
+      "aurelia-router",
+      "aurelia-event-aggregator",
+      "bootstrap",
+      "EastDesire/jscolor",
+      "silviomoreto/bootstrap-select"
+    ],
+    "playground/board-initializer/animation-creator.js": [
+      "aurelia-framework"
+    ],
+    "playground/board-initializer/board-initializer.js": [
+      "aurelia-framework",
+      "aurelia-event-aggregator",
+      "../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation",
+      "EastDesire/jscolor",
+      "fabric",
+      "../messages"
+    ],
+    "playground/board-initializer/img-list.js": [
+      "aurelia-framework",
+      "../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation"
+    ],
+    "playground/board-initializer/sprite-picker.js": [
+      "aurelia-framework"
+    ],
+    "playground/code-editor/editor.js": [
+      "aurelia-framework",
+      "aurelia-event-aggregator",
+      "../messages",
+      "../transpiler-service"
+    ],
+    "playground/game-container.js": [
+      "aurelia-event-aggregator",
+      "aurelia-framework",
+      "./messages",
+      "../lib/sensors",
+      "../lib/game",
+      "../lib/variables",
+      "phaser"
+    ],
+    "playground/image-gallery.js": [
+      "../backend-service",
+      "aurelia-event-aggregator",
+      "./messages",
+      "aurelia-framework"
+    ],
+    "playground/modal-view.js": [
+      "aurelia-framework"
+    ],
+    "playground/split-view.js": [
+      "aurelia-framework",
+      "split.js"
+    ],
+    "playground/transpiler-service.js": [
+      "aurelia-framework",
+      "aurelia-event-aggregator",
+      "./messages",
+      "../backend-service"
+    ],
+    "utils/difficulty-picker.js": [
+      "aurelia-framework",
+      "aurelia-event-aggregator"
+    ],
+    "utils/language-switcher.js": [
+      "aurelia-framework",
+      "aurelia-i18n"
+    ]
   }
 });

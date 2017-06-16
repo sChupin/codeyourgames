@@ -8,3 +8,4 @@ test/e2e/dist
 coverage
 .DS_STORE
 build/reports
+npm-debug.log
