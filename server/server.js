@@ -34,7 +34,7 @@ app.use(require('./api/api'));
 
 // Serve index and config.js
 // app.get('/', (req, res) => res.render('../../client/index.html')); // index stored in server (./views)
-app.get('/', (req, res) => res.render('index.html')); // index stored in client
+app.get('/', (req, res) => res.render(path.join(__dirname, '../client/index.html'))); // index stored in client
 app.get('/config.js', (req, res) => res.sendFile(path.join(__dirname, '../client/config.js')));
 
 // Serve client static files
@@ -43,7 +43,7 @@ app.use('/dist', express.static(path.join(__dirname, '../client/dist')));
 app.use('/jspm_packages', express.static(path.join(__dirname, '../client/jspm_packages')));
 app.use('/styles', express.static(path.join(__dirname, '../client/styles')));
 app.use('/media', express.static(path.join(__dirname, '../client/media')));
-
+app.use('/locales', express.static(path.join(__dirname, '../client/locales')));
 
 // Serve media files
 app.use('/public', express.static(path.join(__dirname, './public')));
