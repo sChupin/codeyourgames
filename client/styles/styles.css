@@ -241,6 +241,16 @@ a.no-underline:focus {
   height: 100%
 }
 
+@media only screen and (max-width : 767px) {
+    .row.col-same-height {
+        height: auto !important;
+    }
+    .row.col-same-height > [class*="col-"] {
+        display: block;
+        height: auto !important;
+    }
+}
+
 /* animation definitions */
 @-webkit-keyframes fadeInRight {
   0% {
