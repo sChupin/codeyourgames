@@ -1,6 +1,4 @@
-import {BaseI18N} from 'aurelia-i18n';
-
-export class Landing extends BaseI18N {
+export class Landing {
 }
 
 // import {autoinject} from 'aurelia-framework';

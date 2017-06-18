@@ -1,7 +1,7 @@
 import {EventAggregator, Subscription} from "aurelia-event-aggregator";
 import {autoinject} from "aurelia-framework";
 
-import {CodeUpdated, GameDimensions} from "./messages";
+import {CodeUpdated, GameDimensions} from "../services/messages";
 import {Keyboard, Mouse} from "../lib/sensors";
 import {Body, Platform, Group} from "../lib/sprite";
 import {GameProps} from "../lib/game";

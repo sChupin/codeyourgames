@@ -1,13 +1,13 @@
 import {autoinject, inject, bindable} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
-import {ValidationControllerFactory, ValidationRules} from '../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
+import {ValidationControllerFactory, ValidationRules} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 import jscolor = require('EastDesire/jscolor');
 import {fabric} from 'fabric';
 // import * as fabric from 'fabric';
 
-import {ImgMsg, GameInfo, GameDimensions} from '../messages';
-import {ImageInfo} from '../image-gallery';
+import {ImgMsg, GameInfo, GameDimensions} from '../../../services/messages';
+import {ImageInfo} from '../../../utils/custom-elements/image-gallery';
 
 
 @autoinject

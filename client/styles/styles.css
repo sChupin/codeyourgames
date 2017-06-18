@@ -241,6 +241,14 @@ a.no-underline:focus {
   height: 100%
 }
 
+.ace_editor {
+    display: block;
+    border: 1px solid lightgray;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+}
+
 @media only screen and (max-width : 767px) {
     .row.col-same-height {
         height: auto !important;

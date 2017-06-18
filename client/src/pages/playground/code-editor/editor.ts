@@ -1,8 +1,8 @@
 import {autoinject} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 
-import {GameInfo, CodeUpdated} from '../messages';
-import {TranspilerService} from "../transpiler-service";
+import {GameInfo, CodeUpdated} from '../../../services/messages';
+import {TranspilerService} from "../../../services/transpiler-service";
 
 @autoinject
 export class Editor {

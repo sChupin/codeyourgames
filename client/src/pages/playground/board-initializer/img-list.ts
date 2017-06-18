@@ -1,5 +1,5 @@
 import {bindable, autoinject} from 'aurelia-framework';
-import {ValidationControllerFactory, ValidationRules, ValidationController} from '../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
+import {ValidationControllerFactory, ValidationRules, ValidationController} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 @autoinject
 export class ImgList {

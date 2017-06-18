@@ -2,7 +2,7 @@ import {autoinject} from "aurelia-framework";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import {CodeUpdated} from "./messages";
-import {BackendService} from '../backend-service';
+import {BackendService} from './backend-service';
 
 @autoinject
 export class TranspilerService {

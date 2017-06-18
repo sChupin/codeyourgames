@@ -1,6 +1,6 @@
-import {BackendService} from '../backend-service';
+import {BackendService} from '../../services/backend-service';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {ImgMsg} from './messages';
+import {ImgMsg} from '../../services/messages';
 import {autoinject, bindable} from 'aurelia-framework';
 
 @autoinject
@@ -59,7 +59,6 @@ export class ImageGallery {
   }
 
 }
-
 
 export class ImageInfo {
   public name: string;

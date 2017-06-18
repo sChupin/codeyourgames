@@ -1,7 +1,7 @@
 import {Point} from './utility';
 import {Sprite, Body, Platform, Group} from './sprite';
 
-import {BodyMap, PlatformMap, GroupMap} from '../playground/game-container';
+import {BodyMap, PlatformMap, GroupMap} from '../components/game-container';
 
 export class GameProps {
   public center: Point;
