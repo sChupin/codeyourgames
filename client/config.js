@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,6 +14,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
@@ -21,7 +23,7 @@ System.config({
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-auth": "npm:aurelia-auth@3.0.5",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
-    "aurelia-dialog": "npm:aurelia-dialog@1.0.0-beta.3.0.1",
+    "aurelia-dialog": "npm:aurelia-dialog@1.0.0-rc.1.0.3",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.1",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.1.1",
     "aurelia-framework": "npm:aurelia-framework@1.0.6",
@@ -134,7 +136,7 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
       "aurelia-pal": "npm:aurelia-pal@1.3.0"
     },
-    "npm:aurelia-dialog@1.0.0-beta.3.0.1": {
+    "npm:aurelia-dialog@1.0.0-rc.1.0.3": {
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.1",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
       "aurelia-pal": "npm:aurelia-pal@1.3.0",
