@@ -1,0 +1,119 @@
+<template>
+<require from="../../../utils/value-converters/blob-to-url"></require>
+<require from="../../../utils/value-converters/file-list-to-array"></require>
+<require from="../../../utils/value-converters/string-to-number"></require>
+<require from="../../../utils/custom-elements/image-gallery"></require>
+<require from="../../../utils/custom-elements/modal-view"></require>
+<require from="./img-list"></require>
+<div class="full-height">
+
+  <!--Board initializer-->
+  <div class="col-md-6" style="height: 100%">
+    <div class="panel with-nav-tabs panel-default" style="height: 100%">
+
+      <div class="panel-heading">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tabbackground" data-toggle="tab">Background</a></li>
+          <li><a href="#tabdecor" data-toggle="tab" click.delegate="setCurrentTab('decor')">Decors</a></li>
+          <li><a href="#tabplatform" data-toggle="tab" click.delegate="setCurrentTab('platform')">Platforms</a></li>
+          <li><a href="#tabbodies" data-toggle="tab" click.delegate="setCurrentTab('body')">Bodies</a></li>
+          <button type="button" class="btn btn-success pull-right" style="margin: 1px;" click.delegate="saveBoard()">Save this board</button>
+        </ul>
+      </div>
+
+      <div class="panel-body">
+        <div class="tab-content">
+
+          <!--Backgound initializer-->
+          <div class="tab-pane fade in active" id="tabbackground">
+            <button id="jscolortest" type="button" class="btn btn-secondary">Set background color</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#background-gallery" style="border-color: #ddd;">
+              Set background image
+            </button>
+            <br>
+            <br>
+            <input id="file" type="file" change.delegate="setBackground($event.target.files[0])" style="display:none">
+              <!--<input id="file" type='file' multiple accept="image/*" files.bind='selectedFiles' style="display:none" />
+                <div if.bind="selectedFiles !== undefined">
+                  <img src.bind="selectedFiles.item(0) | blobToUrl"><img>
+                </div>-->
+            Game dimensions:
+            <input type="text" id="board-width" value.bind="width | stringToNumber">x
+            <input type="text" id="board-height" value.bind="height | stringToNumber">
+            <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Ok</button>              
+            <br>
+            <br>
+            <input checked.bind="camera.enabled" type="checkbox" value="false" change.delegate="toggleCamRect()"> Enable Camera
+            <a data-toggle="tooltip" data-html="true" title.one-way="camDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
+            <div show.bind="camera.enabled">
+              Camera dimensions:
+              <input type="text" id="cam-width" value.bind="camera.width | stringToNumber">x
+              <input type="text" id="cam-height" value.bind="camera.height | stringToNumber">
+              <button type="button" class="btn btn-secondary" click.delegate="setCamDimensions()">Ok</button>
+              <br>
+              Camera mode:
+              <a data-toggle="tooltip" data-html="true" data-placement="bottom" title.one-way="camModeDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
+              <select value.bind="camera.mode">
+                <option value="basic">Basic mode</option>  
+                <option value="smooth">Smooth mode</option>  
+                <option value="deadzone">Deadzone mode</option>  
+              </select>
+              <br>
+              Body to follow:
+              <select value.bind="camera.spriteName">
+                <option repeat.for="body of bodies" value.bind="body.name">${body.name}</option>
+              </select>
+              <span show.bind="camera.spriteName == ''">No bodies found.</span>
+            </div>
+          </div>
+
+          <!--Decor initializer-->
+          <div class="tab-pane fade" id="tabdecor">
+
+            <!--Decors List-->
+            <img-list list.bind="decors" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
+
+          </div>
+
+          <!--Platforms initializer-->
+          <div class="tab-pane fade" id="tabplatform">
+
+            <!--Platforms list-->
+            <img-list list.bind="platforms" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
+
+          </div>
+
+          <!--Bodies initializer-->
+          <div class="tab-pane fade" id="tabbodies">
+
+            <!--Bodies list-->
+            <img-list list.bind="bodies" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>
+            
+          </div>
+
+          <!--Image gallery modal view-->
+          <modal-view modal-title.bind="'Image Gallery'" id.bind="'image-gallery'">
+            <template replace-part="modal-content">
+              <image-gallery background.bind="false"></image-gallery>
+            </template>
+          </modal-view>
+
+          <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-gallery'">
+            <template replace-part="modal-content">
+              <image-gallery background.bind="true" caller.bind="currentTab"></image-gallery>
+            </template>
+          </modal-view>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Board preview-->
+  <div class="col-md-6" style="height: 100%">
+    <div class="full-height" style="border: solid 1px #ddd; border-radius: 2px; overflow: scroll;">
+      <canvas id="board" class="full-height" style="border: 1px solid #ddd"></canvas>
+    </div>
+  </div>
+</div>
+</template>

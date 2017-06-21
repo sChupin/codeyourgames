@@ -249,6 +249,16 @@ a.no-underline:focus {
     width: 100%;
 }
 
+.panel.with-nav-tabs .panel-heading{
+  padding: 5px 5px 0 5px;
+}
+.panel.with-nav-tabs .nav-tabs{
+  border-bottom: none;
+}
+.panel.with-nav-tabs .nav-justified{
+  margin-bottom: -1px;
+}
+
 @media only screen and (max-width : 767px) {
     .row.col-same-height {
         height: auto !important;

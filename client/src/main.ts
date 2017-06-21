@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'fabric';
 import 'EastDesire/jscolor';
 import 'silviomoreto/bootstrap-select';
 import {Aurelia} from 'aurelia-framework';

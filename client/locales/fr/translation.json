@@ -19,5 +19,9 @@
     "lvl1-descr": "Tu découvres ce site? Tu n'as jamais codé ni créé de jeu? C'est le bon endroit pour démarrer !",
     "lvl2-descr": "Tu as quelques notions de programmation et tu as déjà créer quelques jeux avec cette application? N'attends plus, essaye ce niveau !",
     "lvl3-descr": "Tu sais déjà coder et la création de jeux n'a plus de secret pour toi? Tu veux t'amuser en ayant le plus de libérté possible dans ton code? Fonce !"
+  },
+  "playground": {
+    "board-init": "Plateau de jeu",
+    "code-edit": "Editeur de code"
   }
 }

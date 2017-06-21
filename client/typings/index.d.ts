@@ -29,3 +29,4 @@
 /// <reference path="modules/aurelia-templating-router/index.d.ts" />
 /// <reference path="modules/aurelia-templating/index.d.ts" />
 /// <reference path="modules/i18next/index.d.ts" />
+/// <reference path="modules/shims/shims.d.ts" />
