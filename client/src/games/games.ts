@@ -13,7 +13,8 @@ export class Games {
       { route: 'pong', name: 'pong', moduleId: './pong', nav: true, title: 'Pong' },
       { route: 'mario', name: 'mario', moduleId: './mario', nav: true, title: 'Mario' },
       { route: 'zelda', name: 'zelda', moduleId: './zelda', nav: true, title: 'Zelda' },
-      { route: 'platform', name: 'platform', moduleId: './platform', nav: true, title: 'Platform' }
+      { route: 'platform', name: 'platform', moduleId: './platform', nav: true, title: 'Platform' },
+      { route: 'spaceship', name: 'spaceship', moduleId: './spaceship', nav: true, title: 'Spaceship' }
     ]);
 
     this.router = router;
