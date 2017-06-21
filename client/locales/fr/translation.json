@@ -22,6 +22,13 @@
   },
   "playground": {
     "board-init": "Plateau de jeu",
-    "code-edit": "Editeur de code"
+    "code-edit": "Éditeur de code"
+  },
+    "board-init": {
+    "background-tab": "Arrière-plan et Dimensions",
+    "sprites-tab": "Lutins",
+    "save-board": "Sauver ce plateau",
+    "game-dim-label": "Dimension du plateau",
+    "game-dim-ok": "Ok"
   }
 }

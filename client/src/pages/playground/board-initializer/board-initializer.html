@@ -8,9 +8,9 @@
 
       <div class="panel-heading">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tabbackground" data-toggle="tab">Background &amp; Dimensions</a></li>
-          <li><a href="#tabsprites" data-toggle="tab">Sprites</a></li>
-          <button type="button" class="btn btn-success pull-right" style="margin: 1px;" click.delegate="saveBoard()">Save this board</button>
+          <li class="active"><a href="#tabbackground" data-toggle="tab">${ 'board-init.background-tab' & t }</a></li>
+          <li><a href="#tabsprites" data-toggle="tab">${ 'board-init.sprites-tab' & t }</a></li>
+          <button type="button" class="btn btn-success pull-right" style="margin: 1px;" click.delegate="saveBoard()">${ 'board-init.save-board' & t }</button>
         </ul>
       </div>
 
@@ -19,33 +19,15 @@
 
           <!--Backgound and game dimensions-->
           <div class="tab-pane fade in active" id="tabbackground">
-            Game dimensions:
-            <input type="text" id="board-width" value.bind="gameWidth | stringToNumber">x
-            <input type="text" id="board-height" value.bind="gameHeight | stringToNumber">
-            <button type="button" class="btn btn-secondary" click.trigger="setDimensions()">Ok</button>              
-            <br>
-            <br>
-            <input checked.bind="camera.enabled" type="checkbox" value="false" change.delegate="toggleCamRect()"> Enable Camera
-            <a data-toggle="tooltip" data-html="true" title.one-way="camDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
-            <div show.bind="camera.enabled">
-              Camera dimensions:
-              <input type="text" id="cam-width" value.bind="camera.width | stringToNumber">x
-              <input type="text" id="cam-height" value.bind="camera.height | stringToNumber">
-              <button type="button" class="btn btn-secondary" click.delegate="setCamDimensions()">Ok</button>
-              <br>
-              Camera mode:
-              <a data-toggle="tooltip" data-html="true" data-placement="bottom" title.one-way="camModeDescription"><span class="glyphicon glyphicon-question-sign"></span></a>
-              <select value.bind="camera.mode">
-                <option value="basic">Basic mode</option>  
-                <option value="smooth">Smooth mode</option>  
-                <option value="deadzone">Deadzone mode</option>  
-              </select>
-              <br>
-              Body to follow:
-              <select value.bind="camera.spriteName">
-                <option repeat.for="body of bodies" value.bind="body.name">${body.name}</option>
-              </select>
-              <span show.bind="camera.spriteName == ''">No bodies found.</span>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>${ 'board-init.game-dim-label' & t }</label>
+                <br>
+                <input type="text" class="form-control" value.bind="gameWidth | stringToNumber">
+                <span>X</span>
+                <input type="text" class="form-control" value.bind="gameHeight | stringToNumber">
+                <button type="button" class="btn btn-secondary" click.delegate="resizeBoard()">${ 'board-init.game-dim-ok' & t }</button>
+              </div>
             </div>
           </div>
 

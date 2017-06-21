@@ -17,4 +17,8 @@ export class BoardInitializer {
     this.board = new BoardCanvas(this.gameWidth, this.gameHeight);
 
   }
+
+  private resizeBoard() {
+    this.board.resize(this.gameWidth, this.gameHeight);
+  }
 }
