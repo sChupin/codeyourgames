@@ -1,5 +1,5 @@
 import {bindable, bindingMode} from 'aurelia-framework';
-import {SpriteSheetInfo} from '../../../utils/custom-elements/image-gallery';
+import {SpriteSheetInfo} from '../../../utils/interfaces';
 
 export class SpritePicker {
   @bindable sprite: SpriteSheetInfo;

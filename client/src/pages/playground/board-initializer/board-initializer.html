@@ -1,6 +1,5 @@
 <template>
 <require from="../../../utils/value-converters/string-to-number"></require>
-<require from="../../../utils/custom-elements/modal-view"></require>
 <require from="../../../utils/custom-elements/image-gallery"></require>
 <div class="full-height">
 
@@ -41,17 +40,11 @@
               <div class="form-group">
                 <label>Background</label>
                 <br>
-                <!--<button-modal></button-modal>-->
                 <button type="button" class="btn btn-default" click.delegate="submit()">Set background image</button>
-                <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#background-gallery" style="border-color: #ddd;">
-                  Set background image
+                <small>${background.name || 'No background set'}</small>
+                <button show.bind="background" type="button" class="close" aria-label="Close" style="margin: 7.5px 0px 0px 3px;" click.delegate="removeBackground()">
+                  <span aria-hidden="true">&times;</span>
                 </button>
-                <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-gallery'">
-                  <template replace-part="modal-content">
-                    <image-gallery background.bind="true" caller.bind="currentTab"></image-gallery>
-                  </template>
-                </modal-view>-->
-                <!--<small>No background set</small>-->
               </div>
             </div>
 

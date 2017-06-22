@@ -1,4 +1,4 @@
-import {ImageInfo} from '../utils/custom-elements/image-gallery';
+import {ImageInfo} from '../utils/interfaces';
 
 export class CodeUpdated {
   constructor(public preloadCode: string, public createCode: string, public updateCode: string) { }

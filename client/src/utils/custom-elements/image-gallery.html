@@ -6,8 +6,8 @@
   </ux-dialog-header>
   <ux-dialog-body>
     <div class="row">
-    <div class="col-md-3" repeat.for="image of images">
-      <div class="panel panel-default" class.bind="image.selected ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="addImage(image)">
+    <div class="col-md-3 col-sm-3" repeat.for="image of images">
+      <div class="panel panel-default" class.bind="image == selectedImg ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="controller.ok(image)">
         <div class="panel-body" style="height: 80px;">
           <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
         </div>
@@ -16,8 +16,8 @@
     </div>
   </ux-dialog-body>
   <ux-dialog-footer>
-    <button click.trigger="controller.cancel()">Cancel</button>
-    <button click.trigger="controller.ok(selectedImg)">Ok</button>
+    <button click.trigger="controller.cancel()">${ 'img-gallery.cancel' & t}</button>
+    <button click.trigger="controller.ok(selectedImg)">${ 'img-gallery.ok' & t }</button>
   </ux-dialog-footer>
 </ux-dialog>
 </template>

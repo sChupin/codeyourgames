@@ -1,7 +1,10 @@
+import {autoinject} from 'aurelia-framework';
+import {DialogService} from 'aurelia-dialog';
+
 import {BoardCanvas} from './board-canvas';
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
-import {DialogService} from 'aurelia-dialog';
-import {autoinject} from 'aurelia-framework';
+import {ImageInfo} from '../../../utils/interfaces';
+
 
 @autoinject
 export class BoardInitializer {
@@ -9,6 +12,8 @@ export class BoardInitializer {
 
   private gameWidth: number = 600;
   private gameHeight: number = 400;
+
+  private background: ImageInfo = null;
 
   constructor(private dialogService: DialogService) { }
 
@@ -19,7 +24,8 @@ export class BoardInitializer {
     }
     this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
       if (!response.wasCancelled && response.output != undefined) {
-        console.log(response.output);
+        this.board.setBackground(response.output);
+        this.background = response.output;
       }
     });
   }
@@ -38,5 +44,10 @@ export class BoardInitializer {
 
   private resizeBoard() {
     this.board.resize(this.gameWidth, this.gameHeight);
+  }
+
+  private removeBackground() {
+    this.board.removeBackground();
+    this.background = null;
   }
 }

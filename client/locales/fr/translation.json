@@ -31,5 +31,9 @@
     "game-dim-label": "Dimension du plateau",
     "game-dim-ok": "Ok",
     "bgnd-gallery-title": "Gallerie d'arrière-plans"
+  },
+  "img-gallery": {
+    "cancel": "Annuler",
+    "ok": "Ok"
   }
 }

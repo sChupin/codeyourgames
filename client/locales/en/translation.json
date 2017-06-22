@@ -31,5 +31,9 @@
     "game-dim-label": "Game dimensions",
     "game-dim-ok": "Ok",
     "bgnd-gallery-title": "Background Gallery"
+  },
+  "img-gallery": {
+    "cancel": "Cancel",
+    "ok": "Ok"
   }
 }
