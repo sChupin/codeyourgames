@@ -38,16 +38,30 @@
             <!--Background-->
             <div class="form-inline">
               <div class="form-group">
-                <label>Background</label>
+                <label>${ 'board-init.bgnd-label' & t }</label>
                 <br>
-                <button type="button" class="btn btn-default" click.delegate="submit()">Set background image</button>
-                <small>${background.name || 'No background set'}</small>
+                <button type="button" class="btn btn-default" click.delegate="submit()">${ 'board-init.bgnd-set' & t }</button>
+                <small>${background.name || 'board-init.no-bgnd' & t }</small>
                 <button show.bind="background" type="button" class="close" aria-label="Close" style="margin: 7.5px 0px 0px 3px;" click.delegate="removeBackground()">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
             </div>
 
+            <br>
+
+            <div class="form-inline">
+              <div class="form-group">
+                <span>${ 'board-init.bgndType' & t }</span>                
+                <select class="form-control" value.bind="backgroundType" required="required" style="margin-left: 15px;">
+                  <option repeat.for="[key, value] of bgndTypes" value.bind="key">${ value.name & t}</option>
+                </select>
+              </div>
+            </div>
+            <small>
+              <span class="glyphicon glyphicon-question-sign"></span>
+              <span>${ bgndTypes.get(backgroundType).descr & t }</span>
+            </small>
           </div>
 
           <!--Sprites-->

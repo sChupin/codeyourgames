@@ -30,7 +30,17 @@
     "save-board": "Save this board",
     "game-dim-label": "Game dimensions",
     "game-dim-ok": "Ok",
-    "bgnd-gallery-title": "Background Gallery"
+    "bgnd-gallery-title": "Background Gallery",
+    "bgnd-label": "Background",
+    "bgnd-set": "Set background image",
+    "no-bgnd": "No background set",
+    "bgndType": "Background type",
+    "bgndFixed": "Fixed",
+    "bgndCamera": "Camera",
+    "bgndScroll": "Scrollable",
+    "bgndFixedDescr": "The background fits the dimensions of the game. This is the default background type and is suitable for many games.",
+    "bgndCameraDescr": "Only a portion the game is visible at any time. This portion is defined by the camera dimensions. If a hero-type sprite is defined, it is automatically followed by the camera.",
+    "bgndScrollDescr": "The background is repeated in any direction and can be scrolled. This gives a feeling of infinity."
   },
   "img-gallery": {
     "cancel": "Cancel",

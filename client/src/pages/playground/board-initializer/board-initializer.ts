@@ -14,6 +14,13 @@ export class BoardInitializer {
   private gameHeight: number = 400;
 
   private background: ImageInfo = null;
+  private backgroundType: string;
+
+  private bgndTypes = new Map([
+    ['fixed', { name: 'board-init.bgndFixed', descr: 'board-init.bgndFixedDescr' }],
+    ['camera', { name: 'board-init.bgndCamera', descr: 'board-init.bgndCameraDescr' }],
+    ['scroll', { name: 'board-init.bgndScroll', descr: 'board-init.bgndScrollDescr' }]
+  ]);
 
   constructor(private dialogService: DialogService) { }
 
