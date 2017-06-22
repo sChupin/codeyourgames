@@ -11,7 +11,9 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .plugin('aurelia-dialog')
+    .plugin('aurelia-dialog', config => {
+      config.useDefaults();
+    })
     .plugin('abalmus/aurelia-ace-editor')
     .plugin('aurelia-validation')
     .plugin('aurelia-i18n', (instance) => {

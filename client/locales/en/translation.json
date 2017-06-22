@@ -29,6 +29,7 @@
     "sprites-tab": "Sprites",
     "save-board": "Save this board",
     "game-dim-label": "Game dimensions",
-    "game-dim-ok": "Ok"
+    "game-dim-ok": "Ok",
+    "bgnd-gallery-title": "Background Gallery"
   }
 }

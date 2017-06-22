@@ -59,7 +59,7 @@ let getGalleryBySection = function (req, res) {
     let query = {sectionName: section};
     db.retrieveUniqueItem('imggalleries', query, function(err, gallery) {
         if (!err) {
-            if (gallery !== undefined) {
+            if (gallery != undefined) {
                 res.type('application/json').status(200).json(gallery.images);
             } else {
                 res.status(404).end('Bad request: no such gallery named ' + section);

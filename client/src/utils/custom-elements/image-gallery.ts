@@ -1,77 +1,35 @@
+import {DialogController} from 'aurelia-dialog';
+import {autoinject} from 'aurelia-framework';
+
 import {BackendService} from '../../services/backend-service';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {ImgMsg} from '../../services/messages';
-import {autoinject, bindable} from 'aurelia-framework';
 
 @autoinject
 export class ImageGallery {
-  @bindable background
+  private title: string;
+  private sections: Array<string>;
+  private images = null;
 
-  public sections;
-  public gallery;
-  private loaded;
-  private selectedImg;
-
-  constructor(private backend: BackendService, private ea: EventAggregator) {
-    this.gallery = {};
-    this.loaded = {};
+  selectedImg: any = "test";
+  
+  constructor(private controller: DialogController, private backend: BackendService) {
+    controller.settings.centerHorizontalOnly = true;
+    console.log('image-gallery constructed');
+    this.backend.getImagesBySection('Backgrounds').then(data => {
+      this.images = JSON.parse(data.response);
+    })
   }
 
   attached() {
-    if (!this.background) {
-      this.backend.getGallerySections().then(data => this.sections = JSON.parse(data.response));
-    } else {
-      this.sections = ['Backgrounds'];
-    }
+    console.log('image-gallery attached');
   }
 
-  retrieveImg(section) {
-    if (!this.loaded[section]) {
-      this.loaded[section] = true;
-      this.backend.getImagesBySection(section)
-        .then(data => {
-          this.gallery[section] = JSON.parse(data.response);
-        });
-    }
+  detached() {
+    console.log('image-gallery detached');
   }
-
-  public selectImg(img) {
-    if (!img.selected) {
-      img.selected = true;
-      if (!this.selectedImg) {
-        this.selectedImg = img;
-      } else {
-        this.selectedImg.selected = false;
-        this.selectedImg = img;
-      }
-    }
+  
+  activate(model) {
+    console.log('image-gallery activated');
+    this.title = model.title;
+    this.sections = model.sections;
   }
-
-  public addImage(image) {
-    this.ea.publish(new ImgMsg(this.background, image));
-    
-    // Deselect image
-    if (this.selectedImg) {
-      this.selectedImg.selected = false;
-      this.selectedImg = null;
-    }
-
-  }
-
-}
-
-export class ImageInfo {
-  public name: string;
-  public url: string;
-  public spritesheet: SpriteSheetInfo;
-}
-
-export interface SpriteSheetInfo {
-  sheetUrl: string;
-  spriteWidth: number;
-  spriteHeight: number;
-  horizontalNbr: number;
-  verticalNbr: number;
-  spriteNbr: number;
-  defaultSpriteNo: number;
 }

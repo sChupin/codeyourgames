@@ -1,22 +1,23 @@
 <template>
-  <div repeat.for="section of sections">
-    <div class="panel panel-default" style="height: 100%;">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" href.bind="'#collapse' + section" click.delegate="retrieveImg(section)">${section}</a>
-        </h4>
-      </div>
-      <div id.bind="'collapse' + section" class="panel-collapse collapse" style="height: calc(100% - 40.48px);">
-        <div class="panel-body">
-        <div class="col-md-3" repeat.for="image of gallery[section]">
-          <div class="panel panel-default" class.bind="image.selected ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="addImage(image)">
-            <div class="panel-body" style="height: 80px;">
-              <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
-            </div>
-          </div>
-        </div>
+<ux-dialog class="modal-dialog">
+  <ux-dialog-header>
+    <button type="button" class="close" click.trigger="controller.cancel()">&times;</button>
+    ${title & t}
+  </ux-dialog-header>
+  <ux-dialog-body>
+    <div class="row">
+    <div class="col-md-3" repeat.for="image of images">
+      <div class="panel panel-default" class.bind="image.selected ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="addImage(image)">
+        <div class="panel-body" style="height: 80px;">
+          <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </ux-dialog-body>
+  <ux-dialog-footer>
+    <button click.trigger="controller.cancel()">Cancel</button>
+    <button click.trigger="controller.ok(selectedImg)">Ok</button>
+  </ux-dialog-footer>
+</ux-dialog>
 </template>

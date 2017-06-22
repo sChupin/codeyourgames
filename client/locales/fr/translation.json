@@ -29,6 +29,7 @@
     "sprites-tab": "Lutins",
     "save-board": "Sauver ce plateau",
     "game-dim-label": "Dimension du plateau",
-    "game-dim-ok": "Ok"
+    "game-dim-ok": "Ok",
+    "bgnd-gallery-title": "Gallerie d'arrière-plans"
   }
 }

@@ -1,5 +1,7 @@
 <template>
 <require from="../../../utils/value-converters/string-to-number"></require>
+<require from="../../../utils/custom-elements/modal-view"></require>
+<require from="../../../utils/custom-elements/image-gallery"></require>
 <div class="full-height">
 
   <!--Board initializer-->
@@ -19,6 +21,8 @@
 
           <!--Backgound and game dimensions-->
           <div class="tab-pane fade in active" id="tabbackground">
+
+            <!--Game dimensions-->
             <div class="form-inline">
               <div class="form-group">
                 <label>${ 'board-init.game-dim-label' & t }</label>
@@ -29,6 +33,28 @@
                 <button type="button" class="btn btn-secondary" click.delegate="resizeBoard()">${ 'board-init.game-dim-ok' & t }</button>
               </div>
             </div>
+
+            <hr>
+
+            <!--Background-->
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Background</label>
+                <br>
+                <!--<button-modal></button-modal>-->
+                <button type="button" class="btn btn-default" click.delegate="submit()">Set background image</button>
+                <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#background-gallery" style="border-color: #ddd;">
+                  Set background image
+                </button>
+                <modal-view modal-title.bind="'Background Gallery'" id.bind="'background-gallery'">
+                  <template replace-part="modal-content">
+                    <image-gallery background.bind="true" caller.bind="currentTab"></image-gallery>
+                  </template>
+                </modal-view>-->
+                <!--<small>No background set</small>-->
+              </div>
+            </div>
+
           </div>
 
           <!--Sprites-->
