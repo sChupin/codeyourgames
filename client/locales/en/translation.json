@@ -42,7 +42,8 @@
     "bgndCameraDescr": "Only a portion the game is visible at any time. This portion is defined by the camera dimensions. If a hero-type sprite is defined, it is automatically followed by the camera.",
     "bgndScrollDescr": "The background is repeated in any direction and can be scrolled. This gives an impression of infinity.",
     "camDim": "Camera dimensions",
-    "camDimOk": "Ok"
+    "camDimOk": "Ok",
+    "sprite-gallery-title": "Sprite Gallery"
   },
   "img-gallery": {
     "cancel": "Cancel",

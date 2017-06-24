@@ -42,7 +42,8 @@
     "bgndCameraDescr": "Seule une portion du jeu est visible à chaque instant. Cette portion a les dimensions du jeu, l'arrière-plan peut donc être plus grand. Si un lutin de type héro est défini, il est automatiquement suivi par la caméra.",
     "bgndScrollDescr": "L'arrière-plan est répété dans toutes les directions et peut être défilé. Cela donne une impression d'infini.",
     "camDim": "Dimensions de la caméra",
-    "camDimOk": "Ok"
+    "camDimOk": "Ok",
+    "sprite-gallery-title": "Gallerie de lutins"
   },
   "img-gallery": {
     "cancel": "Annuler",

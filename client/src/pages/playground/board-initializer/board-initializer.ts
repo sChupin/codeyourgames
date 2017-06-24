@@ -27,19 +27,6 @@ export class BoardInitializer {
 
   constructor(private dialogService: DialogService) { }
 
-  openBackgroundGallery() {
-    let model = {
-      title: 'board-init.bgnd-gallery-title',
-      sections: ['background']
-    }
-    this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
-      if (!response.wasCancelled && response.output != undefined) {
-        this.board.setBackground(response.output);
-        this.background = response.output;
-      }
-    });
-  }
-
   attached() {
     // Enable bootstrap tooltip
     $('[data-toggle="tooltip"]').tooltip();
@@ -49,7 +36,19 @@ export class BoardInitializer {
 
     // Initialize fabric canvas and associated events
     this.board = new BoardCanvas(this.gameWidth, this.gameHeight);
+  }
 
+  private openBackgroundGallery() {
+    let model = {
+      title: 'board-init.bgnd-gallery-title',
+      sections: ['Backgrounds']
+    }
+    this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
+      if (!response.wasCancelled && response.output != undefined) {
+        this.board.setBackground(response.output);
+        this.background = response.output;
+      }
+    });
   }
 
   private resizeBoard() {

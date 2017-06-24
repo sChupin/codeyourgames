@@ -1,4 +1,5 @@
 <template>
+<require from="./collapse-panel"></require>
 <ux-dialog class="modal-dialog">
   <ux-dialog-header>
     <button type="button" class="close" click.trigger="controller.cancel()">&times;</button>
@@ -6,13 +7,31 @@
   </ux-dialog-header>
   <ux-dialog-body>
     <div class="row">
-    <div class="col-md-3 col-sm-3" repeat.for="image of images">
-      <div class="panel panel-default" class.bind="image == selectedImg ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="controller.ok(image)">
-        <div class="panel-body" style="height: 80px;">
-          <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
+
+      <div if.bind="sections.length > 1" repeat.for="section of gallery">
+        <collapse-panel title.bind="sections[$index]" allow-collapse.bind="true" collapsed.bind="true">
+        <div class="col-md-3 col-sm-3" repeat.for="image of section">
+          <div class="panel panel-default" class.bind="image == selectedImg ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="controller.ok(image)">
+            <div class="panel-body" style="height: 80px;">
+              <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
+            </div>
+          </div>
+        </div>
+        </collapse-panel>
+      </div>
+    
+      <div if.bind="sections.length == 1" repeat.for="section of gallery">
+      <div class="col-md-3 col-sm-3" repeat.for="image of section">
+        <div class="panel panel-default" class.bind="image == selectedImg ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="controller.ok(image)">
+          <div class="panel-body" style="height: 80px;">
+            <img src.bind="image.url" class="img-responsive" alt="image.name" style="margin: 0 auto; height: 50px;">
+          </div>
         </div>
       </div>
-    </div>
+      </div>
+      
+
+
     </div>
   </ux-dialog-body>
   <ux-dialog-footer>

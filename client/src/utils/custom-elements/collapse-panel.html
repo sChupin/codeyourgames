@@ -1,0 +1,19 @@
+<!-- This template is a slightly modified version of the one coded by Nikolaj Ivancic (adriatic) protected by an MIT license in the aurelia-bootstrap-bridge github repository -->
+
+<template>
+    <div>
+        <div class="panel ${ 'panel-' + panelClass }">
+            <div class="panel-heading ${ allowCollapse ? 'panel-hover' : '' }" click.delegate="toggle()">
+                <strong>${title}</strong>
+                <span class="glyphicon glyphicon-chevron-down pull-right" if.bind="!collapsed && allowCollapse" style="margin-top: 4px; color: gray;"></span>
+                <span class="glyphicon glyphicon-chevron-right pull-right" if.bind="collapsed && allowCollapse" style="margin-top: 4px; color: gray;"></span>
+            </div>
+            <div class="panel-body" show.bind="!collapsed">
+                <slot></slot>
+            </div>
+            <div class="panel-footer" if.bind="footer">
+                ${footer}
+            </div>
+        </div>
+    </div>
+</template>

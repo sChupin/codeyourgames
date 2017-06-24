@@ -259,6 +259,13 @@ a.no-underline:focus {
   margin-bottom: -1px;
 }
 
+button.add-sprite {
+  border-color: #ddd;
+  height: 80px;
+  width: 86.13px;
+  margin-bottom: 20px;
+}
+
 @media only screen and (max-width : 767px) {
     .row.col-same-height {
         height: auto !important;
