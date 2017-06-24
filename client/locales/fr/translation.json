@@ -28,7 +28,7 @@
     "background-tab": "Arrière-plan et Dimensions",
     "sprites-tab": "Lutins",
     "save-board": "Sauver ce plateau",
-    "game-dim-label": "Dimension du plateau",
+    "game-dim-label": "Dimensions du plateau",
     "game-dim-ok": "Ok",
     "bgnd-gallery-title": "Gallerie d'arrière-plans",
     "bgnd-label": "Arrière-plan",
@@ -40,7 +40,9 @@
     "bgndScroll": "Défilant",
     "bgndFixedDescr": "L'arrière-plan a les dimensions du jeu. C'est le type d'arrière-plan par défaut et il convient à beaucoup de jeux.",
     "bgndCameraDescr": "Seule une portion du jeu est visible à chaque instant. Cette portion a les dimensions du jeu, l'arrière-plan peut donc être plus grand. Si un lutin de type héro est défini, il est automatiquement suivi par la caméra.",
-    "bgndScrollDescr": "L'arrière-plan est répété dans toutes les directions et peut être défilé. Cela donne une impression d'infini."
+    "bgndScrollDescr": "L'arrière-plan est répété dans toutes les directions et peut être défilé. Cela donne une impression d'infini.",
+    "camDim": "Dimensions de la caméra",
+    "camDimOk": "Ok"
   },
   "img-gallery": {
     "cancel": "Annuler",

@@ -1,4 +1,4 @@
-import {autoinject} from 'aurelia-framework';
+import {autoinject, bindable} from 'aurelia-framework';
 import {DialogService} from 'aurelia-dialog';
 
 import {BoardCanvas} from './board-canvas';
@@ -13,8 +13,11 @@ export class BoardInitializer {
   private gameWidth: number = 600;
   private gameHeight: number = 400;
 
+  private cameraWidth: number;
+  private cameraHeight: number;
+
   private background: ImageInfo = null;
-  private backgroundType: string;
+  @bindable private backgroundType: string;
 
   private bgndTypes = new Map([
     ['fixed', { name: 'board-init.bgndFixed', descr: 'board-init.bgndFixedDescr' }],
@@ -24,7 +27,7 @@ export class BoardInitializer {
 
   constructor(private dialogService: DialogService) { }
 
-  submit() {
+  openBackgroundGallery() {
     let model = {
       title: 'board-init.bgnd-gallery-title',
       sections: ['background']
@@ -53,8 +56,22 @@ export class BoardInitializer {
     this.board.resize(this.gameWidth, this.gameHeight);
   }
 
+  private resizeCamera() {
+    this.board.resizeCamera(this.cameraWidth, this.cameraHeight);
+  }
+
   private removeBackground() {
     this.board.removeBackground();
     this.background = null;
+  }
+
+  backgroundTypeChanged() {
+    if (this.backgroundType == 'camera') {
+      this.cameraWidth = this.board.getWidth();
+      this.cameraHeight = this.board.getHeight();
+      this.board.addCamera(this.cameraWidth, this.cameraHeight);
+    } else {
+      this.board.removeCamera();
+    }
   }
 }

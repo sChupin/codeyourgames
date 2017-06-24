@@ -40,7 +40,7 @@
               <div class="form-group">
                 <label>${ 'board-init.bgnd-label' & t }</label>
                 <br>
-                <button type="button" class="btn btn-default" click.delegate="submit()">${ 'board-init.bgnd-set' & t }</button>
+                <button type="button" class="btn btn-default" click.delegate="openBackgroundGallery()">${ 'board-init.bgnd-set' & t }</button>
                 <small>${background.name || 'board-init.no-bgnd' & t }</small>
                 <button show.bind="background" type="button" class="close" aria-label="Close" style="margin: 7.5px 0px 0px 3px;" click.delegate="removeBackground()">
                   <span aria-hidden="true">&times;</span>
@@ -62,6 +62,17 @@
               <span class="glyphicon glyphicon-question-sign"></span>
               <span>${ bgndTypes.get(backgroundType).descr & t }</span>
             </small>
+          
+            <br>
+
+            <div class="form-inline" show.bind="backgroundType == 'camera'">
+              <div class="form-group">
+                <span>${ 'board-init.camDim' & t }</span>
+                <input type="text" class="form-control" value.bind="cameraWidth | stringToNumber">X
+                <input type="text" class="form-control" value.bind="cameraHeight | stringToNumber">
+                <button type="button" class="btn btn-secondary" click.delegate="resizeCamera()">${ 'board-init.camDimOk' & t }</button>
+              </div>
+            </div>
           </div>
 
           <!--Sprites-->

@@ -13,3 +13,13 @@ export interface SpriteSheetInfo {
   spriteNbr: number;
   defaultSpriteNo: number;
 }
+
+export interface BoardInfo {
+  boardWidth: number;
+  baordHeigt: number;
+  backgroundURL: string;
+  backgroundName: string;
+  backgroundType: string;
+  cameraWidth: number;
+  cameraHeight: number;
+}
