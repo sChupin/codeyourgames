@@ -27,27 +27,41 @@ export class SpriteList {
     }
     this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
       if (!response.wasCancelled && response.output != undefined) {
-        let sprite: ImageInfo = response.output;
-        let callback = (img: fabric.Image) => {
+        let spriteInfo: ImageInfo = response.output;
+        let callback = (newSprite: fabric.Image) => {
           // Set sprite info
-          let data: any = img.data = {};
+          let data: any = newSprite.data = {};
           
-          data.key = sprite.name;
-          data.name = this.createUniqueName(sprite.name);
-
+          data.key = spriteInfo.name;
+          data.name = this.createUniqueName(spriteInfo.name);
+          data.url = spriteInfo.url;
+          
           // Set spritesheet info
-          data.spritesheet = sprite.spritesheet ? {} : undefined;
-          for (let props in sprite.spritesheet) {
-            data.spritesheet[props] = sprite.spritesheet[props];
+          data.spritesheet = spriteInfo.spritesheet ? {} : undefined;
+          for (let props in spriteInfo.spritesheet) {
+            data.spritesheet[props] = spriteInfo.spritesheet[props];
           }
 
-          this.sprites.push(img);
+          // Validation of sprite name
+          ValidationRules.ensure('name')
+          .required().withMessage("Sprite name is required")
+          .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
+          .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
+          .satisfies((name: string, data: any) => {
+            return this.sprites.map(sprite => {
+              if (sprite !== newSprite)
+                return sprite.data.name;
+            }).indexOf(name) == -1;
+          }).withMessage("Sprite name should be unique")
+          .on(data);
+
+          this.sprites.push(newSprite);
         };
 
-        if (sprite.spritesheet) {
-          this.board.addSpriteSheet(sprite.spritesheet, callback);
+        if (spriteInfo.spritesheet) {
+          this.board.addSpriteSheet(spriteInfo.spritesheet, callback);
         } else {
-          this.board.addSprite(sprite, callback);
+          this.board.addSprite(spriteInfo, callback);
         }
       }
     });
@@ -56,7 +70,7 @@ export class SpriteList {
   private deleteSprite(target) {
     // Remove sprite from canvas
     this.board.deleteActiveObject();
-    
+
     // Remove sprite from sprites list
     this.sprites.forEach((sprite, idx, sprites) => {
       if (sprite == target) {

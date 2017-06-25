@@ -1,5 +1,6 @@
 <template>
 <require from="../../../utils/custom-elements/image-gallery"></require>
+<require from="../../../utils/value-converters/round-number"></require>
 <require from="./sprite-picker"></require>
 <require from="./animation-creator"></require>
 
@@ -9,9 +10,9 @@
     <div class="col-md-2">
       <div class="panel" class.bind="sprite.active ? 'panel-primary' : 'panel-default'" click.delegate="board.setActiveObject(sprite)">
         <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
-          <span if.bind="sprite.spritesheet" class="glyphicon glyphicon-play-circle" aria-hidden="true" style="position: absolute; right: 16%; top: 5%"></span>
-          <img src.bind="sprite._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="sprite.name">
-          <span if.bind="sprite.grpName" style="font-size: 10px; margin: -15px; white-space: nowrap;">${ board-init.group & t}: ${sprite.grpName}</span>
+          <span if.bind="sprite.data.spritesheet" class="glyphicon glyphicon-play-circle" aria-hidden="true" style="position: absolute; right: 16%; top: 5%"></span>
+          <img src.bind="sprite.data.url" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="sprite.name">
+          <span if.bind="sprite.data.grpName" style="font-size: 10px; margin: -15px; white-space: nowrap;">${ board-init.group & t}: ${sprite.data.grpName}</span>
         </div>
       </div>
     </div>
@@ -37,38 +38,32 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-pills custom-nav" role="tablist">
-        <!--<li role="presentation" class="active"><a href.bind="'#props-'+sprite.id" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
-        <li role="presentation" if.bind="sprite.spritesheet"><a href.bind="'#anim-'+sprite.id" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>-->
+        <li role="presentation" class="active"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">Properties</a></li>
+        <!--<li role="presentation" if.bind="sprite.data.spritesheet"><a href.bind="'#anim-'+$index" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>-->
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content" style="margin: 10px;">
         <!-- Tab 1 -->
-        <!--<div role="tabpanel" class="tab-pane active" id.bind="'props-'+sprite.id">
+        <div role="tabpanel" class="tab-pane active" id.bind="'props-'+$index">
             <div class="row">
-                <div>Key: ${sprite.key}</div>
-                <div>Height: ${sprite.height * sprite.scaleY}</div>
-                <div>Width: ${sprite.width * sprite.scaleX}</div>
-                <div>x: ${sprite.left}</div>
-                <div>y: ${sprite.top}</div>
-                <div>orientation: ${sprite.angle}</div>
+                <div>Height: ${sprite.height | roundNumber }</div>
+                <div>Width: ${sprite.width | roundNumber }</div>
+                <div>x: ${sprite.left | roundNumber }</div>
+                <div>y: ${sprite.top | roundNumber }</div>
+                <div>orientation: ${sprite.angle | roundNumber }°</div>
             </div>
-            <br>
-            <div class="row">
-              Enable Controls:
-              <input type="checkbox" checked.bind="sprite.controls.enabled">
-            </div>
-        </div>-->
+        </div>
         
         <!-- Tab 2 -->
-        <!--<div if.bind="sprite.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+sprite.id">
+        <!--<div if.bind="sprite.data.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+$index">
             <div class="row">
               Default costume:
-              <sprite-picker sprite.bind="sprite.spritesheet"></sprite-picker>
+              <sprite-picker sprite.bind="sprite.data.spritesheet"></sprite-picker>
             </div>
             <div class="row">
               Animations:
-              <animation-creator spritesheet.bind="sprite.spritesheet"></animation-creator>
+              <animation-creator spritesheet.bind="sprite.data.spritesheet"></animation-creator>
             </div>
         </div>-->
     </div>

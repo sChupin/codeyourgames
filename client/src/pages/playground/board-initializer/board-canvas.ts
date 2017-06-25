@@ -12,6 +12,39 @@ export class BoardCanvas extends fabric.Canvas {
     super('board');
     this.setWidth(width);
     this.setHeight(height);
+
+    // Use width and height properties instead of scales when resizing
+    this.on('object:scaling', (evt) => {
+      let obj = evt.target;
+      let w = obj.width * obj.scaleX;
+      let h = obj.height * obj.scaleY;
+      let s = obj.strokeWidth;
+
+      obj.set({
+          'height'     : h,
+          'width'      : w,
+          'scaleX'     : 1,
+          'scaleY'     : 1
+      });
+
+    });
+
+    this.on({
+      'scaling': function(e) {
+        console.log('test');
+          var obj = this,
+              w = obj.width * obj.scaleX,
+              h = obj.height * obj.scaleY,
+              s = obj.strokeWidth;
+
+          obj.set({
+              'height'     : h,
+              'width'      : w,
+              'scaleX'     : 1,
+              'scaleY'     : 1
+          });
+      }
+    });
   }
 
   public resize(width: number, height: number): void {
