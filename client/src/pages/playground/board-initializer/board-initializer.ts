@@ -53,6 +53,11 @@ export class BoardInitializer {
 
   private resizeBoard() {
     this.board.resize(this.gameWidth, this.gameHeight);
+    
+    // Resize background to fit new board dimensions
+    if (this.background) {
+      this.board.setBackground(this.background);
+    }
   }
 
   private resizeCamera() {
