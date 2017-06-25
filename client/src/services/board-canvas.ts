@@ -1,4 +1,4 @@
-import {ImageInfo, SpriteSheetInfo} from '../../../utils/interfaces';
+import {ImageInfo, SpriteSheetInfo} from '../utils/interfaces';
 
 export class BoardCanvas extends fabric.Canvas {
 
@@ -27,23 +27,6 @@ export class BoardCanvas extends fabric.Canvas {
           'scaleY'     : 1
       });
 
-    });
-
-    this.on({
-      'scaling': function(e) {
-        console.log('test');
-          var obj = this,
-              w = obj.width * obj.scaleX,
-              h = obj.height * obj.scaleY,
-              s = obj.strokeWidth;
-
-          obj.set({
-              'height'     : h,
-              'width'      : w,
-              'scaleX'     : 1,
-              'scaleY'     : 1
-          });
-      }
     });
   }
 

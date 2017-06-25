@@ -1,7 +1,7 @@
 import {autoinject, bindable} from 'aurelia-framework';
 import {DialogService} from 'aurelia-dialog';
 
-import {BoardCanvas} from './board-canvas';
+import {BoardCanvas} from '../../../services/board-canvas';
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
 import {ImageInfo, SpriteInfo} from '../../../utils/interfaces';
 

@@ -1,7 +1,6 @@
 <template>
 <require from="../../../utils/value-converters/string-to-number"></require>
 <require from="../../../utils/custom-elements/image-gallery"></require>
-<require from="./img-list"></require>
 <require from="./sprite-list"></require>
 <div class="full-height">
 
@@ -79,7 +78,6 @@
 
           <!--Sprites-->
           <div class="tab-pane fade" id="tabsprites">
-            <!--<img-list list.bind="bodies" canvas.bind="board" selected-obj.bind="selectedBody" selected-objs.bind="selectedBodies" groups.bind="groups"></img-list>-->
             <sprite-list board.bind="board" sprites.bind="sprites"></sprite-list>
           </div>
 

@@ -3,7 +3,7 @@ import {DialogService} from 'aurelia-dialog';
 import {ValidationControllerFactory, ValidationRules, ValidationController} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
-import {BoardCanvas} from './board-canvas';
+import {BoardCanvas} from '../../../services/board-canvas';
 import {ImageInfo} from '../../../utils/interfaces';
 
 @autoinject
