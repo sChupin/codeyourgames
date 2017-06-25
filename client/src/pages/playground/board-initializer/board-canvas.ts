@@ -1,4 +1,4 @@
-import {ImageInfo} from '../../../utils/interfaces';
+import {ImageInfo, SpriteSheetInfo} from '../../../utils/interfaces';
 
 export class BoardCanvas extends fabric.Canvas {
 
@@ -62,6 +62,48 @@ export class BoardCanvas extends fabric.Canvas {
 
   public getCameraHeight(): number {
     return this.camera.height;
+  }
+
+  public addSprite(sprite: ImageInfo, callback): void {
+
+    fabric.Image.fromURL(sprite.url, (img) => {
+      // Set anchor to 0.5 in both direction
+      img.set({
+        originX: "center", 
+        originY: "center"
+      });
+
+      this.addImage(img);
+
+      callback(img);
+    }, { crossOrigin: 'anonymous' });
+  }
+
+  public addSpriteSheet(spritesheet: SpriteSheetInfo, callback): void {
+    fabric.Image.fromURL(spritesheet.sheetUrl, (img) => {
+      fabric.Image.fromURL(img.toDataURL({ left: 0, top: 0, width: spritesheet.spriteWidth, height: spritesheet.spriteHeight }), (img) => {
+        img.set({
+          originX: "center",
+          originY: "center"
+        });
+
+        this.addImage(img);
+
+        callback(img);
+      }, { crossOrigin: 'anonymous' });
+    }, { crossOrigin: 'anonymous' });
+  }
+
+  public deleteActiveObject() {
+    let aObj = this.getActiveObject();
+    this.remove(aObj);
+  }
+
+  private addImage(image: fabric.Image) {
+    this.add(image);
+    image.center();
+    image.setCoords();
+    this.setActiveObject(image);
   }
 
 }

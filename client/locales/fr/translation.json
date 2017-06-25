@@ -43,7 +43,10 @@
     "bgndScrollDescr": "L'arrière-plan est répété dans toutes les directions et peut être défilé. Cela donne une impression d'infini.",
     "camDim": "Dimensions de la caméra",
     "camDimOk": "Ok",
-    "sprite-gallery-title": "Gallerie de lutins"
+    "sprite-gallery-title": "Gallerie de lutins",
+    "group": "Groupe",
+    "spriteName": "Nom du lutin",
+    "delSprite": "Supprimer le lutin"
   },
   "img-gallery": {
     "cancel": "Annuler",

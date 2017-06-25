@@ -23,3 +23,16 @@ export interface BoardInfo {
   cameraWidth: number;
   cameraHeight: number;
 }
+
+export interface SpriteInfo {
+  key: string;
+  name: string;
+  url: string;
+  type: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  angle: number;
+  spritesheet?: SpriteSheetInfo;
+}

@@ -43,7 +43,10 @@
     "bgndScrollDescr": "The background is repeated in any direction and can be scrolled. This gives an impression of infinity.",
     "camDim": "Camera dimensions",
     "camDimOk": "Ok",
-    "sprite-gallery-title": "Sprite Gallery"
+    "sprite-gallery-title": "Sprite Gallery",
+    "group": "Group",
+    "spriteName": "Sprite name",
+    "delSprite": "Delete Sprite"
   },
   "img-gallery": {
     "cancel": "Cancel",

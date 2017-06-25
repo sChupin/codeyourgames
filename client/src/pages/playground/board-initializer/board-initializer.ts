@@ -3,7 +3,7 @@ import {DialogService} from 'aurelia-dialog';
 
 import {BoardCanvas} from './board-canvas';
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
-import {ImageInfo} from '../../../utils/interfaces';
+import {ImageInfo, SpriteInfo} from '../../../utils/interfaces';
 
 
 @autoinject
@@ -17,6 +17,8 @@ export class BoardInitializer {
   private cameraHeight: number;
 
   private background: ImageInfo = null;
+  private sprites: Array<SpriteInfo> = [];
+
   @bindable private backgroundType: string;
 
   private bgndTypes = new Map([

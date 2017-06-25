@@ -3,15 +3,15 @@
 <require from="./sprite-picker"></require>
 <require from="./animation-creator"></require>
 
-<!--Objects List-->
+<!--Sprites List-->
 <div class="row">
-  <div repeat.for="obj of list">
+  <div repeat.for="sprite of sprites">
     <div class="col-md-2">
-      <div class="panel" class.bind="obj.active ? 'panel-primary' : 'panel-default'" click.delegate="selectObj(obj)">
+      <div class="panel" class.bind="sprite.active ? 'panel-primary' : 'panel-default'" click.delegate="board.setActiveObject(sprite)">
         <div class="panel-body" style="height: 80px; text-align: center; overflow: hidden;">
-          <span if.bind="obj.spritesheet" class="glyphicon glyphicon-play-circle" aria-hidden="true" style="position: absolute; right: 16%; top: 5%"></span>
-          <img src.bind="obj._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="obj.name">
-          <span if.bind="obj.grpName != ''" style="font-size: 10px; margin: -15px; white-space: nowrap;">Group: ${obj.grpName}</span>
+          <span if.bind="sprite.spritesheet" class="glyphicon glyphicon-play-circle" aria-hidden="true" style="position: absolute; right: 16%; top: 5%"></span>
+          <img src.bind="sprite._element.src" class="img-responsive" style="margin: 0 auto; height: 50px;" alt="sprite.name">
+          <span if.bind="sprite.grpName" style="font-size: 10px; margin: -15px; white-space: nowrap;">${ board-init.group & t}: ${sprite.grpName}</span>
         </div>
       </div>
     </div>
@@ -21,13 +21,14 @@
   </div>
 </div>
 
-<div repeat.for="obj of list">
-  <!--Objects Properties-->
-  <div class="well" show.bind="obj.active && !severalObjectsSelected">
+<div repeat.for="sprite of sprites">
+  <!--Sprite Properties-->
+  <div class="well" show.bind="sprite.active && !severalObjectsSelected">
     <!--Sprite name and deleteBody btn-->
-    <div>
-      <input type="text" class="input-sm" class="form-control" value.bind="obj.name & validateOnChange">
-      <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSelectedObj()">Delete Body</button>
+    <div class="form-inline">
+      <label>${ 'board-init.spriteName' & t }</label>
+      <input type="text" class="input-sm" class="form-control" value.bind="sprite.data.name & validateOnChange" style="margin-left: 10px;">
+      <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSprite(sprite)">${ 'board-init.delSprite' & t}</button>
     </div>
     <div if.bind="controller.errors">
         <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
@@ -36,65 +37,40 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-pills custom-nav" role="tablist">
-        <li role="presentation" class="active"><a href.bind="'#props-'+obj.id" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
-        <li role="presentation" if.bind="obj.spritesheet"><a href.bind="'#anim-'+obj.id" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>
+        <!--<li role="presentation" class="active"><a href.bind="'#props-'+sprite.id" aria-controls="tab1" role="tab" data-toggle="tab">Properties</a></li>
+        <li role="presentation" if.bind="sprite.spritesheet"><a href.bind="'#anim-'+sprite.id" aria-controls="tab2" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>-->
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content" style="margin: 10px;">
         <!-- Tab 1 -->
-        <div role="tabpanel" class="tab-pane active" id.bind="'props-'+obj.id">
+        <!--<div role="tabpanel" class="tab-pane active" id.bind="'props-'+sprite.id">
             <div class="row">
-                <div>Key: ${obj.key}</div>
-                <div>Height: ${obj.height * obj.scaleY}</div>
-                <div>Width: ${obj.width * obj.scaleX}</div>
-                <div>x: ${obj.left}</div>
-                <div>y: ${obj.top}</div>
-                <div>orientation: ${obj.angle}</div>
+                <div>Key: ${sprite.key}</div>
+                <div>Height: ${sprite.height * sprite.scaleY}</div>
+                <div>Width: ${sprite.width * sprite.scaleX}</div>
+                <div>x: ${sprite.left}</div>
+                <div>y: ${sprite.top}</div>
+                <div>orientation: ${sprite.angle}</div>
             </div>
             <br>
             <div class="row">
               Enable Controls:
-              <input type="checkbox" checked.bind="obj.controls.enabled">
-              <!--<div show.bind="obj.controls.enabled">
-                Keys:
-                <select value.bind="obj.controls.keys">
-                  <option value="arrows">Arrows</option>
-                  <option value="zqsd">Z-Q-S-D</option>
-                </select>
-                <br>
-                Speed: <input type="text" value.bind="obj.controls.speed">
-                <br>
-                Mode:
-                <select value.bind="obj.controls.mode">
-                  <option value="mario">Mario</option>
-                  <option value="oblique">Oblique</option>
-                  <option value="pokemons">Pokemon</option>
-                  <option value="snake">Snake</option>
-                </select>
-                <br>
-                <span show.bind="obj.controls.mode == 'mario'">
-                  Jump key:
-                  <select value.bind="obj.controls.jumpKey">
-                    <option value="up">Up key</option>
-                    <option value="spacebar">Space bar</option>
-                  </select>
-                </span>
-              </div>-->
+              <input type="checkbox" checked.bind="sprite.controls.enabled">
             </div>
-        </div>
+        </div>-->
         
         <!-- Tab 2 -->
-        <div if.bind="obj.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+obj.id">
+        <!--<div if.bind="sprite.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+sprite.id">
             <div class="row">
               Default costume:
-              <sprite-picker sprite.bind="obj.spritesheet"></sprite-picker>
+              <sprite-picker sprite.bind="sprite.spritesheet"></sprite-picker>
             </div>
             <div class="row">
               Animations:
-              <animation-creator spritesheet.bind="obj.spritesheet"></animation-creator>
+              <animation-creator spritesheet.bind="sprite.spritesheet"></animation-creator>
             </div>
-        </div>
+        </div>-->
     </div>
 
   </div>
