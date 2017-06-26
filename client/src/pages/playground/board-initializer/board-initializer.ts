@@ -8,7 +8,6 @@ import {ImageInfo, SpriteInfo} from '../../../utils/interfaces';
 
 @autoinject
 export class BoardInitializer {
-  private test;
   private board: BoardCanvas;
 
   private gameWidth: number = 600;

@@ -46,7 +46,10 @@
     "sprite-gallery-title": "Sprite Gallery",
     "group": "Group",
     "spriteName": "Sprite name",
-    "delSprite": "Delete Sprite"
+    "delSprite": "Delete Sprite",
+    "createGroup": "Create a group",
+    "deleteGroup": "Delete group",
+    "deleteSprites": "Delete sprites"
   },
   "img-gallery": {
     "cancel": "Cancel",

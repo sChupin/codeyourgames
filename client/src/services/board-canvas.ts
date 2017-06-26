@@ -7,7 +7,7 @@ export class BoardCanvas extends fabric.Canvas {
 
   private camera = new fabric.Rect({
     left: 0, top: 0,
-    hasControls: false, hasBorders: false, selectable: true,
+    hasControls: false, hasBorders: false, selectable: false,
     fill: 'transparent', stroke: '#ddd', strokeDashArray: [5, 5]
   });
 
@@ -37,8 +37,14 @@ export class BoardCanvas extends fabric.Canvas {
       this.mouseX = pointer.x;
       this.mouseY = pointer.y;
     });
+  }
 
+  public onGroupSelection(callback) {
+    this.on('selection:created', callback);
+  }
 
+  public onGroupDeselection(callback) {
+    this.on('selection:cleared', callback);
   }
 
   public resize(width: number, height: number): void {
@@ -124,6 +130,17 @@ export class BoardCanvas extends fabric.Canvas {
   public deleteActiveObject() {
     let aObj = this.getActiveObject();
     this.remove(aObj);
+  }
+
+  public deleteActiveGroup() {
+    let aGrp = this.getActiveGroup().getObjects();
+    
+    this.discardActiveGroup();
+    aGrp.forEach(obj => {
+      this.remove(obj)
+    });
+
+    return aGrp;
   }
 
   private addImage(image: fabric.Image) {

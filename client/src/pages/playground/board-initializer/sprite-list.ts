@@ -12,8 +12,10 @@ export class SpriteList {
   private controller: ValidationController;
   @bindable({ defaultBindingMode: bindingMode.twoWay }) private errors: Array<ValidateResult> = [];
 
-  @bindable private board: BoardCanvas;
+  @bindable private board: BoardCanvas = null;
   @bindable private sprites: Array<fabric.Image> = [];
+
+  private groupSelected = false;
 
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {
     this.controller = controllerFactory.createForCurrentScope();
@@ -21,8 +23,22 @@ export class SpriteList {
 
   attached() {
     this.errors = this.controller.errors;
+    console.log(this.board);
   }
-  
+
+  // Wait the BoardCanvas to be constructed
+  boardChanged(newValue: BoardCanvas, oldValue: BoardCanvas) {
+    if (newValue) {
+      newValue.onGroupSelection(() => {
+        this.groupSelected = true;
+      });
+
+      newValue.onGroupDeselection(() => {
+        this.groupSelected = false;
+      });
+    }
+  }
+
   private openSpriteGallery(): void {
     let model = {
       title: 'board-init.sprite-gallery-title',
@@ -71,16 +87,27 @@ export class SpriteList {
     });
   }
 
-  private deleteSprite(target): void {
+  private deleteSprite(sprite: fabric.Image): void {
     // Remove sprite from canvas
     this.board.deleteActiveObject();
 
     // Remove sprite from sprites list
+    this.removeSpriteFromList(sprite);
+  }
+
+  private deleteSprites(): void {
+    // Remove sprites from canvas
+    let aGrp: Array<fabric.Object> = this.board.deleteActiveGroup();
+    
+    aGrp.forEach(aSprite => this.removeSpriteFromList(<fabric.Image> aSprite));
+  }
+
+  private removeSpriteFromList(toDel: fabric.Image): void {
     this.sprites.forEach((sprite, idx, sprites) => {
-      if (sprite == target) {
-        sprites.splice(idx, 1);
-      }
-    });
+        if (sprite == toDel) {
+          sprites.splice(idx, 1);
+        }
+      });
   }
 
   private createUniqueName(oName: string): string {

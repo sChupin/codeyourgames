@@ -46,7 +46,10 @@
     "sprite-gallery-title": "Gallerie de lutins",
     "group": "Groupe",
     "spriteName": "Nom du lutin",
-    "delSprite": "Supprimer le lutin"
+    "delSprite": "Supprimer le lutin",
+    "createGroup": "Créer un groupe",
+    "deleteGroup": "Supprimer le groupe",
+    "deleteSprites": "Supprimer les lutins"
   },
   "img-gallery": {
     "cancel": "Annuler",
