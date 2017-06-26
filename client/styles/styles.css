@@ -266,6 +266,17 @@ button.add-sprite {
   margin-bottom: 20px;
 }
 
+.error-notif {
+  position: fixed !important;
+  top: 50px !important;
+  left: 0 !important;
+  display: none;
+}
+
+.error-message {
+  margin: 0 auto !important;
+}
+
 @media only screen and (max-width : 767px) {
     .row.col-same-height {
         height: auto !important;

@@ -1,6 +1,7 @@
 <template>
 <require from="../../../utils/value-converters/string-to-number"></require>
 <require from="../../../utils/custom-elements/image-gallery"></require>
+<require from="../../../utils/value-converters/round-number"></require>
 <require from="./sprite-list"></require>
 <div class="full-height">
 
@@ -78,9 +79,9 @@
 
           <!--Sprites-->
           <div class="tab-pane fade" id="tabsprites">
-            <sprite-list board.bind="board" sprites.bind="sprites"></sprite-list>
+            <sprite-list board.bind="board" sprites.bind="sprites" errors.bind="spriteErrors"></sprite-list>
           </div>
-
+          
         </div>
       </div>
     </div>
@@ -90,7 +91,20 @@
   <div class="col-md-6" style="height: 100%">
     <div class="full-height" style="border: solid 1px #ddd; border-radius: 2px; overflow: scroll;">
       <canvas id="board" class="full-height" style="border: 1px solid #ddd"></canvas>
+      <small>x: ${board.mouseX | roundNumber}; y: ${board.mouseY | roundNumber}</small>
     </div>
   </div>
 </div>
+
+<!--Error Notification-->
+<div id="error-notif" class="col-md-offset-3 col-md-6 error-notif">
+    <div style="padding: 5px;">
+        <div class="alert alert-danger error-message">
+            <button type="button" class="close" click.delegate="closeNotif()">&times;</button>
+            There are still some errors in the sprite names
+            <div repeat.for="error of spriteErrors"><i>${error.message}</i></div>
+        </div>
+    </div>
+</div>
+
 </template>

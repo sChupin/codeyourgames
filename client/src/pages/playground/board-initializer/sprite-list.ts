@@ -1,6 +1,6 @@
-import {autoinject, bindable} from 'aurelia-framework';
+import {autoinject, bindable, bindingMode} from 'aurelia-framework';
 import {DialogService} from 'aurelia-dialog';
-import {ValidationControllerFactory, ValidationRules, ValidationController} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
+import {ValidationControllerFactory, ValidationRules, ValidationController, ValidateResult} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
 
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
 import {BoardCanvas} from '../../../services/board-canvas';
@@ -9,22 +9,26 @@ import {ImageInfo} from '../../../utils/interfaces';
 @autoinject
 export class SpriteList {
 
-  private canvasSprites = [];
+  private controller: ValidationController;
+  @bindable({ defaultBindingMode: bindingMode.twoWay }) private errors: Array<ValidateResult> = [];
 
   @bindable private board: BoardCanvas;
   @bindable private sprites: Array<fabric.Image> = [];
 
-  private controller: ValidationController;
-
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {
     this.controller = controllerFactory.createForCurrentScope();
   }
+
+  attached() {
+    this.errors = this.controller.errors;
+  }
   
-  private openSpriteGallery() {
+  private openSpriteGallery(): void {
     let model = {
       title: 'board-init.sprite-gallery-title',
       sections: ['Sprites', 'Tiles', 'Items']
     }
+
     this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
       if (!response.wasCancelled && response.output != undefined) {
         let spriteInfo: ImageInfo = response.output;
@@ -67,7 +71,7 @@ export class SpriteList {
     });
   }
 
-  private deleteSprite(target) {
+  private deleteSprite(target): void {
     // Remove sprite from canvas
     this.board.deleteActiveObject();
 
@@ -79,7 +83,14 @@ export class SpriteList {
     });
   }
 
-  private createUniqueName(oName: string) {
-    return oName;
+  private createUniqueName(oName: string): string {
+    let nName = oName;
+    let suffix = 2;
+    while (this.sprites.map(sprite => sprite.data.name).indexOf(nName) !== -1) {
+      nName = oName + suffix;
+      suffix++;
+    }
+    return nName;
   }
+
 }

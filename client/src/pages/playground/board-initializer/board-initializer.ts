@@ -1,4 +1,4 @@
-import {autoinject, bindable} from 'aurelia-framework';
+import {autoinject, bindable, BindingEngine} from 'aurelia-framework';
 import {DialogService} from 'aurelia-dialog';
 
 import {BoardCanvas} from '../../../services/board-canvas';
@@ -8,6 +8,7 @@ import {ImageInfo, SpriteInfo} from '../../../utils/interfaces';
 
 @autoinject
 export class BoardInitializer {
+  private test;
   private board: BoardCanvas;
 
   private gameWidth: number = 600;
@@ -17,7 +18,8 @@ export class BoardInitializer {
   private cameraHeight: number;
 
   private background: ImageInfo = null;
-  private sprites: Array<SpriteInfo> = [];
+  private sprites: Array<fabric.Image> = [];
+  private spriteErrors: Array<any> = [];
 
   @bindable private backgroundType: string;
 
@@ -27,15 +29,12 @@ export class BoardInitializer {
     ['scroll', { name: 'board-init.bgndScroll', descr: 'board-init.bgndScrollDescr' }]
   ]);
 
-  constructor(private dialogService: DialogService) { }
+  constructor(private dialogService: DialogService, private bindingEngine: BindingEngine) {
+    // not working
+    // this.bindingEngine.collectionObserver(this.spriteErrors).subscribe(this.errorsChanged);
+  }
 
   attached() {
-    // Enable bootstrap tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // Capture current context
-    let __this = this;
-
     // Initialize fabric canvas and associated events
     this.board = new BoardCanvas(this.gameWidth, this.gameHeight);
   }
@@ -69,6 +68,24 @@ export class BoardInitializer {
   private removeBackground() {
     this.board.removeBackground();
     this.background = null;
+  }
+
+  private saveBoard() {
+    if (this.spriteErrors.length > 0) {
+      console.log('Sprite name errors');
+      this.showNotif();
+    } else {
+      console.log('Saving board...');
+    }
+  }
+
+  private showNotif() {
+    let notif = $('#error-notif');
+    notif.fadeIn();
+  }
+
+  private closeNotif() {
+    $('#error-notif').hide();
   }
 
   backgroundTypeChanged() {

@@ -2,6 +2,9 @@ import {ImageInfo, SpriteSheetInfo} from '../utils/interfaces';
 
 export class BoardCanvas extends fabric.Canvas {
 
+  public mouseX: number;
+  public mouseY: number;
+
   private camera = new fabric.Rect({
     left: 0, top: 0,
     hasControls: false, hasBorders: false, selectable: true,
@@ -26,8 +29,16 @@ export class BoardCanvas extends fabric.Canvas {
           'scaleX'     : 1,
           'scaleY'     : 1
       });
-
     });
+
+    // Populate mouse coordinates
+    this.on('mouse:move', (evt) => {
+      let pointer = this.getPointer(evt.e);
+      this.mouseX = pointer.x;
+      this.mouseY = pointer.y;
+    });
+
+
   }
 
   public resize(width: number, height: number): void {
