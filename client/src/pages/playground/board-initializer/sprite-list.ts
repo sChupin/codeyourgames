@@ -23,17 +23,16 @@ export class SpriteList {
 
   attached() {
     this.errors = this.controller.errors;
-    console.log(this.board);
   }
 
   // Wait the BoardCanvas to be constructed
   boardChanged(newValue: BoardCanvas, oldValue: BoardCanvas) {
     if (newValue) {
-      newValue.onGroupSelection(() => {
+      newValue.setOnGroupSelection(() => {
         this.groupSelected = true;
       });
 
-      newValue.onGroupDeselection(() => {
+      newValue.setOnGroupDeselection(() => {
         this.groupSelected = false;
       });
     }

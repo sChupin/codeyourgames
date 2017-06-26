@@ -47,8 +47,8 @@
         <!-- Tab 1 -->
         <div role="tabpanel" class="tab-pane active" id.bind="'props-'+$index">
             <div class="row">
-                <div>Height: ${sprite.height | roundNumber }</div>
-                <div>Width: ${sprite.width | roundNumber }</div>
+                <div>Height: ${sprite.height * sprite.scaleY | roundNumber }</div>
+                <div>Width: ${sprite.width * sprite.scaleX | roundNumber }</div>
                 <div>x: ${sprite.left | roundNumber }</div>
                 <div>y: ${sprite.top | roundNumber }</div>
                 <div>orientation: ${sprite.angle | roundNumber }°</div>

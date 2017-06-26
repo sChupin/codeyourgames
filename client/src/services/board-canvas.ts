@@ -17,18 +17,50 @@ export class BoardCanvas extends fabric.Canvas {
     this.setHeight(height);
 
     // Use width and height properties instead of scales when resizing
-    this.on('object:scaling', (evt) => {
-      let obj = evt.target;
-      let w = obj.width * obj.scaleX;
-      let h = obj.height * obj.scaleY;
-      let s = obj.strokeWidth;
+      // this.on('object:scaling', (evt) => {
+      //   let obj = evt.target;
 
-      obj.set({
-          'height'     : h,
-          'width'      : w,
-          'scaleX'     : 1,
-          'scaleY'     : 1
-      });
+      //   // Check if multiple objects are selected
+      //   if (obj.hasOwnProperty('_objects')) {
+      //     let group = <fabric.Group> obj;
+      //     let objects = group.getObjects();
+      //     objects.forEach(obj => {
+      //       let w = obj.width * group.scaleX;
+      //       let h = obj.height * group.scaleY;
+
+      //       obj.set({
+      //           'height'     : h,
+      //           'width'      : w,
+      //           'scaleX'     : 1,
+      //           'scaleY'     : 1
+      //       });
+      //     });
+
+      //     let gW = group.width * group.scaleX;
+      //     let gH = group.height * group.scaleY;
+
+      //     group.set({
+      //       'width': gW,
+      //       'height': gH,
+      //       'scaleX': 1,
+      //       'scaleY': 1
+      //     });
+      //   } else {
+      //     let w = obj.width * obj.scaleX;
+      //     let h = obj.height * obj.scaleY;
+
+      //     obj.set({
+      //         'height'     : h,
+      //         'width'      : w,
+      //         'scaleX'     : 1,
+      //         'scaleY'     : 1
+      //     });
+      //   }
+      // });
+    // not working perfectly
+
+    this.on('object:selected', (evt) => {
+      console.log(evt.target);
     });
 
     // Populate mouse coordinates
@@ -39,11 +71,11 @@ export class BoardCanvas extends fabric.Canvas {
     });
   }
 
-  public onGroupSelection(callback) {
+  public setOnGroupSelection(callback) {
     this.on('selection:created', callback);
   }
 
-  public onGroupDeselection(callback) {
+  public setOnGroupDeselection(callback) {
     this.on('selection:cleared', callback);
   }
 
