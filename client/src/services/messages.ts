@@ -1,13 +1,19 @@
-import {ImageInfo} from '../utils/interfaces';
+import {ImageInfo, SpriteInfo} from '../utils/interfaces';
 
 export class CodeUpdated {
   constructor(public preloadCode: string, public createCode: string, public updateCode: string) { }
 }
 
-export class ImgMsg {
-  constructor(public isBackground: boolean, public image: ImageInfo) { }
+export class BoardInfo {
+  constructor(
+    public gameWidth: number, public gameHeight: number,
+    public background: ImageInfo, public backgroundType: string,
+    public sprites: Array<SpriteInfo>,
+    public cameraWidth?: number, public cameraHeight?: number,
+  ) { }
 }
 
+// to remove
 export class GameInfo {
   public backgroundImage;
   public bodies = [];
@@ -41,6 +47,7 @@ export class GameInfo {
   }
 }
 
+// to remove
 export class GameDimensions {
   constructor(public gameWidth: number, public gameHeight: number, public worldWidth: number, public worldHeight: number) { }
 }

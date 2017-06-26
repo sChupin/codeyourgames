@@ -175,6 +175,10 @@ export class BoardCanvas extends fabric.Canvas {
     return aGrp;
   }
 
+  public deselectAll() {
+    this.deactivateAll().renderAll();
+  }
+
   private addImage(image: fabric.Image) {
     this.add(image);
     image.center();

@@ -1,9 +1,11 @@
 import {autoinject, bindable, BindingEngine} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 
 import {BoardCanvas} from '../../../services/board-canvas';
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
 import {ImageInfo, SpriteInfo} from '../../../utils/interfaces';
+import {BoardInfo} from '../../../services/messages';
 
 
 @autoinject
@@ -28,7 +30,7 @@ export class BoardInitializer {
     ['scroll', { name: 'board-init.bgndScroll', descr: 'board-init.bgndScrollDescr' }]
   ]);
 
-  constructor(private dialogService: DialogService, private bindingEngine: BindingEngine) {
+  constructor(private dialogService: DialogService, private bindingEngine: BindingEngine, private ea: EventAggregator) {
     // not working
     // this.bindingEngine.collectionObserver(this.spriteErrors).subscribe(this.errorsChanged);
   }
@@ -75,6 +77,33 @@ export class BoardInitializer {
       this.showNotif();
     } else {
       console.log('Saving board...');
+
+      this.board.deselectAll();
+
+      let spritesInfo = this.sprites.map((sprite): SpriteInfo => {
+        return {
+          key: sprite.data.key,
+          name: sprite.data.name,
+          url: sprite.data.url,
+          type: sprite.data.type,
+          x: sprite.left,
+          y: sprite.top,
+          width: sprite.width,
+          height: sprite.height,
+          angle: sprite.angle,
+          spritesheet: sprite.data.spritesheet
+        };
+      });
+
+      let boardInfo = new BoardInfo(
+        this.board.getWidth(), this.board.getHeight(),
+        this.background, this.backgroundType,
+        spritesInfo
+      );
+
+      console.log(boardInfo);
+
+      this.ea.publish(boardInfo);
     }
   }
 
