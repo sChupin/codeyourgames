@@ -80,6 +80,7 @@ export class BoardInitializer {
 
       this.board.deselectAll();
 
+      // Create SpriteInfo object from canvas sprites
       let spritesInfo = this.sprites.map((sprite): SpriteInfo => {
         return {
           key: sprite.data.key,
