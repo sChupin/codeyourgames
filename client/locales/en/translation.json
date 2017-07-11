@@ -64,6 +64,7 @@
     "x": "x",
     "y": "y",
     "orientation": "Orientation",
+    "errorHeader": "There are errors in sprite names",
     "errorReq": "Sprite name is required",
     "errorLow": "Sprite name should start with lower case letter",
     "errorSpec": "Sprite name shouldn't contain special character",

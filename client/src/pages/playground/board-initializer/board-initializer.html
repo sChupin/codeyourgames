@@ -101,8 +101,8 @@
     <div style="padding: 5px;">
         <div class="alert alert-danger error-message">
             <button type="button" class="close" click.delegate="closeNotif()">&times;</button>
-            There are still some errors in the sprite names
-            <div repeat.for="error of spriteErrors"><i>${error.message}</i></div>
+            <span>${ 'board-init.errorHeader' & t }</span>
+            <div repeat.for="error of spriteErrors"><i>${ error.message & t }</i></div>
         </div>
     </div>
 </div>
