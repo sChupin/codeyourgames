@@ -17,6 +17,8 @@ export class BoardInitializer {
 
   private cameraWidth: number;
   private cameraHeight: number;
+  private cameraSetWidth: number;
+  private cameraSetHeight: number;
 
   private background: ImageInfo = null;
   private sprites: Array<fabric.Image> = [];
@@ -64,6 +66,8 @@ export class BoardInitializer {
 
   private resizeCamera() {
     this.board.resizeCamera(this.cameraWidth, this.cameraHeight);
+    this.cameraSetWidth = this.cameraWidth;
+    this.cameraSetHeight = this.cameraHeight;
   }
 
   private removeBackground() {
@@ -99,7 +103,8 @@ export class BoardInitializer {
       let boardInfo = new BoardInfo(
         this.board.getWidth(), this.board.getHeight(),
         this.background, this.backgroundType,
-        spritesInfo
+        spritesInfo,
+        this.cameraSetWidth, this.cameraSetHeight
       );
 
       console.log(boardInfo);
@@ -121,9 +126,13 @@ export class BoardInitializer {
     if (this.backgroundType == 'camera') {
       this.cameraWidth = this.board.getWidth();
       this.cameraHeight = this.board.getHeight();
+      this.cameraSetWidth = this.cameraWidth;
+      this.cameraSetHeight = this.cameraHeight;
       this.board.addCamera(this.cameraWidth, this.cameraHeight);
     } else {
       this.board.removeCamera();
+      this.cameraSetWidth = null;
+      this.cameraSetHeight = null;
     }
   }
 }
