@@ -99,6 +99,7 @@ export class BoardCanvas extends fabric.Canvas {
     this.camera.width = width - 1;
     this.camera.height = height - 1;
     this.add(this.camera);
+    this.sendToBack(this.camera);
   }
 
   public removeCamera(): void {
