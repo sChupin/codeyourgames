@@ -32,40 +32,55 @@
       <button type="button" class="btn btn-default pull-right" style="margin-top: -3px;" click.delegate="deleteSprite(sprite)">${ 'board-init.delSprite' & t}</button>
     </div>
     <div if.bind="controller.errors">
-        <span class="help-block" repeat.for="error of controller.errors">${error.message}</span>
+        <span class="help-block" repeat.for="error of controller.errors">${ error.message & t }</span>
     </div>
     <hr>
 
     <!-- Nav tabs -->
     <ul class="nav nav-pills custom-nav" role="tablist">
-        <li role="presentation" class="active"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">Properties</a></li>
+        <li role="presentation" class="active"><a href.bind="'#type-'+$index" role="tab" data-toggle="tab">${ 'board-init.type' & t }</a></li>
+        <li role="presentation"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">${ 'board-init.props' & t }</a></li>
         <!--<li role="presentation" if.bind="sprite.data.spritesheet"><a href.bind="'#anim-'+$index" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>-->
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content" style="margin: 10px;">
-        <!-- Tab 1 -->
-        <div role="tabpanel" class="tab-pane active" id.bind="'props-'+$index">
-            <div class="row">
-                <div>Height: ${sprite.height * sprite.scaleY | roundNumber }</div>
-                <div>Width: ${sprite.width * sprite.scaleX | roundNumber }</div>
-                <div>x: ${sprite.left | roundNumber }</div>
-                <div>y: ${sprite.top | roundNumber }</div>
-                <div>orientation: ${sprite.angle | roundNumber }°</div>
+      <!--Type tab-->
+      <div role="tabpanel" class="tab-pane active" id.bind="'type-'+$index">
+          <div class="row">
+            <!--Sprite type-->
+            <div class="form-inline">
+              <div class="form-group">
+                <span>${ 'board-init.spriteType' & t }</span>                
+                <select class="form-control" value.bind="sprite.data.type" required="required" style="margin-left: 15px;">
+                  <option repeat.for="[key, value] of spriteTypes" value.bind="key">${ value.name & t}</option>
+                </select>
+              </div>
             </div>
-        </div>
-        
-        <!-- Tab 2 -->
-        <!--<div if.bind="sprite.data.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+$index">
-            <div class="row">
-              Default costume:
-              <sprite-picker sprite.bind="sprite.data.spritesheet"></sprite-picker>
-            </div>
-            <div class="row">
-              Animations:
-              <animation-creator spritesheet.bind="sprite.data.spritesheet"></animation-creator>
-            </div>
-        </div>-->
+          </div>
+      </div>
+      <!-- Properties tab -->
+      <div role="tabpanel" class="tab-pane" id.bind="'props-'+$index">
+          <div class="row">
+              <div>${ 'board-init.width' & t }: ${sprite.width * sprite.scaleX | roundNumber }</div>
+              <div>${ 'board-init.height' & t }: ${sprite.height * sprite.scaleY | roundNumber }</div>
+              <div>${ 'board-init.x' & t }: ${sprite.left | roundNumber }</div>
+              <div>${ 'board-init.y' & t }: ${sprite.top | roundNumber }</div>
+              <div>${ 'board-init.orientation' & t }: ${sprite.angle | roundNumber }°</div>
+          </div>
+      </div>
+      
+      <!-- Tab 2 -->
+      <!--<div if.bind="sprite.data.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+$index">
+          <div class="row">
+            Default costume:
+            <sprite-picker sprite.bind="sprite.data.spritesheet"></sprite-picker>
+          </div>
+          <div class="row">
+            Animations:
+            <animation-creator spritesheet.bind="sprite.data.spritesheet"></animation-creator>
+          </div>
+      </div>-->
     </div>
 
   </div>

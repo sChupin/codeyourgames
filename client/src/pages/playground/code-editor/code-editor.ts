@@ -1,3 +1,3 @@
 export class CodeEditor {
-  private componentName = 'code-editor';
+  // private componentName = 'code-editor';
 }

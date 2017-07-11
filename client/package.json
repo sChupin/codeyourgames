@@ -102,7 +102,9 @@
       "split.js": "npm:split.js@^1.1.1",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
-    "devDependencies": {}
+    "devDependencies": {
+      "typedoc": "npm:typedoc@^0.7.1"
+    }
   },
   "dependencies": {
     "@types/fabric": "^1.5.22"

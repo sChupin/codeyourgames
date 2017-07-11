@@ -59,10 +59,6 @@ export class BoardCanvas extends fabric.Canvas {
       // });
     // not working perfectly
 
-    this.on('object:selected', (evt) => {
-      console.log(evt.target);
-    });
-
     // Populate mouse coordinates
     this.on('mouse:move', (evt) => {
       let pointer = this.getPointer(evt.e);

@@ -17,6 +17,12 @@ export class SpriteList {
 
   private groupSelected = false;
 
+  private spriteTypes = new Map([
+    ['platform', { name: 'board-init.platform', descr: 'board-init.platformDescr' }],
+    ['hero', { name: 'board-init.hero', descr: 'board-init.heroDescr' }],
+    ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr' }]
+  ]);
+
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {
     this.controller = controllerFactory.createForCurrentScope();
   }
@@ -63,15 +69,15 @@ export class SpriteList {
 
           // Validation of sprite name
           ValidationRules.ensure('name')
-          .required().withMessage("Sprite name is required")
-          .matches(/^[a-z].*$/).withMessage("Sprite name should start with lower case letter")
-          .matches(/^\w*$/).withMessage("Sprite name shouldn\'t contain special character")
+          .required().withMessage('board-init.errorReq')
+          .matches(/^[a-z].*$/).withMessage('board-init.errorLow')
+          .matches(/^\w*$/).withMessage('board-init.errorSpec')
           .satisfies((name: string, data: any) => {
             return this.sprites.map(sprite => {
               if (sprite !== newSprite)
                 return sprite.data.name;
             }).indexOf(name) == -1;
-          }).withMessage("Sprite name should be unique")
+          }).withMessage('board-init.errorUniq')
           .on(data);
 
           this.sprites.push(newSprite);
