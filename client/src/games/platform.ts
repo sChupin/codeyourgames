@@ -145,35 +145,35 @@ class Hero extends Phaser.Sprite {
 
     // Set motion signals
     this.cursors = this.game.input.keyboard.createCursorKeys();
+// signal based motion 
+    // this.cursors.left.onDown.add(() => {
+    //   this.body.velocity.x = -this.speed;
+    // });
+    // this.cursors.left.onUp.add(() => {
+    //   if (!this.cursors.right.isDown) {
+    //     this.body.velocity.x = 0;
+    //   } else {
+    //     this.body.velocity.x = this.speed;
+    //   }
+    // });
 
-    this.cursors.left.onDown.add(() => {
-      this.body.velocity.x = -this.speed;
-    });
-    this.cursors.left.onUp.add(() => {
-      if (!this.cursors.right.isDown) {
-        this.body.velocity.x = 0;
-      } else {
-        this.body.velocity.x = this.speed;
-      }
-    });
+    // this.cursors.right.onDown.add(() => {
+    //   this.body.velocity.x = this.speed;
+    // });
+    // this.cursors.right.onUp.add(() => {
+    //   if (!this.cursors.left.isDown) {
+    //     this.body.velocity.x = 0;
+    //   } else {
+    //     this.body.velocity.x = -this.speed;
+    //   }
+    // });
 
-    this.cursors.right.onDown.add(() => {
-      this.body.velocity.x = this.speed;
-    });
-    this.cursors.right.onUp.add(() => {
-      if (!this.cursors.left.isDown) {
-        this.body.velocity.x = 0;
-      } else {
-        this.body.velocity.x = -this.speed;
-      }
-    });
-
-    this.cursors.up.onDown.add(() => {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.body.velocity.y = -this.jumpForce;
-      }
-    });
-
+    // this.cursors.up.onDown.add(() => {
+    //   if (this.body.blocked.down || this.body.touching.down) {
+    //     this.body.velocity.y = -this.jumpForce;
+    //   }
+    // });
+//
     // Set up camera
     this.game.camera.follow(this);
     let left = this.game.width / 3;
@@ -182,6 +182,20 @@ class Hero extends Phaser.Sprite {
   }
 
   update() {
+
+    this.body.velocity.x = 0;
+
+    if (this.cursors.left.isDown) {
+      this.body.velocity.x = -this.speed;
+    } else if (this.cursors.right.isDown) {
+      this.body.velocity.x = this.speed;
+    }
+
+    if (this.cursors.up.isDown) {
+      if (this.body.blocked.down || this.body.touching.down) {
+        this.body.velocity.y = -this.jumpForce;
+      }
+    }
 
     // Set animations and frame based on motion
     if (this.body.velocity.x > 0) {

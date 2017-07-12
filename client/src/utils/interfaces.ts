@@ -14,15 +14,15 @@ export interface SpriteSheetInfo {
   defaultSpriteNo: number;
 }
 
-export interface BoardInfo {
-  boardWidth: number;
-  baordHeigt: number;
-  backgroundURL: string;
-  backgroundName: string;
-  backgroundType: string;
-  cameraWidth: number;
-  cameraHeight: number;
-}
+// export interface BoardInfo {
+//   boardWidth: number;
+//   baordHeight: number;
+//   backgroundURL: string;
+//   backgroundName: string;
+//   backgroundType: string;
+//   cameraWidth: number;
+//   cameraHeight: number;
+// }
 
 export interface SpriteInfo {
   key: string;
@@ -35,4 +35,9 @@ export interface SpriteInfo {
   height: number;
   angle: number;
   spritesheet?: SpriteSheetInfo;
+}
+
+export interface Dimensions {
+  width: number;
+  height: number;
 }

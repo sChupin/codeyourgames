@@ -1,7 +1,7 @@
 import {autoinject} from "aurelia-framework";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
-import {CodeUpdated} from "./messages";
+import {CodeUpdate} from "./messages";
 import {BackendService} from './backend-service';
 
 @autoinject
@@ -26,7 +26,7 @@ export class TranspilerService {
         let update = eventCode.update;
 
         // Publish codes to game-container
-        this.ea.publish(new CodeUpdated(preloadCode, create, update));
+        this.ea.publish(new CodeUpdate(preloadCode, create, update));
       });
   }
 

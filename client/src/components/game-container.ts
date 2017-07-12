@@ -1,9 +1,10 @@
 import {EventAggregator, Subscription} from "aurelia-event-aggregator";
-import {autoinject} from "aurelia-framework";
+import {autoinject, bindable} from "aurelia-framework";
 
-import {CodeUpdated, GameDimensions} from "../services/messages";
+import {CodeUpdate} from "../services/messages";
+
 import {Keyboard, Mouse} from "../lib/sensors";
-import {Body, Platform, Group} from "../lib/sprite";
+import {Group, Hero} from "../lib/sprite";
 import {GameProps} from "../lib/game";
 import {NumberMap, TextMap, BooleanMap} from "../lib/variables";
 
@@ -14,20 +15,16 @@ export class GameContainer {
   private container: HTMLDivElement;
 
   private codeUpdateSubscriber: Subscription;
-  private gameDimensionsSubscriber: Subscription;
 
   private game: Game;
-  private gameWidth: number;
-  private gameHeight: number;
-  private worldWidth: number;
-  private worldHeight: number;
+  @bindable private gameWidth: number;
+  @bindable private gameHeight: number;
 
   constructor(private ea: EventAggregator) { }
 
   attached() {
     // Refresh game with new code
-    this.gameDimensionsSubscriber = this.ea.subscribe(GameDimensions, msg => {this.gameWidth = msg.gameWidth; this.gameHeight = msg.gameHeight; this.worldWidth = msg.worldWidth; this.worldHeight = msg.worldHeight;});
-    this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdated, msg => this.update(msg.preloadCode, msg.createCode, msg.updateCode));
+    this.codeUpdateSubscriber = this.ea.subscribe(CodeUpdate, code => this.update(code.preloadCode, code.createCode, code.updateCode));
     
     // Disable key capture when click outside game
     window.addEventListener('click', (e) => {
@@ -42,14 +39,20 @@ export class GameContainer {
   }
 
   detached() {
-    this.gameDimensionsSubscriber.dispose();
     this.codeUpdateSubscriber.dispose();
     if (this.game != null) {
       this.game.destroy();
     }
   }
 
-  private update(preloadCode: string, createCode: string, updateCode: string) {    
+  private update(preloadCode: string, createCode: string, updateCode: string) {
+
+    if (this.gameWidth == undefined || this.gameHeight == undefined) {
+      console.log('Game width and height are not defined');
+      console.log('You need to save a board first');
+      return;
+    }
+
     if (this.game != null) {
       this.game.destroy();
     }
@@ -73,11 +76,11 @@ export class GameContainer {
 }
 
 class Game extends Phaser.Game {
-  constructor(preloadCode: string, createCode: string, updateCode: string, width: number = 400, height: number = 300) {
+  constructor(preloadCode: string, createCode: string, updateCode: string, width: number, height: number) {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
     GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', createCode);
+    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', 'Hero', createCode);
     GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', updateCode);
 
     this.state.add('main', GameWorld);
@@ -89,8 +92,6 @@ class GameWorld extends Phaser.State {
 
   // Game properties handler accessed by global Game in user code
   private gameProps: GameProps;
-
-  private background: any;
 
   // List of sprite accessed by global Bodies in user code
   private bodies: BodyMap = {};
@@ -120,12 +121,12 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
+    this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap, Hero);
   }
 
   update() {
     // Bodies always collide with platforms
-    this.physics.arcade.collide(this.groups.bodies, this.groups.platforms);
+    // this.physics.arcade.collide(this.groups.bodies, this.groups.platforms);
 
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
@@ -134,7 +135,7 @@ class GameWorld extends Phaser.State {
   }
 
   private initGameProps() {
-    this.gameProps = new GameProps(this.game, this.background, this.bodies, this.platforms, this.groups);
+    this.gameProps = new GameProps(this.game, this.bodies, this.platforms);
   }
 
   private initKeyboard() {
@@ -157,7 +158,7 @@ export interface BodyMap {
 }
 
 export interface PlatformMap {
-  [key: string]: Platform;
+  [key: string]: any;
 }
 
 export interface FunctionMap {

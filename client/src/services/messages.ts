@@ -1,6 +1,6 @@
 import {ImageInfo, SpriteInfo} from '../utils/interfaces';
 
-export class CodeUpdated {
+export class CodeUpdate {
   constructor(public preloadCode: string, public createCode: string, public updateCode: string) { }
 }
 
