@@ -134,7 +134,7 @@ class Hero extends Phaser.Sprite {
     this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
     
     // Enable collision with world bounds
-    this.body.collideWorldBounds = this.canFall;
+    this.body.collideWorldBounds = true;
 
     // Set hero gravity
     this.body.gravity.y = this.gravity;

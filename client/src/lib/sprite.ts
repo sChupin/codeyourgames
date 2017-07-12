@@ -524,7 +524,7 @@ export class Hero extends Sprite {
   private cursors;
   
   // Default properties
-  private defaultCanFall: boolean = false;
+  private defaultCanFall: boolean = true;
   private defaultSpeed: number = 200;
   private defaultGravity = 500;
   private defaultJumpForce = 300;
@@ -549,7 +549,7 @@ export class Hero extends Sprite {
     this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
     
     // Enable collision with world bounds
-    this.body.collideWorldBounds = this.canFall;
+    this.body.collideWorldBounds = !this.canFall;
     // todo enable collision without left/right in any case
 
     // Set hero gravity
@@ -570,6 +570,10 @@ export class Hero extends Sprite {
   }
 
   update() {
+
+    // Apply properties in case they changed
+    this.body.collideWorldBounds = !this.canFall;
+    this.body.gravity.y = this.gravity;
 
     // Set collision with platforms
     let children = this.game.world.children;
@@ -634,4 +638,6 @@ export class Platform extends Sprite {
   
     // Set immovable 
     this.body.immovable = true;
+
+    }
 }

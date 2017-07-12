@@ -91,11 +91,11 @@ export class BoardInitializer {
           name: sprite.data.name,
           url: sprite.data.url,
           type: sprite.data.type,
-          x: sprite.left,
-          y: sprite.top,
-          width: sprite.width,
-          height: sprite.height,
-          angle: sprite.angle,
+          x: Math.round(sprite.left),
+          y: Math.round(sprite.top),
+          width: Math.round(sprite.width * sprite.scaleX),
+          height: Math.round(sprite.height * sprite.scaleY),
+          angle: Math.round(sprite.angle),
           spritesheet: sprite.data.spritesheet
         };
       });
