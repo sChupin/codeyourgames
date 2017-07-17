@@ -65,6 +65,17 @@ export class BoardInitializer {
   }
 
   private resizeCamera() {
+    let boardWidth = this.board.getWidth();
+    let boardHeight = this.board.getHeight();
+
+    if (this.cameraWidth > boardWidth) {
+      this.cameraWidth = boardWidth;
+    }
+
+    if (this.cameraHeight > boardHeight) {
+      this.cameraHeight = boardHeight;
+    }
+
     this.board.resizeCamera(this.cameraWidth, this.cameraHeight);
     this.cameraSetWidth = this.cameraWidth;
     this.cameraSetHeight = this.cameraHeight;
