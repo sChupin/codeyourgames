@@ -527,7 +527,7 @@ export class Hero extends Sprite {
   private defaultCanFall: boolean = true;
   private defaultSpeed: number = 200;
   private defaultGravity = 500;
-  private defaultJumpForce = 300;
+  private defaultJumpForce = 250;
 
   // Physics properties
   public canFall: boolean;
