@@ -519,6 +519,7 @@ export class Group extends Phaser.Group {
   }
 }
 
+
 export class Hero extends Sprite {
 
   private cursors;
@@ -640,4 +641,12 @@ export class Platform extends Sprite {
     this.body.immovable = true;
 
     }
+}
+
+export class Decor extends Sprite {
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+              public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame);    
+  }
 }

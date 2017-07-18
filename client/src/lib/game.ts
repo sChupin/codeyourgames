@@ -1,5 +1,5 @@
 import {Point} from './utility';
-import {Sprite, Group, Hero, Platform} from './sprite';
+import {Sprite, Hero, Platform, Decor} from './sprite';
 
 import {BodyMap, PlatformMap, GroupMap} from '../components/game-container';
 
@@ -26,8 +26,8 @@ export class GameProps {
     this.cameraCenterY = game.height/2;
 
     // Set paused property on game pause/resume
-    this.game.onPause.add(() => this.game.paused = true);
-    this.game.onResume.add(() => this.game.paused = false);
+    this.game.onPause.add(() => this.pause());
+    this.game.onResume.add(() => this.resume());
   }
 
   public pause() {
@@ -81,15 +81,21 @@ export class GameProps {
     return this.game.add.existing(new Platform(this.game, x, y, key));
   }
 
-  public addGroup(): Group {
-    return this.game.add.existing(new Group(this.game));
-  }
+  // public addGroup(): Group {
+  //   return this.game.add.existing(new Group(this.game));
+  // }
 
   public addDecor(x: number, y: number, key: string, width: number, height: number) {
-    let sprite = this.game.add.image(x, y, key);
-    sprite.anchor.setTo(0.5, 0.5);
-    sprite.width = width;
-    sprite.height = height;
+    let decor = this.game.add.existing(new Decor(this.game, x, y, key));
+
+    // Send this sprite to deepest level
+    decor.sendToBack();
+
+    // Move it just above the background
+    if (this.background) {
+      decor.moveUp();
+    }
+    return decor;
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {
