@@ -524,6 +524,14 @@ export class Hero extends Sprite {
 
   private cursors;
   
+  // Initial properties
+  private initX: number;
+  private initY: number;
+  private initFrame: number | string;
+  private initJumpForce: number;
+  private initGravity: number;
+  private initSpeed: number;
+
   // Default properties
   private defaultCanFall: boolean = true;
   private defaultSpeed: number = 200;
@@ -539,7 +547,7 @@ export class Hero extends Sprite {
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
- 
+
     // Enable hero physics
     this.game.physics.arcade.enable(this);
 
@@ -548,6 +556,14 @@ export class Hero extends Sprite {
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
     this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
     this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
+
+    // Set initial properties
+    this.initX = x;
+    this.initY = y;
+    this.initFrame = frame;
+    this.initJumpForce = this.jumpForce;
+    this.initGravity = this.gravity;
+    this.initSpeed = this.speed;
     
     // Enable collision with world bounds
     this.body.collideWorldBounds = !this.canFall;
@@ -626,6 +642,15 @@ export class Hero extends Sprite {
       }
     }
   }
+
+  public restart() {
+    this.x = this.initX;
+    this.y = this.initY;
+    this.frame = this.initFrame;
+    this.jumpForce = this.initJumpForce;
+    this.gravity = this.initGravity;
+    this.speed = this.initSpeed;
+  }
 }
 
 export class Platform extends Sprite {
@@ -647,6 +672,36 @@ export class Decor extends Sprite {
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame);    
+    super(game, x, y, key, frame);
+  }
+}
+
+export class Ennemy extends Sprite {
+
+  // Default properties
+  private defaultCanFall: boolean = true;
+  private defaultSpeed: number = 200;
+  private defaultGravity = 500;
+
+  // Physics properties
+  public canFall: boolean;
+  public speed: number;
+  public gravity: number;
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+              public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame);
+
+    // Enable platform physics
+    this.game.physics.arcade.enable(this);
+
+    // Set hero properties
+    this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
+    this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
+    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
+
+    // Enable collision with world bounds
+    this.body.collideWorldBounds = !this.canFall;
+    // todo enable collision without left/right in any case
   }
 }

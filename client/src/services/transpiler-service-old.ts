@@ -9,10 +9,6 @@ export class TranspilerService {
 
   constructor(private ea: EventAggregator, private backend: BackendService) { }
 
-  public transpileEvents(eventCode) {
-    return this.backend.parseEventCode(eventCode);
-  }
-
   transpile(preloadCode, createCode, eventCode, functionCode) {
     let parseEventCodePromise = this.backend.parseEventCode(eventCode);
     let parseFunctionCodePromise = this.backend.parseFunctionCode(functionCode);
@@ -50,7 +46,7 @@ export class TranspilerService {
     return create;
   }
 
-  public addEvents(events: Array<any>): EventCode {
+  private addEvents(events: Array<any>): EventCode {
     let create = '';
     let update = '';
     console.log(events);

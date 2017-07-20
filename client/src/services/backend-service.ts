@@ -18,7 +18,7 @@ export class BackendService {
     return this.http.get('img-gallery');
   }
 
-  parseEventCode(code) {
+  parseEventCode(code): Promise<any> {
     let postBody: any = {};
     postBody.code = code;
     return this.http.post('transpiler/event', postBody);

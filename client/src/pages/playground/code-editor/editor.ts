@@ -20,7 +20,7 @@ export class Editor {
   private preloadCode: string = ""; // Not editable by user
   private createCode: string = "";
 
-  constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser) { }
+  constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService) { }
 
   attached() {
     // Process game info from board initializer
@@ -47,7 +47,13 @@ export class Editor {
    * Execute the code from all editors
    */
   public runCode() {
-    this.ea.publish(new CodeUpdate(this.preloadCode, this.createEditor.getValue(), ""));
+    this.transpiler.transpileEvents(this.eventEditor.getValue()).then(value => {
+      let test = JSON.parse(value.response);
+      let eventCode = this.transpiler.addEvents(test);
+      let createCode = this.createEditor.getValue() + eventCode.create;
+      let updateCode = eventCode.update;
+      this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));
+    });
   }
 }
 
