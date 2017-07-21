@@ -573,8 +573,8 @@ export class Hero extends Sprite {
     this.body.gravity.y = this.gravity;
 
     // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10 , true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10  , true);
+    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
 
     // Create cursors
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -617,14 +617,14 @@ export class Hero extends Sprite {
     }
 
     // Set animations and frame based on motion
-    if (this.body.velocity.x > 0) {
+    if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
       if (this.body.blocked.down || this.body.touching.down) {
         this.animations.play('moveRight');
       } else {
         this.animations.stop();
         this.frame = 9;
       }
-    } else if (this.body.velocity.x < 0) {
+    } else if (this.body.velocity.x < 0 && this.speed > 0 || this.body.velocity.x > 0 && this.speed < 0) {
       if (this.body.blocked.down || this.body.touching.down) {
         this.animations.play('moveLeft');
       } else {
@@ -650,6 +650,24 @@ export class Hero extends Sprite {
     this.jumpForce = this.initJumpForce;
     this.gravity = this.initGravity;
     this.speed = this.initSpeed;
+  }
+
+  public getSick() {
+    if (this.speed > 0) {
+      this.speed = -this.speed;
+    }
+    if (this.tint == 0xFFFFFF) {
+      this.tint = 0xB5F3A2;      
+    }
+  }
+
+  public getCured() {
+    if (this.speed < 0) {
+      this.speed = -this.speed;
+    }
+    if (this.tint != 0xFFFFFF) {
+      this.tint = 0xFFFFFF;      
+    }
   }
 }
 
@@ -710,8 +728,8 @@ export class Enemy extends Sprite {
     this.body.gravity.y = this.gravity;
 
     // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10 , true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10  , true);
+    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
   }
 
   update() {
