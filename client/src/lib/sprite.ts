@@ -733,7 +733,6 @@ export class Enemy extends Sprite {
           // Enemy AI
           if (enemy.body.velocity.x > 0 && enemy.x + enemy.width / 2 > platform.x + platform.width / 2
               || enemy.body.velocity.x < 0 && enemy.x - enemy.width / 2 < platform.x - platform.width / 2) {
-            // enemy.body.velocity.x *= -1;
             this.directionRight = !this.directionRight;
           }
           this.body.velocity.x = this.directionRight ? this.speed : -this.speed;
