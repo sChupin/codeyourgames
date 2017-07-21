@@ -45,25 +45,27 @@ class GameWorld extends Phaser.State {
 
     this.platformGroup = this.add.group();
 
-    let x = 0;
-    let y = 400;
-    while (x < this.world.width) {
-      x += Math.floor(Math.random() * 75);
-      let width = Math.floor(Math.random() * 100) + 200;
+    // let x = 0;
+    // let y = 400;
+    // while (x < this.world.width) {
+    //   x += Math.floor(Math.random() * 75);
+    //   let width = Math.floor(Math.random() * 100) + 200;
 
-      // Create new platform
-      let platform = new Platform(this.game, x, y, 'platform', {width: width});
+    //   // Create new platform
+    //   let platform = new Platform(this.game, x, y, 'platform', {width: width});
 
-      x += platform.width;
+    //   x += platform.width;
 
-      // Add platform to world
-      this.add.existing(platform);
+    //   // Add platform to world
+    //   this.add.existing(platform);
 
-      // Add platform to platformGroup
-      this.platformGroup.add(platform);
+    //   // Add platform to platformGroup
+    //   this.platformGroup.add(platform);
 
-      y -= Math.sign(Math.random() - 0.35) * Math.floor((Math.random() * 75));
-    }  
+    //   y -= Math.sign(Math.random() - 0.35) * Math.floor((Math.random() * 75));
+    // }  
+
+    let platform = new Platform(this.game, this.game.world.centerX, 400, 'platform', {width: this.game.world.width});
 
   }
 
@@ -120,9 +122,19 @@ class Hero extends Phaser.Sprite {
   public gravity: number;
   public jumpForce: number;
 
+  // Debug texts
+  private speedText: Phaser.Text;
+  private frameRateText: Phaser.Text;
+  private frameRate: number = 10;
+
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
+
+    this.speedText = this.game.add.text(16, 16, 'Speed: 0', { fontSize: '32px', fill: '#fff' });
+    this.speedText.fixedToCamera = true;
+    this.frameRateText = this.game.add.text(16, 48, 'Frame rate: 0', { fontSize: '32px', fill: '#fff' });
+    this.frameRateText.fixedToCamera = true;
     
     // Enable hero physics
     this.game.physics.arcade.enable(this);
@@ -140,8 +152,8 @@ class Hero extends Phaser.Sprite {
     this.body.gravity.y = this.gravity;
 
     // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10 , true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10  , true);
+    this.animations.add('moveRight', [8, 9, 10, 11], this.frameRate, true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], this.frameRate, true);
 
     // Set motion signals
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -179,9 +191,54 @@ class Hero extends Phaser.Sprite {
     let left = this.game.width / 3;
     let width = left;
     this.game.camera.deadzone = new Phaser.Rectangle(left, 0, width, this.game.height);
+
+    // Speed & frame rate modifier
+    let A = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    A.onDown.add(() => {
+      this.speed++;
+    });
+    A.onHoldCallback = () => {
+      if (A.duration > 300) {
+        this.speed++;
+      }
+    };
+    let Z = this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    Z.onDown.add(() => {
+      this.speed--;
+    });
+    Z.onHoldCallback = () => {
+      if (Z.duration > 300) {
+        this.speed--;
+      }
+    };
+    let Q = this.game.input.keyboard.addKey(Phaser.Keyboard.Q);
+    Q.onDown.add(() => {
+      this.frameRate++;
+    });
+    Q.onHoldCallback = () => {
+      if (Q.duration > 300) {
+      this.frameRate++;        
+      }
+    };
+    let S = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    S.onDown.add(() => {
+      this.frameRate--;
+    });
+    S.onHoldCallback = () => {
+      if (S.duration > 300) {
+        this.frameRate--;
+      }
+    };
   }
 
   update() {
+
+    this.speedText.text = 'Speed: ' + this.speed;
+    this.frameRateText.text = 'Frame rate: ' + this.frameRate;
+
+    this.frameRate = speedToFrameRate(this.speed);
+
+    this.animations.currentAnim.speed = this.frameRate;
 
     this.body.velocity.x = 0;
 
@@ -221,4 +278,18 @@ class Hero extends Phaser.Sprite {
       }
     }
   }
+}
+
+function speedToFrameRate(speed: number) {
+  if (speed < 15) {
+    return 4;
+  }
+  if (speed < 50) {
+    return 5;
+  }
+  if (speed < 75) {
+    return 6;
+  }
+  
+  return Math.floor(speed/50 + 6);
 }
