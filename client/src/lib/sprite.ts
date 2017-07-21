@@ -10,6 +10,11 @@ export class Sprite extends Phaser.Sprite {
 
     // Center sprite to its position
     this.anchor.setTo(0.5);
+
+    // Set Sprite properties
+    if (opts.hasOwnProperty('width')) { this.width = opts.width; }
+    if (opts.hasOwnProperty('height')) { this.height = opts.height; }
+    if (opts.hasOwnProperty('angle')) { this.angle = opts.angle; }
   }
 
   public changeCostume(costumeNo: number) {
@@ -26,6 +31,50 @@ export class Sprite extends Phaser.Sprite {
 
   public resetScale() {
     this.scale.setTo(1);
+  }
+}
+
+class AnimatedSprite extends Sprite {
+
+  public speed: number;
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+              public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame);
+
+    // Create animations
+    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
+  }
+
+  update() {
+    // Set animations and frame based on motion
+    this.animations.currentAnim.speed = speedToFrameRate(this.speed);
+
+    if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
+      if (this.body.blocked.down || this.body.touching.down) {
+        this.animations.play('moveRight');
+      } else {
+        this.animations.stop();
+        this.frame = 9;
+      }
+    } else if (this.body.velocity.x < 0 && this.speed > 0 || this.body.velocity.x > 0 && this.speed < 0) {
+      if (this.body.blocked.down || this.body.touching.down) {
+        this.animations.play('moveLeft');
+      } else {
+        this.animations.stop();
+        this.frame = 5;
+      }
+    } else {
+      this.animations.stop();
+      if (this.frame == 0) {
+        this.frame = 0;
+      } else if (this.frame >= 8) {
+        this.frame = 8;
+      } else {
+        this.frame = 4;
+      }
+    }
   }
 }
 
@@ -520,7 +569,7 @@ export class Group extends Phaser.Group {
 }
 
 
-export class Hero extends Sprite {
+export class Hero extends AnimatedSprite {
 
   private cursors;
   
@@ -540,13 +589,13 @@ export class Hero extends Sprite {
 
   // Physics properties
   public canFall: boolean;
-  public speed: number;
+  public speed: number; // Useless as inherited, redeclared for doc purpose only
   public gravity: number;
   public jumpForce: number;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame);
+    super(game, x, y, key, frame, opts);
 
     // Enable hero physics
     this.game.physics.arcade.enable(this);
@@ -572,10 +621,6 @@ export class Hero extends Sprite {
     // Set hero gravity
     this.body.gravity.y = this.gravity;
 
-    // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
-
     // Create cursors
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -587,7 +632,6 @@ export class Hero extends Sprite {
   }
 
   update() {
-
     // Apply properties in case they changed
     this.body.collideWorldBounds = !this.canFall;
     this.body.gravity.y = this.gravity;
@@ -616,31 +660,8 @@ export class Hero extends Sprite {
       }
     }
 
-    // Set animations and frame based on motion
-    if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveRight');
-      } else {
-        this.animations.stop();
-        this.frame = 9;
-      }
-    } else if (this.body.velocity.x < 0 && this.speed > 0 || this.body.velocity.x > 0 && this.speed < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveLeft');
-      } else {
-        this.animations.stop();
-        this.frame = 5;
-      }
-    } else {
-      this.animations.stop();
-      if (this.frame == 0) {
-        this.frame = 0;
-      } else if (this.frame >= 8) {
-        this.frame = 8;
-      } else {
-        this.frame = 4;
-      }
-    }
+    // Call inherited update method so touching check happens after collide
+    super.update();
   }
 
   public restart() {
@@ -671,6 +692,22 @@ export class Hero extends Sprite {
   }
 }
 
+function speedToFrameRate(speed: number) {
+  speed = Math.abs(speed);
+
+  if (speed < 15) {
+    return 4;
+  }
+  if (speed < 50) {
+    return 5;
+  }
+  if (speed < 75) {
+    return 6;
+  }
+  
+  return Math.floor(speed/50 + 6);
+}
+
 export class Platform extends Sprite {
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
@@ -682,7 +719,6 @@ export class Platform extends Sprite {
   
     // Set immovable 
     this.body.immovable = true;
-
   }
 }
 
@@ -694,7 +730,7 @@ export class Decor extends Sprite {
   }
 }
 
-export class Enemy extends Sprite {
+export class Enemy extends AnimatedSprite {
 
   private directionRight: boolean = true; // true <-> right; false <-> left
 
@@ -705,14 +741,14 @@ export class Enemy extends Sprite {
 
   // Physics properties
   public canFall: boolean;
-  public speed: number;
+  public speed: number; // Useless as inherited, redeclared for doc purpose only
   public gravity: number;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame);
+    super(game, x, y, key, frame, opts);
 
-    // Enable platform physics
+    // Enable enemy physics
     this.game.physics.arcade.enable(this);
 
     // Set enemy properties
@@ -726,10 +762,6 @@ export class Enemy extends Sprite {
 
     // Set enemy gravity
     this.body.gravity.y = this.gravity;
-
-    // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
   }
 
   update() {
@@ -758,30 +790,7 @@ export class Enemy extends Sprite {
       }
     }
 
-    // Set animations and frame based on motion
-    if (this.body.velocity.x > 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveRight');
-      } else {
-        this.animations.stop();
-        this.frame = 9;
-      }
-    } else if (this.body.velocity.x < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveLeft');
-      } else {
-        this.animations.stop();
-        this.frame = 5;
-      }
-    } else {
-      this.animations.stop();
-      if (this.frame == 0) {
-        this.frame = 0;
-      } else if (this.frame >= 8) {
-        this.frame = 8;
-      } else {
-        this.frame = 4;
-      }
-    }
+    // Call inherited update method so touching check happens after collide
+    super.update();
   }
 }

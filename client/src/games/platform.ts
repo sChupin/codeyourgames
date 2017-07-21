@@ -281,6 +281,8 @@ class Hero extends Phaser.Sprite {
 }
 
 function speedToFrameRate(speed: number) {
+  speed = Math.abs(speed);
+  
   if (speed < 15) {
     return 4;
   }
