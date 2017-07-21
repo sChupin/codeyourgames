@@ -17,7 +17,7 @@
 "and"                 return 'AND'
 "or"                  return 'OR'
 <<EOF>>               return 'EOF'
-\w*(\.\w*)+(\(.*\))?    return 'COMPOSED_WORD'
+\w*(\.\w*)+(\(.*\))?.*    return 'COMPOSED_WORD'
 [a-z]\w*              return 'WORD'
 [{]                   return 'BEGIN_CODE'
 [}]                   return 'END_CODE'

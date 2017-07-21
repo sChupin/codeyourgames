@@ -20,7 +20,8 @@ export class SpriteList {
   private spriteTypes = new Map([
     ['platform', { name: 'board-init.platform', descr: 'board-init.platformDescr' }],
     ['hero', { name: 'board-init.hero', descr: 'board-init.heroDescr' }],
-    ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr' }]
+    ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr' }],
+    ['enemy', { name: 'board-init.enemy', descr: 'board-init.enemyDescr' }]
   ]);
 
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {

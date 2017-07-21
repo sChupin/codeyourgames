@@ -1,5 +1,5 @@
 import {Point} from './utility';
-import {Sprite, Hero, Platform, Decor} from './sprite';
+import {Sprite, Hero, Platform, Decor, Enemy} from './sprite';
 
 import {BodyMap, PlatformMap, GroupMap} from '../components/game-container';
 
@@ -96,6 +96,10 @@ export class GameProps {
       decor.moveUp();
     }
     return decor;
+  }
+
+  public addEnemy(x: number, y: number, key: string, width: number, height: number) {
+    return this.game.add.existing(new Enemy(this.game, x, y, key));
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {

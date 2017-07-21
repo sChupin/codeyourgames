@@ -665,7 +665,7 @@ export class Platform extends Sprite {
     // Set immovable 
     this.body.immovable = true;
 
-    }
+  }
 }
 
 export class Decor extends Sprite {
@@ -676,11 +676,13 @@ export class Decor extends Sprite {
   }
 }
 
-export class Ennemy extends Sprite {
+export class Enemy extends Sprite {
+
+  private directionRight: boolean = true; // true <-> right; false <-> left
 
   // Default properties
   private defaultCanFall: boolean = true;
-  private defaultSpeed: number = 200;
+  private defaultSpeed: number = 150;
   private defaultGravity = 500;
 
   // Physics properties
@@ -695,7 +697,7 @@ export class Ennemy extends Sprite {
     // Enable platform physics
     this.game.physics.arcade.enable(this);
 
-    // Set hero properties
+    // Set enemy properties
     this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
     this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
@@ -703,5 +705,66 @@ export class Ennemy extends Sprite {
     // Enable collision with world bounds
     this.body.collideWorldBounds = !this.canFall;
     // todo enable collision without left/right in any case
+
+    // Set enemy gravity
+    this.body.gravity.y = this.gravity;
+
+    // Create animations
+    this.animations.add('moveRight', [8, 9, 10, 11], 10 , true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], 10  , true);
+  }
+
+  update() {
+    // Apply properties in case they changed
+    this.body.collideWorldBounds = !this.canFall;
+    this.body.gravity.y = this.gravity; 
+
+    // Set collision with platforms
+    let children = this.game.world.children;
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child instanceof Platform) {
+        this.game.physics.arcade.collide(this, child, (enemy, platform) => {
+          // Initiate enemy motion when on a platform
+          if (this.body.velocity.x == 0) {
+            this.body.velocity.x = this.speed;
+          }
+
+          // Enemy AI
+          if (enemy.body.velocity.x > 0 && enemy.x + enemy.width / 2 > platform.x + platform.width / 2
+              || enemy.body.velocity.x < 0 && enemy.x - enemy.width / 2 < platform.x - platform.width / 2) {
+            // enemy.body.velocity.x *= -1;
+            this.directionRight = !this.directionRight;
+          }
+          this.body.velocity.x = this.directionRight ? this.speed : -this.speed;
+        });
+      }
+    }
+
+    // Set animations and frame based on motion
+    if (this.body.velocity.x > 0) {
+      if (this.body.blocked.down || this.body.touching.down) {
+        this.animations.play('moveRight');
+      } else {
+        this.animations.stop();
+        this.frame = 9;
+      }
+    } else if (this.body.velocity.x < 0) {
+      if (this.body.blocked.down || this.body.touching.down) {
+        this.animations.play('moveLeft');
+      } else {
+        this.animations.stop();
+        this.frame = 5;
+      }
+    } else {
+      this.animations.stop();
+      if (this.frame == 0) {
+        this.frame = 0;
+      } else if (this.frame >= 8) {
+        this.frame = 8;
+      } else {
+        this.frame = 4;
+      }
+    }
   }
 }
