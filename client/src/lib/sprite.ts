@@ -34,45 +34,54 @@ export class Sprite extends Phaser.Sprite {
   }
 }
 
-class AnimatedSprite extends Sprite {
+class Platformer extends Sprite {
 
   public speed: number;
+
+  private animated: boolean; // Cannot be changed during game
+  private defaultAnimated: boolean = false;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
 
+    this.animated = opts.hasOwnProperty('animated') ? opts.animated : this.defaultAnimated;
+
     // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
+    if (this.animated) {
+      this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
+      this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
+    }
   }
 
   update() {
-    // Set animations and frame based on motion
-    this.animations.currentAnim.speed = speedToFrameRate(this.speed);
+    if (this.animated) {
+      // Set animations and frame based on motion
+      this.animations.currentAnim.speed = speedToFrameRate(this.speed);
 
-    if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveRight');
+      if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
+        if (this.body.blocked.down || this.body.touching.down) {
+          this.animations.play('moveRight');
+        } else {
+          this.animations.stop();
+          this.frame = 9;
+        }
+      } else if (this.body.velocity.x < 0 && this.speed > 0 || this.body.velocity.x > 0 && this.speed < 0) {
+        if (this.body.blocked.down || this.body.touching.down) {
+          this.animations.play('moveLeft');
+        } else {
+          this.animations.stop();
+          this.frame = 5;
+        }
       } else {
         this.animations.stop();
-        this.frame = 9;
-      }
-    } else if (this.body.velocity.x < 0 && this.speed > 0 || this.body.velocity.x > 0 && this.speed < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveLeft');
-      } else {
-        this.animations.stop();
-        this.frame = 5;
-      }
-    } else {
-      this.animations.stop();
-      if (this.frame == 0) {
-        this.frame = 0;
-      } else if (this.frame >= 8) {
-        this.frame = 8;
-      } else {
-        this.frame = 4;
+        if (this.frame == 0) {
+          this.frame = 0;
+        } else if (this.frame >= 8) {
+          this.frame = 8;
+        } else {
+          this.frame = 4;
+        }
       }
     }
   }
@@ -569,7 +578,7 @@ export class Group extends Phaser.Group {
 }
 
 
-export class Hero extends AnimatedSprite {
+export class Hero extends Platformer {
 
   private cursors;
   
@@ -730,7 +739,7 @@ export class Decor extends Sprite {
   }
 }
 
-export class Enemy extends AnimatedSprite {
+export class Enemy extends Platformer {
 
   private directionRight: boolean = true; // true <-> right; false <-> left
 
@@ -738,11 +747,13 @@ export class Enemy extends AnimatedSprite {
   private defaultCanFall: boolean = true;
   private defaultSpeed: number = 150;
   private defaultGravity = 500;
+  private defaultMove: boolean = true;
 
   // Physics properties
   public canFall: boolean;
   public speed: number; // Useless as inherited, redeclared for doc purpose only
   public gravity: number;
+  public move: boolean;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -755,6 +766,7 @@ export class Enemy extends AnimatedSprite {
     this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
     this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
+    this.move = opts.hasOwnProperty('move') ? opts.move : this.defaultMove;
 
     // Enable collision with world bounds
     this.body.collideWorldBounds = !this.canFall;
@@ -769,6 +781,10 @@ export class Enemy extends AnimatedSprite {
     this.body.collideWorldBounds = !this.canFall;
     this.body.gravity.y = this.gravity; 
 
+    if (!this.move) {
+      this.body.velocity.x = 0;
+    }
+
     // Set collision with platforms
     let children = this.game.world.children;
     for (let i = 0; i < children.length; i++) {
@@ -776,7 +792,7 @@ export class Enemy extends AnimatedSprite {
       if (child instanceof Platform) {
         this.game.physics.arcade.collide(this, child, (enemy, platform) => {
           // Initiate enemy motion when on a platform
-          if (this.body.velocity.x == 0) {
+          if (this.body.velocity.x == 0 && this.move) {
             this.body.velocity.x = this.speed;
           }
 
@@ -785,7 +801,9 @@ export class Enemy extends AnimatedSprite {
               || enemy.body.velocity.x < 0 && enemy.x - enemy.width / 2 < platform.x - platform.width / 2) {
             this.directionRight = !this.directionRight;
           }
-          this.body.velocity.x = this.directionRight ? this.speed : -this.speed;
+          if (this.move) {
+            this.body.velocity.x = this.directionRight ? this.speed : -this.speed;
+          }
         });
       }
     }

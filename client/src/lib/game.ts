@@ -73,20 +73,20 @@ export class GameProps {
     this.game.world.setBounds(0, 0, width, height);
   }
 
-  public addHero(x: number, y: number, key: string): Hero {
-    return this.game.add.existing(new Hero(this.game, x, y, key, 0));
+  public addHero(x: number, y: number, key: string, opts?: any): Hero {
+    return this.game.add.existing(new Hero(this.game, x, y, key, 0, opts));
   }
 
-  public addPlatform(x: number, y: number, key: string): Platform {
-    return this.game.add.existing(new Platform(this.game, x, y, key));
+  public addPlatform(x: number, y: number, key: string, opts?: any): Platform {
+    return this.game.add.existing(new Platform(this.game, x, y, key, opts));
   }
 
   // public addGroup(): Group {
   //   return this.game.add.existing(new Group(this.game));
   // }
 
-  public addDecor(x: number, y: number, key: string, width: number, height: number) {
-    let decor = this.game.add.existing(new Decor(this.game, x, y, key));
+  public addDecor(x: number, y: number, key: string, opts?: any) {
+    let decor = this.game.add.existing(new Decor(this.game, x, y, key, opts));
 
     // Send this sprite to deepest level
     decor.sendToBack();
@@ -98,8 +98,8 @@ export class GameProps {
     return decor;
   }
 
-  public addEnemy(x: number, y: number, key: string, width: number, height: number) {
-    return this.game.add.existing(new Enemy(this.game, x, y, key));
+  public addEnemy(x: number, y: number, key: string, opts?: any) {
+    return this.game.add.existing(new Enemy(this.game, x, y, key, 0, opts));
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {
