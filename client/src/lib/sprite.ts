@@ -812,3 +812,101 @@ export class Enemy extends Platformer {
     super.update();
   }
 }
+
+export class Spaceship extends Sprite {
+
+  private cursors: Phaser.CursorKeys;
+  private fireButton: Phaser.Key;
+  private weapon: Weapon = null;
+
+  // Default properties
+  private defaultSpeed: number = 150;
+  private defaultController: string = 'mouse';
+
+  // Physics properties
+  public speed: number;
+  public bulletType: string;
+  public controller: string;
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+              public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame, opts);
+
+    // Enable spaceship physics
+    this.game.physics.arcade.enable(this);
+
+    // Set enemy properties
+    this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
+    this.controller = opts.hasOwnProperty('controller') ? opts.controller : this.defaultController;
+
+    // Enable collision with world bounds
+    this.body.collideWorldBounds = true;
+
+    // Set controllers
+    this.cursors = this.game.input.keyboard.createCursorKeys();
+
+    this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  }
+
+  update() {
+    this.body.acceleration.x = 0;
+    this.body.angularVelocity = 0;
+    
+    // this.weapon.fireAngle = this.angle - 90;
+
+    if (this.cursors.right.isDown) {
+      this.body.acceleration.x = 150;
+      if (this.angle < 25) {
+        this.body.angularVelocity = 50;
+      }
+    } else if (this.cursors.left.isDown) {
+      this.body.acceleration.x = -150;
+      if (this.angle > -25) {
+        this.body.angularVelocity = -50;
+      }
+    } else if (this.angle != 0) {
+      if (this.angle < -3) {
+        this.body.angularVelocity = 50;
+      } else if (this.angle > 3) {
+        this.body.angularVelocity = -50;
+      } else {
+        this.angle = 0;
+      }
+    }
+
+    if (this.fireButton.isDown && this.weapon) {
+      this.weapon.fire();
+    }
+  }
+
+  public equipWeapon(weapon: Weapon) {
+    this.weapon = weapon;
+    this.weapon.follow(this);
+  }
+}
+
+export class Weapon {
+
+  private weapon: Phaser.Weapon;
+
+  constructor(public game: Phaser.Game, key: string = '', opts: any = {}) {
+    // Set weapon
+    this.weapon = this.game.add.weapon(30, key);
+    this.weapon.bullets.setAll('width', 50);
+    this.weapon.bullets.setAll('height', 50);
+    this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    this.weapon.bulletAngleOffset = 90;
+    this.weapon.bulletSpeed = 400;
+    this.weapon.fireRate = 60;
+  }
+
+  public fire() {
+    if (this.weapon.trackedSprite) {
+      this.weapon.fire();
+    }
+  }
+
+  public follow(sprite: Sprite) {
+    this.weapon.trackSprite(sprite, 0, 0);
+  }
+}

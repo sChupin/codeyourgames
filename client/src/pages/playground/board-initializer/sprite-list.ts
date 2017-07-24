@@ -18,11 +18,12 @@ export class SpriteList {
   private groupSelected = false;
 
   private spriteTypes = new Map([
-    ['platform', { name: 'board-init.platform', descr: 'board-init.platformDescr' }],
-    ['hero', { name: 'board-init.hero', descr: 'board-init.heroDescr' }],
-    ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr' }],
-    ['enemy', { name: 'board-init.enemy', descr: 'board-init.enemyDescr' }],
-    ['spaceship', { name: 'board-init.spaceship', descr: 'board-init.spaceshipDescr' }]
+    ['platform', { name: 'board-init.platform', descr: 'board-init.platformDescr', opts: ['testA1', 'testA2'] }],
+    ['hero', { name: 'board-init.hero', descr: 'board-init.heroDescr', opts: ['testB1', 'testB2'] }],
+    ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr', opts: ['testC1', 'testC2'] }],
+    ['enemy', { name: 'board-init.enemy', descr: 'board-init.enemyDescr', opts: ['testD1', 'testD2'] }],
+    ['spaceship', { name: 'board-init.spaceship', descr: 'board-init.spaceshipDescr', opts: ['testE1', 'testE2'] }],
+    ['weapon', { name: 'board-init.weapon', descr: 'board-init.weaponDescr', opts: ['testF1', 'testF2'] }]
   ]);
 
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {

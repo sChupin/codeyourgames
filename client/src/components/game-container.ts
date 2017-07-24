@@ -135,7 +135,7 @@ class GameWorld extends Phaser.State {
   }
 
   private initGameProps() {
-    this.gameProps = new GameProps(this.game, this.bodies, this.platforms);
+    this.gameProps = new GameProps(this.game);
   }
 
   private initKeyboard() {

@@ -40,6 +40,7 @@
     <ul class="nav nav-pills custom-nav" role="tablist">
         <li role="presentation" class="active"><a href.bind="'#type-'+$index" role="tab" data-toggle="tab">${ 'board-init.type' & t }</a></li>
         <li role="presentation"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">${ 'board-init.props' & t }</a></li>
+        <li role="presentation"><a href.bind="'#opts-'+$index" role="tab" data-toggle="tab">${ 'board-init.opts' & t }</a></li>
         <!--<li role="presentation" if.bind="sprite.data.spritesheet"><a href.bind="'#anim-'+$index" role="tab" data-toggle="tab">Costumes &amp; Animations</a></li>-->
     </ul>
 
@@ -67,6 +68,12 @@
               <div>${ 'board-init.x' & t }: ${sprite.left | roundNumber }</div>
               <div>${ 'board-init.y' & t }: ${sprite.top | roundNumber }</div>
               <div>${ 'board-init.orientation' & t }: ${sprite.angle | roundNumber }°</div>
+          </div>
+      </div>
+      <!-- Options tab -->
+      <div role="tabpanel" class="tab-pane" id.bind="'opts-'+$index">
+          <div class="row">
+              <div repeat.for="opt of spriteTypes.get(sprite.data.type).opts">${opt}</div>
           </div>
       </div>
       

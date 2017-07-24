@@ -1,7 +1,5 @@
 import {Point} from './utility';
-import {Sprite, Hero, Platform, Decor, Enemy} from './sprite';
-
-import {BodyMap, PlatformMap, GroupMap} from '../components/game-container';
+import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon} from './sprite';
 
 export class GameProps {
   public center: Point;
@@ -16,7 +14,7 @@ export class GameProps {
 
   public paused: boolean = false;
 
-  constructor(private game: Phaser.Game, private bodies: BodyMap, private platforms: PlatformMap) {
+  constructor(private game: Phaser.Game) {
     this.center = {x: game.world.centerX, y: game.world.centerY};
     this.centerX = game.world.centerX;
     this.centerY = game.world.centerY;
@@ -85,7 +83,7 @@ export class GameProps {
   //   return this.game.add.existing(new Group(this.game));
   // }
 
-  public addDecor(x: number, y: number, key: string, opts?: any) {
+  public addDecor(x: number, y: number, key: string, opts?: any): Decor {
     let decor = this.game.add.existing(new Decor(this.game, x, y, key, opts));
 
     // Send this sprite to deepest level
@@ -98,8 +96,16 @@ export class GameProps {
     return decor;
   }
 
-  public addEnemy(x: number, y: number, key: string, opts?: any) {
+  public addEnemy(x: number, y: number, key: string, opts?: any): Enemy {
     return this.game.add.existing(new Enemy(this.game, x, y, key, 0, opts));
+  }
+
+  public addSpaceship(x: number, y: number, key: string, opts?: any): Spaceship {
+    return this.game.add.existing(new Spaceship(this.game, x, y, key, 0, opts));
+  }
+
+  public createWeapon(key: string, opts?: any): Weapon {
+    return new Weapon(this.game, key, opts);
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {
