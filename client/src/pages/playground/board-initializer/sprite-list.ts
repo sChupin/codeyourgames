@@ -21,7 +21,8 @@ export class SpriteList {
     ['platform', { name: 'board-init.platform', descr: 'board-init.platformDescr' }],
     ['hero', { name: 'board-init.hero', descr: 'board-init.heroDescr' }],
     ['decor', { name: 'board-init.decor', descr: 'board-init.decorDescr' }],
-    ['enemy', { name: 'board-init.enemy', descr: 'board-init.enemyDescr' }]
+    ['enemy', { name: 'board-init.enemy', descr: 'board-init.enemyDescr' }],
+    ['spaceship', { name: 'board-init.spaceship', descr: 'board-init.spaceshipDescr' }]
   ]);
 
   constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {

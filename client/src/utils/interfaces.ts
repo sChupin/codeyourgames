@@ -29,6 +29,7 @@ export interface SpriteInfo {
   name: string;
   url: string;
   type: string;
+  typeProps: any;
   x: number;
   y: number;
   width: number;

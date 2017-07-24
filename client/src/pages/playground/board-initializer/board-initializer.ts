@@ -102,6 +102,7 @@ export class BoardInitializer {
           name: sprite.data.name,
           url: sprite.data.url,
           type: sprite.data.type,
+          typeProps: sprite.data.typeProps,
           x: Math.round(sprite.left),
           y: Math.round(sprite.top),
           width: Math.round(sprite.width * sprite.scaleX),
