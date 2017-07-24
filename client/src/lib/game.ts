@@ -103,10 +103,25 @@ export class GameProps {
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {
-    this.background = this.game.add.image(0, 0, backgroundKey);
-    this.background.width = this.game.world.width;
-    this.background.height = this.game.world.height;
+    if (backgroundType == 'scroll') {
+      // Get original image size
+      let bgCache = this.game.cache.getImage(backgroundKey);
+      let imgWidth = bgCache.width;
+      let imgHeight = bgCache.height;
+
+      // Create scrollable background
+      let bg: Phaser.TileSprite = this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, backgroundKey);
+      
+      // Scale image so it fits game size
+      bg.tileScale.set(this.game.width/imgWidth, this.game.height/imgHeight);
+    } else {
+      this.background = this.game.add.image(0, 0, backgroundKey);
+      this.background.width = this.game.world.width;
+      this.background.height = this.game.world.height;
+    }
     this.background.sendToBack();
+    
+    return this.background;
   }
 
   public setBackgroundColor(color: string) {

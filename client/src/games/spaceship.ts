@@ -27,153 +27,125 @@ class GameWorld extends Phaser.State {
   private background: Phaser.TileSprite;
   private cursors: Phaser.CursorKeys;
 
+  public spaceship: Phaser.Sprite;
+  public weapon: Phaser.Weapon;
+  private scrollingSpeed: number = 2;
+
+  private aKey: Phaser.Key;
+
   preload() {
     this.load.crossOrigin = 'anonymous';
     this.load.image('background', 'http://localhost:9000/public/images/Backgrounds/space19.png');
-    this.load.spritesheet('hero', 'http://localhost:9000/public/images/Sprites/sheets/alberto.png', 32, 53);
+    this.load.image('spaceship', 'http://localhost:9000/public/images/Tiles/tochLit.png');
+    this.load.image('bullet', 'http://localhost:9000/public/images/Items/fireball.png');
   }
 
   create() {
 
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, 'background');
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.world.setBounds(0, 0, 3000, 3000);
+    this.background.autoScroll(0, 50);
 
-    // this.add.existing(new Hero(this.game, 100, 25, 'hero', 8, {gravity: 0}));
+    this.spaceship = this.add.existing(new Spaceship(this.game, this.game.world.centerX, this.game.world.height - 50, 'spaceship'));
+
+    this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+
   }
 
   update() {
-    this.background.tilePosition.y += 2;
+    // this.background.tilePosition.y += this.scrollingSpeed;
 
-    if (this.cursors.right.isDown) {
-      this.background.tilePosition.x -= 1;
-    } else if (this.cursors.left.isDown) {
-      this.background.tilePosition.x += 1;
+    if (this.aKey.isDown) {
+      this.background.autoScroll(0, 500);
+    } else {
+      this.background.autoScroll(0, 100);
     }
+
+    // if (this.cursors.up.isDown) {
+    //   this.scrollingSpeed = 5;
+    // } else {
+    //   this.scrollingSpeed = 2;
+    // }
   }
 
-  render() {
-
-  }
 }
 
-class Hero extends Phaser.Sprite {
+class Spaceship extends Phaser.Sprite {
 
-  private cursors;
+  private cursors: Phaser.CursorKeys;
+  private fireButton: Phaser.Key;
+  private weapon: Phaser.Weapon;
   
   // Default properties
-  private defaultCanFall: boolean = false;
   private defaultSpeed: number = 200;
-  private defaultGravity = 500;
-  private defaultJumpForce = 300;
+  private defaultAllowRotation: boolean = true;
 
   // Physics properties
-  public canFall: boolean;
   public speed: number;
-  public gravity: number;
-  public jumpForce: number;
+  public allowRotation: boolean = true;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
+
+    this.weapon = this.game.add.weapon(30, 'bullet');
+    this.weapon.bullets.setAll('width', 50);
+    this.weapon.bullets.setAll('height', 50);
+    this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    this.weapon.bulletAngleOffset = 90;
+    this.weapon.bulletSpeed = 400;
+    this.weapon.fireRate = 60;
+    this.weapon.trackSprite(this, 0, 0);
     
-    // Enable hero physics
+    // Enable spaceship physics
     this.game.physics.arcade.enable(this);
 
+    this.anchor.setTo(0.5);
+
     // Set hero properties
-    this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
-    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
-    this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
+    this.allowRotation = opts.hasOwnProperty('allowRotation') ? opts.allowRotation : this.defaultAllowRotation;
     
     // Enable collision with world bounds
-    this.body.collideWorldBounds = this.canFall;
-
-    // Set hero gravity
-    this.body.gravity.y = this.gravity;
-
-    // Create animations
-    this.animations.add('moveRight', [8, 9, 10, 11], 10 , true);
-    this.animations.add('moveLeft', [4, 5, 6, 7], 10  , true);
+    this.body.collideWorldBounds = true;
 
     // Set motion signals
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
-    this.cursors.left.onDown.add(() => {
-      this.body.velocity.x = -this.speed;
-    });
-    this.cursors.left.onUp.add(() => {
-      if (!this.cursors.right.isDown) {
-        this.body.velocity.x = 0;
-      } else {
-        this.body.velocity.x = this.speed;
-      }
-    });
+    this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-    this.cursors.right.onDown.add(() => {
-      this.body.velocity.x = this.speed;
-    });
-    this.cursors.right.onUp.add(() => {
-      if (!this.cursors.left.isDown) {
-        this.body.velocity.x = 0;
-      } else {
-        this.body.velocity.x = -this.speed;
-      }
-    });
-
-    this.cursors.up.onDown.add(() => {
-      this.body.velocity.y = -this.speed;
-    });
-    this.cursors.up.onUp.add(() => {
-      if (!this.cursors.left.isDown) {
-        this.body.velocity.y = 0;
-      } else {
-        this.body.velocity.y = this.speed;
-      }
-    });
-
-    this.cursors.down.onDown.add(() => {
-      this.body.velocity.y = this.speed;
-    });
-    this.cursors.down.onUp.add(() => {
-      if (!this.cursors.left.isDown) {
-        this.body.velocity.y = 0;
-      } else {
-        this.body.velocity.y = -this.speed;
-      }
-    });
-
-    // Set up camera
-    this.game.camera.follow(this);
-    let left = this.game.width / 3;
-    let width = left;
-    //this.game.camera.deadzone = new Phaser.Rectangle(left, 0, width, this.game.height);
+    this.body.drag.x = 100;
+    this.body.maxVelocity = 150;
   }
 
   update() {
+    this.body.acceleration.x = 0;
+    this.body.angularVelocity = 0;
+    
+    this.weapon.fireAngle = this.angle - 90;
 
-    // Set animations and frame based on motion
-    if (this.body.velocity.x > 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveRight');
-      } else {
-        this.animations.stop();
-        this.frame = 9;
+    if (this.cursors.right.isDown) {
+      this.body.acceleration.x = 150;
+      if (this.angle < 25) {
+        this.body.angularVelocity = 50;
       }
-    } else if (this.body.velocity.x < 0) {
-      if (this.body.blocked.down || this.body.touching.down) {
-        this.animations.play('moveLeft');
-      } else {
-        this.animations.stop();
-        this.frame = 5;
+    } else if (this.cursors.left.isDown) {
+      this.body.acceleration.x = -150;
+      if (this.angle > -25) {
+        this.body.angularVelocity = -50;
       }
-    } else {
-      this.animations.stop();
-      if (this.frame >= 8) {
-        this.frame = 8;
+    } else if (this.angle != 0) {
+      if (this.angle < -3) {
+        this.body.angularVelocity = 50;
+      } else if (this.angle > 3) {
+        this.body.angularVelocity = -50;
       } else {
-        this.frame = 4;
+        this.angle = 0;
       }
     }
+
+    if (this.fireButton.isDown) {
+      this.weapon.fire();
+    }
+
   }
 }
