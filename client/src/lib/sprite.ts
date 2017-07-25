@@ -706,7 +706,7 @@ export class Hero extends Platformer {
     this.weapon.follow(this);
   }
 
-  public unequip() {
+  public unequipWeapon() {
     this.weapon = null;
   }
 }
@@ -880,7 +880,7 @@ export class Spaceship extends Sprite {
     this.weapon.follow(this);
   }
 
-  public unequip() {
+  public unequipWeapon() {
     this.weapon = null;
   }
 }
