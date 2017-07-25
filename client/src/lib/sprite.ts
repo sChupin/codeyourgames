@@ -580,7 +580,8 @@ export class Group extends Phaser.Group {
 
 export class Hero extends Platformer {
 
-  private cursors;
+  private cursors: Phaser.CursorKeys;
+  private weapon: Weapon = null;
   
   // Initial properties
   private initX: number;
@@ -698,6 +699,15 @@ export class Hero extends Platformer {
     if (this.tint != 0xFFFFFF) {
       this.tint = 0xFFFFFF;      
     }
+  }
+
+  public equipWeapon(weapon: Weapon) {
+    this.weapon = weapon;
+    this.weapon.follow(this);
+  }
+
+  public unequip() {
+    this.weapon = null;
   }
 }
 
@@ -868,6 +878,10 @@ export class Spaceship extends Sprite {
   public equipWeapon(weapon: Weapon) {
     this.weapon = weapon;
     this.weapon.follow(this);
+  }
+
+  public unequip() {
+    this.weapon = null;
   }
 }
 
