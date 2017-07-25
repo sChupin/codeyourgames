@@ -820,13 +820,10 @@ export class Spaceship extends Sprite {
   private weapon: Weapon = null;
 
   // Default properties
-  private defaultSpeed: number = 150;
-  private defaultController: string = 'mouse';
+  private defaultSpeed: number = 250;
 
   // Physics properties
   public speed: number;
-  public bulletType: string;
-  public controller: string;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -837,7 +834,6 @@ export class Spaceship extends Sprite {
 
     // Set enemy properties
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
-    this.controller = opts.hasOwnProperty('controller') ? opts.controller : this.defaultController;
 
     // Enable collision with world bounds
     this.body.collideWorldBounds = true;
@@ -849,29 +845,19 @@ export class Spaceship extends Sprite {
   }
 
   update() {
+    this.body.maxVelocity.x = this.speed;
+    this.body.drag.x = this.speed;
     this.body.acceleration.x = 0;
-    this.body.angularVelocity = 0;
     
-    // this.weapon.fireAngle = this.angle - 90;
+    // Squish and rotate ship for illusion of "banking"
+    let bank = this.body.velocity.x / this.speed;
+    this.scale.x = 1 - Math.abs(bank) / 4;
+    this.angle = bank * 10;
 
     if (this.cursors.right.isDown) {
-      this.body.acceleration.x = 150;
-      if (this.angle < 25) {
-        this.body.angularVelocity = 50;
-      }
+      this.body.acceleration.x = this.speed * 1.5;
     } else if (this.cursors.left.isDown) {
-      this.body.acceleration.x = -150;
-      if (this.angle > -25) {
-        this.body.angularVelocity = -50;
-      }
-    } else if (this.angle != 0) {
-      if (this.angle < -3) {
-        this.body.angularVelocity = 50;
-      } else if (this.angle > 3) {
-        this.body.angularVelocity = -50;
-      } else {
-        this.angle = 0;
-      }
+      this.body.acceleration.x = -this.speed * 1.5;
     }
 
     if (this.fireButton.isDown && this.weapon) {
