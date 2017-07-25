@@ -703,7 +703,7 @@ export class Hero extends Platformer {
 
   public equipWeapon(weapon: Weapon) {
     this.weapon = weapon;
-    this.weapon.follow(this);
+    this.weapon.trackSprite(this);
   }
 
   public unequipWeapon() {
@@ -827,7 +827,7 @@ export class Spaceship extends Sprite {
 
   private cursors: Phaser.CursorKeys;
   private fireButton: Phaser.Key;
-  private weapon: Weapon = null;
+  private weapons: Array<Weapon> = [];
 
   // Default properties
   private defaultSpeed: number = 250;
@@ -870,43 +870,130 @@ export class Spaceship extends Sprite {
       this.body.acceleration.x = -this.speed * 1.5;
     }
 
-    if (this.fireButton.isDown && this.weapon) {
-      this.weapon.fire();
+    if (this.fireButton.isDown && this.weapons.length != 0) {
+      this.weapons.forEach((weapon) => weapon.fire());
     }
   }
 
   public equipWeapon(weapon: Weapon) {
-    this.weapon = weapon;
-    this.weapon.follow(this);
+    this.weapons.push(weapon);
+    weapon.trackSprite(this);
   }
 
-  public unequipWeapon() {
-    this.weapon = null;
-  }
-}
-
-export class Weapon {
-
-  private weapon: Phaser.Weapon;
-
-  constructor(public game: Phaser.Game, key: string = '', opts: any = {}) {
-    // Set weapon
-    this.weapon = this.game.add.weapon(30, key);
-    this.weapon.bullets.setAll('width', 50);
-    this.weapon.bullets.setAll('height', 50);
-    this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    this.weapon.bulletAngleOffset = 90;
-    this.weapon.bulletSpeed = 400;
-    this.weapon.fireRate = 60;
-  }
-
-  public fire() {
-    if (this.weapon.trackedSprite) {
-      this.weapon.fire();
+  public unequipWeapon(weapon: Weapon) {
+    let idx = this.weapons.indexOf(weapon);
+    if (idx != -1) {
+      this.weapons[idx].trackedSprite = null;
+      this.weapons.splice(idx, 1);
     }
   }
 
-  public follow(sprite: Sprite) {
-    this.weapon.trackSprite(sprite, 0, 0);
+  public unequipAllWeapons() {
+    this.weapons.forEach((weapon) => weapon.trackedSprite = null);
+    this.weapons = [];
   }
 }
+
+export class Weapon extends Phaser.Weapon {
+
+  // private previousAmmoQuantity: number;
+
+  // Default properties
+  private defaultAmmoQuantity: number = -1;
+  private defaultFireDirection: number = Phaser.ANGLE_UP;
+  private defaultFireRate: number = 200;
+  private defaultBulletSpeed: number = 300;
+
+  // Physics properties
+  public width: number;
+  public height: number;
+  public angle: number = 0;
+
+  public ammoQuantity: number;
+  public fireDirection: number;
+
+
+  constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, game.plugins);
+
+    // Set weapon properties
+    this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
+    this.fireDirection = opts.hasOwnProperty('fireDirection') ? opts.fireDirection : this.defaultFireDirection;
+    this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
+    this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
+    
+    let imgCache = this.game.cache.getImage(key);
+    this.width = imgCache.width;
+    this.height = imgCache.height;
+
+    // Populate the bullet pool
+    this.createBullets(this.ammoQuantity, key);
+    this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+  }
+
+  update() {
+    this.bullets.setAll('width', this.width);
+    this.bullets.setAll('height', this.height);
+
+    this.bulletAngleOffset = this.angle - this.fireAngle;
+    this.fireAngle = this.fireDirection;
+
+    // Check for ammoQuantity change
+    // if (this.previousAmmoQuantity != this.ammoQuantity) {
+    //   this.previousAmmoQuantity = this.ammoQuantity;
+    //   this.bullets.forEachDead((bullet) => bullet.destroy(), this);
+    //   this.createBullets(this.ammoQuantity - this.bullets.countLiving(), this.bulletKey);
+    // }
+  }
+}
+
+// export class Weapon {
+
+//   private weapon: Phaser.Weapon;
+
+//   // Default properties
+//   private defaultAmmoQuantity: number = -1;
+//   private defaultBulletSpeed: number = 400;
+//   private defaultFireRate: number = 60;
+
+//   // Physics properties
+//   public width: number = 50;
+//   public height: number = 50;
+
+//   public ammoQuantity: number;
+//   public bulletSpeed: number;
+//   public fireRate: number;
+
+//   constructor(public game: Phaser.Game, key: string = '', opts: any = {}) {
+
+//     // Set weapon properties
+//     this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
+//     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
+//     this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
+
+//     // Set weapon
+//     this.weapon = this.game.add.weapon(this.ammoQuantity, key);
+//     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+//     this.weapon.bulletAngleOffset = 90;
+
+//     this.weapon.update = () => {
+//       this.weapon.bullets.setAll('width', this.width);
+//       this.weapon.bullets.setAll('height', this.height);
+//       this.weapon.bulletSpeed = this.bulletSpeed;
+//       this.weapon.fireRate = this.fireRate;
+//     }
+
+//   }
+
+//   public fire() {
+//     if (this.weapon.trackedSprite) {
+//       this.weapon.fireAngle = this.weapon.trackedSprite.angle + Phaser.ANGLE_UP;
+//       this.weapon.fire();
+//     }
+//   }
+
+//   public follow(sprite: Sprite) {
+//     this.weapon.trackSprite(sprite, 0, 0);
+//   }
+
+// }

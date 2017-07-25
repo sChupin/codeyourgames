@@ -104,8 +104,9 @@ export class GameProps {
     return this.game.add.existing(new Spaceship(this.game, x, y, key, 0, opts));
   }
 
-  public createWeapon(key: string, opts?: any): Weapon {
-    return new Weapon(this.game, key, opts);
+  public createWeapon(key: string, opts?: any) {
+    // return new Weapon(this.game, key, opts);
+    return this.game.add.plugin(new Weapon(this.game, key, 0, opts));
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {
