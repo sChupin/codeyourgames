@@ -46,8 +46,6 @@ class GameWorld extends Phaser.State {
 
     this.hero = this.add.existing(new Hero(this.game, 100, 25, 'hero', 8));
 
-    // this.platformGroup = this.add.group();
-
     let x = 0;
     let y = 400;
     while (x < this.world.width) {
@@ -73,7 +71,7 @@ class GameWorld extends Phaser.State {
     let fireball = <Weapon>this.game.add.plugin(new Weapon(this.game, 'bullet'));
     fireball.width = 50;
     fireball.height = 50;
-    fireball.fireDirection = Phaser.ANGLE_RIGHT;
+    fireball.fireAngle = Phaser.ANGLE_RIGHT;
     fireball.bulletGravity.y = 400;
     fireball.bounceOnPlatforms = true;
 
@@ -150,6 +148,8 @@ class Hero extends Phaser.Sprite {
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
 
+    this.anchor.setTo(0.5);
+
     this.speedText = this.game.add.text(16, 16, 'Speed: 0', { fontSize: '32px', fill: '#fff' });
     this.speedText.fixedToCamera = true;
     this.frameRateText = this.game.add.text(16, 48, 'Frame rate: 0', { fontSize: '32px', fill: '#fff' });
@@ -176,78 +176,12 @@ class Hero extends Phaser.Sprite {
 
     // Set motion signals
     this.cursors = this.game.input.keyboard.createCursorKeys();
-// signal based motion 
-    // this.cursors.left.onDown.add(() => {
-    //   this.body.velocity.x = -this.speed;
-    // });
-    // this.cursors.left.onUp.add(() => {
-    //   if (!this.cursors.right.isDown) {
-    //     this.body.velocity.x = 0;
-    //   } else {
-    //     this.body.velocity.x = this.speed;
-    //   }
-    // });
 
-    // this.cursors.right.onDown.add(() => {
-    //   this.body.velocity.x = this.speed;
-    // });
-    // this.cursors.right.onUp.add(() => {
-    //   if (!this.cursors.left.isDown) {
-    //     this.body.velocity.x = 0;
-    //   } else {
-    //     this.body.velocity.x = -this.speed;
-    //   }
-    // });
-
-    // this.cursors.up.onDown.add(() => {
-    //   if (this.body.blocked.down || this.body.touching.down) {
-    //     this.body.velocity.y = -this.jumpForce;
-    //   }
-    // });
-//
     // Set up camera
     this.game.camera.follow(this);
     let left = this.game.width / 3;
     let width = left;
     this.game.camera.deadzone = new Phaser.Rectangle(left, 0, width, this.game.height);
-
-    // Speed & frame rate modifier
-    let A = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    A.onDown.add(() => {
-      this.speed++;
-    });
-    A.onHoldCallback = () => {
-      if (A.duration > 300) {
-        this.speed++;
-      }
-    };
-    let Z = this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
-    Z.onDown.add(() => {
-      this.speed--;
-    });
-    Z.onHoldCallback = () => {
-      if (Z.duration > 300) {
-        this.speed--;
-      }
-    };
-    let Q = this.game.input.keyboard.addKey(Phaser.Keyboard.Q);
-    Q.onDown.add(() => {
-      this.frameRate++;
-    });
-    Q.onHoldCallback = () => {
-      if (Q.duration > 300) {
-      this.frameRate++;        
-      }
-    };
-    let S = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-    S.onDown.add(() => {
-      this.frameRate--;
-    });
-    S.onHoldCallback = () => {
-      if (S.duration > 300) {
-        this.frameRate--;
-      }
-    };
   }
 
   update() {
@@ -314,6 +248,11 @@ class Hero extends Phaser.Sprite {
 
   public fire() {
     if (this.weapon) {
+      if (this.body.facing == 1) {
+        this.weapon.fireAngle = Phaser.ANGLE_LEFT;
+      } else if (this.body.facing == 2) {
+        this.weapon.fireAngle = Phaser.ANGLE_RIGHT;
+      }
       this.weapon.fire();
     }
   }
@@ -347,7 +286,7 @@ export class Weapon extends Phaser.Weapon {
 
   // Default properties
   private defaultAmmoQuantity: number = -1;
-  private defaultFireDirection: number = Phaser.ANGLE_UP;
+  private defaultFireAngle: number = Phaser.ANGLE_UP;
   private defaultFireRate: number = 200;
   private defaultBulletSpeed: number = 300;
   private defaultBounceOnPlatforms: boolean = true;
@@ -358,7 +297,6 @@ export class Weapon extends Phaser.Weapon {
   public angle: number = 0;
 
   public ammoQuantity: number;
-  public fireDirection: number;
   public bounceOnPlatforms: boolean;
 
 
@@ -367,7 +305,7 @@ export class Weapon extends Phaser.Weapon {
 
     // Set weapon properties
     this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
-    this.fireDirection = opts.hasOwnProperty('fireDirection') ? opts.fireDirection : this.defaultFireDirection;
+    this.fireAngle = opts.hasOwnProperty('fireAngle') ? opts.fireAngle : this.defaultFireAngle;
     this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
     this.bounceOnPlatforms = opts.hasOwnProperty('bounceOnPlatforms') ? opts.bounceOnPlatforms : this.defaultBounceOnPlatforms;
@@ -384,9 +322,9 @@ export class Weapon extends Phaser.Weapon {
   update() {
     this.bullets.setAll('width', this.width);
     this.bullets.setAll('height', this.height);
+    this.bullets.forEach((bullet) => bullet.body.updateBounds(), this);
 
     this.bulletAngleOffset = this.angle - this.fireAngle;
-    this.fireAngle = this.fireDirection;
 
     if (this.bounceOnPlatforms) {
       this.bullets.forEach((bullet: Phaser.Bullet) => {

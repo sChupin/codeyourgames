@@ -660,8 +660,14 @@ export class Hero extends Platformer {
 
     if (this.cursors.left.isDown) {
       this.body.velocity.x = -this.speed;
+      if (this.weapon) {
+        this.weapon.fireAngle = Phaser.ANGLE_LEFT;
+      }
     } else if (this.cursors.right.isDown) {
       this.body.velocity.x = this.speed;
+      if (this.weapon) {
+        this.weapon.fireAngle = Phaser.ANGLE_RIGHT;
+      }
     }
 
     if (this.cursors.up.isDown) {
@@ -704,9 +710,18 @@ export class Hero extends Platformer {
   public equipWeapon(weapon: Weapon) {
     this.weapon = weapon;
     this.weapon.trackSprite(this);
+    this.weapon.fireAngle = Phaser.ANGLE_RIGHT;
+    this.weapon.bulletGravity.y = this.gravity;
+  }
+
+  public fire() {
+    if (this.weapon) {
+      this.weapon.fire();
+    }
   }
 
   public unequipWeapon() {
+    this.weapon.trackedSprite = null;
     this.weapon = null;
   }
 }
@@ -900,7 +915,7 @@ export class Weapon extends Phaser.Weapon {
 
   // Default properties
   private defaultAmmoQuantity: number = -1;
-  private defaultFireDirection: number = Phaser.ANGLE_UP;
+  private defaultFireAngle: number = Phaser.ANGLE_UP;
   private defaultFireRate: number = 200;
   private defaultBulletSpeed: number = 300;
 
@@ -910,15 +925,13 @@ export class Weapon extends Phaser.Weapon {
   public angle: number = 0;
 
   public ammoQuantity: number;
-  public fireDirection: number;
-
 
   constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, game.plugins);
 
     // Set weapon properties
     this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
-    this.fireDirection = opts.hasOwnProperty('fireDirection') ? opts.fireDirection : this.defaultFireDirection;
+    this.fireAngle = opts.hasOwnProperty('fireAngle') ? opts.fireAngle : this.defaultFireAngle;
     this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
     
@@ -935,8 +948,19 @@ export class Weapon extends Phaser.Weapon {
     this.bullets.setAll('width', this.width);
     this.bullets.setAll('height', this.height);
 
+    // Prevent arcade hitbox bug
+    this.bullets.forEach((bullet) => bullet.body.updateBounds(), this);
+
     this.bulletAngleOffset = this.angle - this.fireAngle;
-    this.fireAngle = this.fireDirection;
+
+    // Set collision with platforms
+    let children = this.game.world.children;
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child instanceof Platform) {
+        this.game.physics.arcade.collide(this.bullets, child);
+      }
+    }
 
     // Check for ammoQuantity change
     // if (this.previousAmmoQuantity != this.ammoQuantity) {
@@ -947,53 +971,3 @@ export class Weapon extends Phaser.Weapon {
   }
 }
 
-// export class Weapon {
-
-//   private weapon: Phaser.Weapon;
-
-//   // Default properties
-//   private defaultAmmoQuantity: number = -1;
-//   private defaultBulletSpeed: number = 400;
-//   private defaultFireRate: number = 60;
-
-//   // Physics properties
-//   public width: number = 50;
-//   public height: number = 50;
-
-//   public ammoQuantity: number;
-//   public bulletSpeed: number;
-//   public fireRate: number;
-
-//   constructor(public game: Phaser.Game, key: string = '', opts: any = {}) {
-
-//     // Set weapon properties
-//     this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
-//     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
-//     this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
-
-//     // Set weapon
-//     this.weapon = this.game.add.weapon(this.ammoQuantity, key);
-//     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-//     this.weapon.bulletAngleOffset = 90;
-
-//     this.weapon.update = () => {
-//       this.weapon.bullets.setAll('width', this.width);
-//       this.weapon.bullets.setAll('height', this.height);
-//       this.weapon.bulletSpeed = this.bulletSpeed;
-//       this.weapon.fireRate = this.fireRate;
-//     }
-
-//   }
-
-//   public fire() {
-//     if (this.weapon.trackedSprite) {
-//       this.weapon.fireAngle = this.weapon.trackedSprite.angle + Phaser.ANGLE_UP;
-//       this.weapon.fire();
-//     }
-//   }
-
-//   public follow(sprite: Sprite) {
-//     this.weapon.trackSprite(sprite, 0, 0);
-//   }
-
-// }
