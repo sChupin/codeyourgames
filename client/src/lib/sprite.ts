@@ -914,7 +914,8 @@ export class Weapon extends Phaser.Weapon {
   // private previousAmmoQuantity: number;
 
   // Default properties
-  private defaultAmmoQuantity: number = -1;
+  // private defaultAmmoQuantity: number = -1; // Induce a bug for resizing all hitbox as the pool dynamically increase and setSize cannot be use after resizing !
+  private defaultAmmoQuantity: number = 100;
   private defaultFireAngle: number = Phaser.ANGLE_UP;
   private defaultFireRate: number = 200;
   private defaultBulletSpeed: number = 300;
@@ -923,6 +924,10 @@ export class Weapon extends Phaser.Weapon {
   public width: number;
   public height: number;
   public angle: number = 0;
+
+  // Prevent reduce hitbox bug
+  private initWidth: number;
+  private initHeight: number;
 
   public ammoQuantity: number;
 
@@ -936,8 +941,10 @@ export class Weapon extends Phaser.Weapon {
     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
     
     let imgCache = this.game.cache.getImage(key);
-    this.width = imgCache.width;
-    this.height = imgCache.height;
+    this.initWidth = imgCache.width;
+    this.initHeight = imgCache.height;
+    this.width = this.initWidth;
+    this.height = this.initHeight;
 
     // Populate the bullet pool
     this.createBullets(this.ammoQuantity, key);
@@ -950,6 +957,11 @@ export class Weapon extends Phaser.Weapon {
 
     // Prevent arcade hitbox bug
     this.bullets.forEach((bullet) => bullet.body.updateBounds(), this);
+
+    // Reduce bullet hitbox
+    this.bullets.forEach((bullet) => {
+      bullet.body.setSize(this.initWidth/2, this.initHeight/2, this.initWidth/4, this.initHeight/4);
+    }, this);
 
     this.bulletAngleOffset = this.angle - this.fireAngle;
 

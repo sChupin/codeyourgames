@@ -90,7 +90,7 @@ class GameWorld extends Phaser.State {
   }
 
   render() {
-
+    this.game.debug.body(this.hero);
   }
 }
 
@@ -182,6 +182,8 @@ class Hero extends Phaser.Sprite {
     let left = this.game.width / 3;
     let width = left;
     this.game.camera.deadzone = new Phaser.Rectangle(left, 0, width, this.game.height);
+    // this.body.setSize(this.width/2, this.height/2, this.width/4, this.height/4);
+    // this.body.setCircle(5, -5 + this.width/2, -5 + this.height/2); // NOT WORKING
   }
 
   update() {
@@ -299,6 +301,9 @@ export class Weapon extends Phaser.Weapon {
   public ammoQuantity: number;
   public bounceOnPlatforms: boolean;
 
+  private initWidth: number;
+  private initHeight: number;
+
 
   constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, game.plugins);
@@ -311,15 +316,24 @@ export class Weapon extends Phaser.Weapon {
     this.bounceOnPlatforms = opts.hasOwnProperty('bounceOnPlatforms') ? opts.bounceOnPlatforms : this.defaultBounceOnPlatforms;
     
     let imgCache = this.game.cache.getImage(key);
-    this.width = imgCache.width;
-    this.height = imgCache.height;
+    this.initWidth = imgCache.width;
+    this.initHeight = imgCache.height;
+    this.width = this.initWidth;
+    this.height = this.initHeight;
 
     // Populate the bullet pool
     this.createBullets(this.ammoQuantity, key);
     this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+
+    
   }
 
   update() {
+    // Reduce bullet hitbox
+    this.bullets.forEach((bullet) => {
+      bullet.body.setSize(this.initWidth/2, this.initHeight/2, this.initWidth/4, this.initHeight/4);
+    }, this);
+    
     this.bullets.setAll('width', this.width);
     this.bullets.setAll('height', this.height);
     this.bullets.forEach((bullet) => bullet.body.updateBounds(), this);
@@ -335,7 +349,8 @@ export class Weapon extends Phaser.Weapon {
       for (let i = 0; i < children.length; i++) {
         let child = children[i];
         if (child instanceof Platform) {
-          this.game.physics.arcade.collide(this.bullets, child);
+          // this.game.physics.arcade.overlap(this.bullets, child, (platform, bullet) => bullet.kill());
+          this.game.physics.arcade.collide(this.bullets, child, (platform, bullet) => bullet.body.velocity.setTo(0));
         }
       }
     }
@@ -346,5 +361,9 @@ export class Weapon extends Phaser.Weapon {
     //   this.bullets.forEachDead((bullet) => bullet.destroy(), this);
     //   this.createBullets(this.ammoQuantity - this.bullets.countLiving(), this.bulletKey);
     // }
+  }
+
+  render() {
+    this.bullets.forEach((bullet) => this.game.debug.body(bullet), this);
   }
 }
