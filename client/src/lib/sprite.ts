@@ -661,12 +661,12 @@ export class Hero extends Platformer {
     if (this.cursors.left.isDown) {
       this.body.velocity.x = -this.speed;
       if (this.weapon) {
-        this.weapon.fireAngle = Phaser.ANGLE_LEFT;
+        this.weapon.fireAngle = Phaser.ANGLE_LEFT + 25;
       }
     } else if (this.cursors.right.isDown) {
       this.body.velocity.x = this.speed;
       if (this.weapon) {
-        this.weapon.fireAngle = Phaser.ANGLE_RIGHT;
+        this.weapon.fireAngle = Phaser.ANGLE_RIGHT - 25;
       }
     }
 
@@ -710,7 +710,7 @@ export class Hero extends Platformer {
   public equipWeapon(weapon: Weapon) {
     this.weapon = weapon;
     this.weapon.trackSprite(this);
-    this.weapon.fireAngle = Phaser.ANGLE_RIGHT;
+    this.weapon.fireAngle = Phaser.ANGLE_RIGHT - 25;
     this.weapon.bulletGravity.y = this.gravity;
   }
 
@@ -965,14 +965,24 @@ export class Weapon extends Phaser.Weapon {
 
     this.bulletAngleOffset = this.angle - this.fireAngle;
 
+    // Bullets bounce on collide
+    this.bullets.forEach((bullet: Phaser.Bullet) => {
+      bullet.body.bounce.y = 1;
+    }, this);
+
     // Set collision with platforms
     let children = this.game.world.children;
     for (let i = 0; i < children.length; i++) {
       let child = children[i];
       if (child instanceof Platform) {
-        this.game.physics.arcade.collide(this.bullets, child);
+        this.game.physics.arcade.collide(this.bullets, child, (platform, bullet) => {
+          // If collision happens on the top of a platform, the bullet bounces
+          // It disappear otherwise
+          if (bullet.body.touching.up || bullet.body.touching.left || bullet.body.touching.right) {
+            bullet.kill();
+          }
+        });
       }
-    }
 
     // Check for ammoQuantity change
     // if (this.previousAmmoQuantity != this.ammoQuantity) {

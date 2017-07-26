@@ -206,10 +206,17 @@ class Hero extends Phaser.Sprite {
 
     this.body.velocity.x = 0;
 
+
     if (this.cursors.left.isDown) {
       this.body.velocity.x = -this.speed;
+      if (this.weapon) {
+        this.weapon.fireAngle = Phaser.ANGLE_LEFT + 25;
+      }
     } else if (this.cursors.right.isDown) {
       this.body.velocity.x = this.speed;
+      if (this.weapon) {
+        this.weapon.fireAngle = Phaser.ANGLE_RIGHT - 25;
+      }
     }
 
     if (this.cursors.up.isDown) {
@@ -246,6 +253,8 @@ class Hero extends Phaser.Sprite {
   public equipWeapon(weapon: Weapon) {
     this.weapon = weapon;
     this.weapon.trackSprite(this);
+    this.weapon.fireAngle = Phaser.ANGLE_RIGHT - 25;
+    this.weapon.bulletGravity.y = this.gravity;
   }
 
   public fire() {
@@ -333,7 +342,7 @@ export class Weapon extends Phaser.Weapon {
     this.bullets.forEach((bullet) => {
       bullet.body.setSize(this.initWidth/2, this.initHeight/2, this.initWidth/4, this.initHeight/4);
     }, this);
-    
+
     this.bullets.setAll('width', this.width);
     this.bullets.setAll('height', this.height);
     this.bullets.forEach((bullet) => bullet.body.updateBounds(), this);
@@ -342,7 +351,7 @@ export class Weapon extends Phaser.Weapon {
 
     if (this.bounceOnPlatforms) {
       this.bullets.forEach((bullet: Phaser.Bullet) => {
-        bullet.body.bounce.y = 0.5;
+        bullet.body.bounce.y = 1;
       }, this);
       // Set collision with platforms
       let children = this.game.world.children;
@@ -350,7 +359,11 @@ export class Weapon extends Phaser.Weapon {
         let child = children[i];
         if (child instanceof Platform) {
           // this.game.physics.arcade.overlap(this.bullets, child, (platform, bullet) => bullet.kill());
-          this.game.physics.arcade.collide(this.bullets, child, (platform, bullet) => bullet.body.velocity.setTo(0));
+          this.game.physics.arcade.collide(this.bullets, child, (platform, bullet) => {
+            if (bullet.body.touching.up || bullet.body.touching.left || bullet.body.touching.right) {
+              bullet.kill();
+            }
+          });
         }
       }
     }
