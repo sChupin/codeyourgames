@@ -28,11 +28,14 @@ class GameWorld extends Phaser.State {
   
   private platformGroup: Phaser.Group;
 
+  private fireButton: Phaser.Key;
+
   preload() {
     this.load.crossOrigin = 'anonymous';
     this.load.image('background', 'http://localhost:9000/public/images/Backgrounds/cave.png');
     this.load.spritesheet('hero', 'http://localhost:9000/public/images/Sprites/sheets/alberto.png', 32, 53);
     this.load.image('platform', 'http://localhost:9000/public/images/Tiles/dirtHalf.png');
+    this.load.image('bullet', 'http://localhost:9000/public/images/Items/fireball.png');
   }
 
   create() {
@@ -43,34 +46,49 @@ class GameWorld extends Phaser.State {
 
     this.hero = this.add.existing(new Hero(this.game, 100, 25, 'hero', 8));
 
-    this.platformGroup = this.add.group();
+    // this.platformGroup = this.add.group();
 
-    // let x = 0;
-    // let y = 400;
-    // while (x < this.world.width) {
-    //   x += Math.floor(Math.random() * 75);
-    //   let width = Math.floor(Math.random() * 100) + 200;
+    let x = 0;
+    let y = 400;
+    while (x < this.world.width) {
+      x += Math.floor(Math.random() * 75);
+      let width = Math.floor(Math.random() * 100) + 200;
 
-    //   // Create new platform
-    //   let platform = new Platform(this.game, x, y, 'platform', {width: width});
+      // Create new platform
+      let platform = new Platform(this.game, x, y, 'platform', {width: width});
 
-    //   x += platform.width;
+      x += platform.width;
 
-    //   // Add platform to world
-    //   this.add.existing(platform);
+      // Add platform to world
+      this.add.existing(platform);
 
-    //   // Add platform to platformGroup
-    //   this.platformGroup.add(platform);
+      // Add platform to platformGroup
+      // this.platformGroup.add(platform);
 
-    //   y -= Math.sign(Math.random() - 0.35) * Math.floor((Math.random() * 75));
-    // }  
+      y -= Math.sign(Math.random() - 0.35) * Math.floor((Math.random() * 75));
+    }  
 
-    let platform = new Platform(this.game, this.game.world.centerX, 400, 'platform', {width: this.game.world.width});
+    // let platform = this.game.add.existing(new Platform(this.game, this.game.world.centerX, 400, 'platform', {width: this.game.world.width}));
+    
+    let fireball = <Weapon>this.game.add.plugin(new Weapon(this.game, 'bullet'));
+    fireball.width = 50;
+    fireball.height = 50;
+    fireball.fireDirection = Phaser.ANGLE_RIGHT;
+    fireball.bulletGravity.y = 400;
+    fireball.bounceOnPlatforms = true;
 
+    this.hero.equipWeapon(fireball);
+
+    this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   }
 
   update() {
-    this.game.physics.arcade.collide(this.hero, this.platformGroup);
+    // this.game.physics.arcade.collide(this.hero, this.platformGroup);
+
+    if (this.fireButton.isDown) {
+      this.hero.fire();
+    }
+
   }
 
   render() {
@@ -109,6 +127,7 @@ class Platform extends Phaser.Sprite {
 class Hero extends Phaser.Sprite {
 
   private cursors;
+  private weapon: Weapon = null;
   
   // Default properties
   private defaultCanFall: boolean = false;
@@ -233,6 +252,15 @@ class Hero extends Phaser.Sprite {
 
   update() {
 
+    // Set collision with platforms
+    let children = this.game.world.children;
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child instanceof Platform) {
+        this.game.physics.arcade.collide(this, child);
+      }
+    }
+
     this.speedText.text = 'Speed: ' + this.speed;
     this.frameRateText.text = 'Frame rate: ' + this.frameRate;
 
@@ -278,6 +306,22 @@ class Hero extends Phaser.Sprite {
       }
     }
   }
+
+  public equipWeapon(weapon: Weapon) {
+    this.weapon = weapon;
+    this.weapon.trackSprite(this);
+  }
+
+  public fire() {
+    if (this.weapon) {
+      this.weapon.fire();
+    }
+  }
+
+  public unequipWeapon() {
+    this.weapon.trackedSprite = null;
+    this.weapon = null;
+  }
 }
 
 function speedToFrameRate(speed: number) {
@@ -294,4 +338,75 @@ function speedToFrameRate(speed: number) {
   }
   
   return Math.floor(speed/50 + 6);
+}
+
+
+export class Weapon extends Phaser.Weapon {
+
+  // private previousAmmoQuantity: number;
+
+  // Default properties
+  private defaultAmmoQuantity: number = -1;
+  private defaultFireDirection: number = Phaser.ANGLE_UP;
+  private defaultFireRate: number = 200;
+  private defaultBulletSpeed: number = 300;
+  private defaultBounceOnPlatforms: boolean = true;
+
+  // Physics properties
+  public width: number;
+  public height: number;
+  public angle: number = 0;
+
+  public ammoQuantity: number;
+  public fireDirection: number;
+  public bounceOnPlatforms: boolean;
+
+
+  constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, game.plugins);
+
+    // Set weapon properties
+    this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
+    this.fireDirection = opts.hasOwnProperty('fireDirection') ? opts.fireDirection : this.defaultFireDirection;
+    this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
+    this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
+    this.bounceOnPlatforms = opts.hasOwnProperty('bounceOnPlatforms') ? opts.bounceOnPlatforms : this.defaultBounceOnPlatforms;
+    
+    let imgCache = this.game.cache.getImage(key);
+    this.width = imgCache.width;
+    this.height = imgCache.height;
+
+    // Populate the bullet pool
+    this.createBullets(this.ammoQuantity, key);
+    this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+  }
+
+  update() {
+    this.bullets.setAll('width', this.width);
+    this.bullets.setAll('height', this.height);
+
+    this.bulletAngleOffset = this.angle - this.fireAngle;
+    this.fireAngle = this.fireDirection;
+
+    if (this.bounceOnPlatforms) {
+      this.bullets.forEach((bullet: Phaser.Bullet) => {
+        bullet.body.bounce.y = 0.5;
+      }, this);
+      // Set collision with platforms
+      let children = this.game.world.children;
+      for (let i = 0; i < children.length; i++) {
+        let child = children[i];
+        if (child instanceof Platform) {
+          this.game.physics.arcade.collide(this.bullets, child);
+        }
+      }
+    }
+
+    // Check for ammoQuantity change
+    // if (this.previousAmmoQuantity != this.ammoQuantity) {
+    //   this.previousAmmoQuantity = this.ammoQuantity;
+    //   this.bullets.forEachDead((bullet) => bullet.destroy(), this);
+    //   this.createBullets(this.ammoQuantity - this.bullets.countLiving(), this.bulletKey);
+    // }
+  }
 }
