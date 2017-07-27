@@ -57,7 +57,7 @@ class Platformer extends Sprite {
   update() {
     if (this.animated) {
       // Set animations and frame based on motion
-      this.animations.currentAnim.speed = speedToFrameRate(this.speed);
+      this.animations.currentAnim.speed = this.speedToFrameRate(this.speed);
 
       if (this.body.velocity.x > 0 && this.speed > 0 || this.body.velocity.x < 0 && this.speed < 0) {
         if (this.body.blocked.down || this.body.touching.down) {
@@ -84,6 +84,22 @@ class Platformer extends Sprite {
         }
       }
     }
+  }
+
+  private speedToFrameRate(speed: number) {
+    speed = Math.abs(speed);
+
+    if (speed < 15) {
+      return 4;
+    }
+    if (speed < 50) {
+      return 5;
+    }
+    if (speed < 75) {
+      return 6;
+    }
+    
+    return Math.floor(speed/50 + 6);
   }
 }
 
@@ -560,7 +576,6 @@ class Platformer extends Sprite {
   //   // }
 // }
 
-
 // export class Group {
   //   constructor(public phaserGroup: Phaser.Group) { }
 
@@ -577,11 +592,13 @@ export class Group extends Phaser.Group {
   }
 }
 
-
 export class Hero extends Platformer {
 
   private cursors: Phaser.CursorKeys;
   private weapon: Weapon = null;
+
+  // Hit notification
+  public hit: boolean = false;
   
   // Initial properties
   private initX: number;
@@ -676,6 +693,9 @@ export class Hero extends Platformer {
       }
     }
 
+    // Reset the hit notification
+    this.hit = false;
+
     // Call inherited update method so touching check happens after collide
     super.update();
   }
@@ -726,22 +746,6 @@ export class Hero extends Platformer {
   }
 }
 
-function speedToFrameRate(speed: number) {
-  speed = Math.abs(speed);
-
-  if (speed < 15) {
-    return 4;
-  }
-  if (speed < 50) {
-    return 5;
-  }
-  if (speed < 75) {
-    return 6;
-  }
-  
-  return Math.floor(speed/50 + 6);
-}
-
 export class Platform extends Sprite {
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
@@ -767,7 +771,10 @@ export class Decor extends Sprite {
 export class Enemy extends Platformer {
 
   private directionRight: boolean = true; // true <-> right; false <-> left
-
+  
+  // Hit notification
+  public hit: boolean = false;
+  
   // Default properties
   private defaultCanFall: boolean = true;
   private defaultSpeed: number = 150;
@@ -833,6 +840,10 @@ export class Enemy extends Platformer {
       }
     }
 
+
+    // Reset the hit notification
+    this.hit = false;
+
     // Call inherited update method so touching check happens after collide
     super.update();
   }
@@ -843,6 +854,9 @@ export class Spaceship extends Sprite {
   private cursors: Phaser.CursorKeys;
   private fireButton: Phaser.Key;
   private weapons: Array<Weapon> = [];
+
+  // Hit notification
+  public hit: boolean = false;
 
   // Default properties
   private defaultSpeed: number = 250;
@@ -888,6 +902,9 @@ export class Spaceship extends Sprite {
     if (this.fireButton.isDown && this.weapons.length != 0) {
       this.weapons.forEach((weapon) => weapon.fire());
     }
+
+    // Reset the hit notification
+    this.hit = false;
   }
 
   public equipWeapon(weapon: Weapon) {
@@ -914,8 +931,7 @@ export class Weapon extends Phaser.Weapon {
   // private previousAmmoQuantity: number;
 
   // Default properties
-  // private defaultAmmoQuantity: number = -1; // Induce a bug for resizing all hitbox as the pool dynamically increase and setSize cannot be use after resizing !
-  private defaultAmmoQuantity: number = 100;
+  private defaultAmmoQuantity: number = -1;
   private defaultFireAngle: number = Phaser.ANGLE_UP;
   private defaultFireRate: number = 200;
   private defaultBulletSpeed: number = 300;
@@ -970,10 +986,12 @@ export class Weapon extends Phaser.Weapon {
       bullet.body.bounce.y = 1;
     }, this);
 
-    // Set collision with platforms
+    // Collisions and overlaps
     let children = this.game.world.children;
     for (let i = 0; i < children.length; i++) {
       let child = children[i];
+
+      // Set collision with platforms
       if (child instanceof Platform) {
         this.game.physics.arcade.collide(this.bullets, child, (platform, bullet) => {
           // If collision happens on the top of a platform, the bullet bounces
@@ -983,6 +1001,18 @@ export class Weapon extends Phaser.Weapon {
           }
         });
       }
+
+      if ((child instanceof Hero || child instanceof Spaceship || child instanceof Enemy) && child != this.trackedSprite) {
+        this.game.physics.arcade.overlap(this.bullets, child, (target, bullet) => {
+          // Kill bullet (can be replace by user logic <todo later>)
+          bullet.kill();
+          console.log('bullet killed by overlap');
+          
+          // Notify the target it is hit by a bullet
+          target.hit = true;
+        });
+      }
+    }
 
     // Check for ammoQuantity change
     // if (this.previousAmmoQuantity != this.ammoQuantity) {
