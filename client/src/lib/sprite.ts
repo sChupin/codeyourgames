@@ -855,6 +855,8 @@ export class Spaceship extends Sprite {
   private fireButton: Phaser.Key;
   private weapons: Array<Weapon> = [];
 
+  private initScale: number = 1;
+
   // Hit notification
   public hit: boolean = false;
 
@@ -884,13 +886,17 @@ export class Spaceship extends Sprite {
   }
 
   update() {
+    // hack to fix scale/bank problem (but still not perfect if sprite is resized when moving)
+    if (this.body.velocity.x == 0) {
+      this.initScale = this.scale.x;
+    }
     this.body.maxVelocity.x = this.speed;
     this.body.drag.x = this.speed;
     this.body.acceleration.x = 0;
     
     // Squish and rotate ship for illusion of "banking"
     let bank = this.body.velocity.x / this.speed;
-    this.scale.x = 1 - Math.abs(bank) / 4;
+    this.scale.x = (1 - Math.abs(bank) / 4) * this.initScale;
     this.angle = bank * 10;
 
     if (this.cursors.right.isDown) {

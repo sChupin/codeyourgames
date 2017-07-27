@@ -135,7 +135,7 @@ export class GameProps {
     this.game.stage.backgroundColor = color;
   }
 
-  // public collision(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
+//   public collision(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
   //   let arg1;
   //   let arg2;
   //   if (obj1 instanceof Group) {
@@ -177,7 +177,7 @@ export class GameProps {
   //   } else {
   //     return this.game.physics.arcade.overlap(arg1, arg2, callback);
   //   }
-  // }
+//   }
 
   public setGravity(g: number) {
     this.game.physics.arcade.gravity.y = g ? g : 100;
