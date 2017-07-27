@@ -598,7 +598,7 @@ export class Hero extends Platformer {
   private weapon: Weapon = null;
 
   // Hit notification
-  public hit: boolean = false;
+  public isHit: boolean = false;
   
   // Initial properties
   private initX: number;
@@ -694,7 +694,7 @@ export class Hero extends Platformer {
     }
 
     // Reset the hit notification
-    this.hit = false;
+    this.isHit = false;
 
     // Call inherited update method so touching check happens after collide
     super.update();
@@ -773,7 +773,7 @@ export class Enemy extends Platformer {
   private directionRight: boolean = true; // true <-> right; false <-> left
   
   // Hit notification
-  public hit: boolean = false;
+  public isHit: boolean = false;
   
   // Default properties
   private defaultCanFall: boolean = true;
@@ -842,7 +842,7 @@ export class Enemy extends Platformer {
 
 
     // Reset the hit notification
-    this.hit = false;
+    this.isHit = false;
 
     // Call inherited update method so touching check happens after collide
     super.update();
@@ -858,7 +858,7 @@ export class Spaceship extends Sprite {
   private initScale: number = 1;
 
   // Hit notification
-  public hit: boolean = false;
+  public isHit: boolean = false;
 
   // Default properties
   private defaultSpeed: number = 250;
@@ -910,7 +910,7 @@ export class Spaceship extends Sprite {
     }
 
     // Reset the hit notification
-    this.hit = false;
+    this.isHit = false;
   }
 
   public equipWeapon(weapon: Weapon) {
@@ -1015,7 +1015,7 @@ export class Weapon extends Phaser.Weapon {
           console.log('bullet killed by overlap');
           
           // Notify the target it is hit by a bullet
-          target.hit = true;
+          target.isHit = true;
         });
       }
     }
