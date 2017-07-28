@@ -79,5 +79,8 @@
   "img-gallery": {
     "cancel": "Annuler",
     "ok": "Ok"
+  },
+  "editor": {
+    "run-code": "Exécuter le code"
   }
 }

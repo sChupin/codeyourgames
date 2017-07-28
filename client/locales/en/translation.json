@@ -80,5 +80,8 @@
   "img-gallery": {
     "cancel": "Cancel",
     "ok": "Ok"
+  },
+  "editor": {
+    "run-code": "Run code"
   }
 }
