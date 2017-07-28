@@ -1,4 +1,4 @@
-import {Point, Angle, Velocity, Direction} from './utility';
+import {Point, Angle, Velocity, Direction, Color} from './utility';
 
 import Phaser = require('phaser');
 
@@ -1029,3 +1029,14 @@ export class Weapon extends Phaser.Weapon {
   }
 }
 
+export class TextImage extends Phaser.Text {
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+              public text: string, public color: string, public fontSize: number) {
+    super(game, x, y, text, {fill: color, fontSize: fontSize});
+  }
+
+  update() {
+    this.setStyle({ fill: this.color, fontSize: this.fontSize });
+  }
+}

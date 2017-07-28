@@ -1,5 +1,5 @@
-import {Point} from './utility';
-import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon} from './sprite';
+import {Point, Color} from './utility';
+import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage} from './sprite';
 
 export class GameProps {
   public center: Point;
@@ -107,6 +107,11 @@ export class GameProps {
   public createWeapon(key: string, opts?: any) {
     // return new Weapon(this.game, key, opts);
     return this.game.add.plugin(new Weapon(this.game, key, 0, opts));
+  }
+
+  public addText(x: number, y: number, text: string, color: string = '#000000', fontSize: number = 32) {
+    // return this.game.add.text(x, y, 'text', {fill: color, fontSize: fontSize});
+    return this.game.add.existing(new TextImage(this.game, x, y, text, color, fontSize));
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {

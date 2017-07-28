@@ -1,3 +1,5 @@
+import {Color} from '../lib/utility';
+
 import Phaser = require('phaser');
 
 export class PhaserGame {
@@ -84,7 +86,7 @@ class GameWorld extends Phaser.State {
     this.platforms.setAll('body.immovable', true);
 
     // Set the score
-    this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+    this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: Color.LightGoldenRodYellow });
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
