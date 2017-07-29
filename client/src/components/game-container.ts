@@ -79,24 +79,25 @@ class Game extends Phaser.Game {
   constructor(preloadCode: string, createCode: string, updateCode: string, width: number, height: number) {
     super(width, height, Phaser.AUTO, 'game-container', null);
 
-    GameWorld.prototype.userPreload = Function(preloadCode);
-    GameWorld.prototype.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', 'Hero', createCode);
-    GameWorld.prototype.userUpdate = Function('Game', 'Keyboard', 'Mouse', 'Bodies', 'Groups', 'Numbers', 'Texts', 'Booleans', updateCode);
+    let chapter: Chapter = new Chapter();
 
-    this.state.add('main', GameWorld);
+    // Trick to access create scope in update function
+    createCode += '\nreturn function() {\n' + updateCode + '\n};\n';
+
+    chapter.userPreload = Function(preloadCode);
+    chapter.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', createCode);
+    // chapter.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', createCode);
+    // chapter.userUpdate = Function('Game', 'Keyboard', 'Mouse', updateCode);
+    
+    this.state.add('main', chapter);
     this.state.start('main');
   }
 }
 
-class GameWorld extends Phaser.State {
+class Chapter extends Phaser.State {
 
   // Game properties handler accessed by global Game in user code
   private gameProps: GameProps;
-
-  // List of sprite accessed by global Bodies in user code
-  private bodies: BodyMap = {};
-
-  private platforms: PlatformMap = {};
 
   private userEvents: Array<Phaser.Signal> = [];
 
@@ -109,9 +110,6 @@ class GameWorld extends Phaser.State {
   // Mouse events handler accessed by global Mouse in user code
   private mouse: Mouse;
 
-  // List of groups accessed by global Groups in user code
-  private groups: GroupMap = {};
-
   preload() {
     this.userPreload();
   }
@@ -121,7 +119,7 @@ class GameWorld extends Phaser.State {
     this.initKeyboard();
     this.initMouse();
     
-    this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap, Hero);
+    this.userUpdate = this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse);
   }
 
   update() {
@@ -131,7 +129,7 @@ class GameWorld extends Phaser.State {
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
-    this.userUpdate(this.gameProps, this.keyboard, this.mouse, this.bodies, this.groups, NumberMap, TextMap, BooleanMap);
+    this.userUpdate();
   }
 
   private initGameProps() {
@@ -147,25 +145,12 @@ class GameWorld extends Phaser.State {
   }
 }
 
-interface GameWorld {
+interface Chapter {
   userPreload: Function;
   userCreate: Function;
   userUpdate: Function;
 }
 
-export interface BodyMap {
-  [key: string]: Body;
-}
-
-export interface PlatformMap {
-  [key: string]: any;
-}
-
 export interface FunctionMap {
   [key: string]: Function;
-}
-
-export interface GroupMap {
-  // todo: replace by new Group class
-  [key: string]: Group;
 }
