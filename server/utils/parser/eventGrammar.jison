@@ -16,9 +16,11 @@
 "do"                  return 'DO'
 "and"                 return 'AND'
 "or"                  return 'OR'
+"equals"              return 'EQUALS'
 <<EOF>>               return 'EOF'
 \w*(\.\w*)+(\(.*\))?.*    return 'COMPOSED_WORD'
 [a-z]\w*              return 'WORD'
+[0-9]+                return 'NUMBER'
 [{]                   return 'BEGIN_CODE'
 [}]                   return 'END_CODE'
 "("                   return '('
@@ -71,7 +73,11 @@ code_line
         {$$ = $1}
     | COMPOSED_WORD
         {$$ = $1}
-    ; 
+    | code_line INVALID
+        {$$ = $1 + $2}
+    | code_line NUMBER
+        {$$ = $1 + $2}
+    ;
 
 condition
     : WORD
@@ -87,6 +93,10 @@ composed_condition
         {$$ = $1 + " && " + $3}
     | composed_condition OR condition
         {$$ = $1 + " || " + $3}
+    | composed_condition EQUALS condition
+        {$$ = $1 + " == " + $3}
+    | composed_condition EQUALS NUMBER
+        {$$ = $1 + " == " + $3}
     ;
 
 type

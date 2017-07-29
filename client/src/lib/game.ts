@@ -2,27 +2,19 @@ import {Point, Color} from './utility';
 import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage} from './sprite';
 
 export class GameProps {
-  public center: Point;
-  public centerX: number;
-  public centerY: number;
-
-  public cameraCenter: Point;
-  public cameraCenterX: number;
-  public cameraCenterY: number;
-
   private background: any;
 
-  public paused: boolean = false;
+
+  /**
+   * True if the game is in pause, false otherwise
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberof GameProps
+   */
+  public readonly paused: boolean = false;
 
   constructor(private game: Phaser.Game) {
-    this.center = {x: game.world.centerX, y: game.world.centerY};
-    this.centerX = game.world.centerX;
-    this.centerY = game.world.centerY;
-
-    this.cameraCenter = {x: game.width/2, y: game.height/2};
-    this.cameraCenterX = game.width/2;
-    this.cameraCenterY = game.height/2;
-
     // Set paused property on game pause/resume
     this.game.onPause.add(() => this.pause());
     this.game.onResume.add(() => this.resume());
@@ -136,55 +128,7 @@ export class GameProps {
     return this.background;
   }
 
-  public setBackgroundColor(color: string) {
-    this.game.stage.backgroundColor = color;
-  }
-
-//   public collision(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
-  //   let arg1;
-  //   let arg2;
-  //   if (obj1 instanceof Group) {
-  //     arg1 = obj1.phaserGroup;
-  //   } else {
-  //     arg1 = obj1.phaserSprite;
-  //   }
-
-  //   if (obj2 instanceof Group) {
-  //     arg2 = obj2.phaserGroup;
-  //   } else {
-  //     arg2 = obj2.phaserSprite;
-  //   }
-    
-  //   if (callback === undefined) {
-  //     return this.game.physics.arcade.collide(arg1, arg2);
-  //   } else {
-  //     return this.game.physics.arcade.collide(arg1, arg2, callback);
-  //   }
+  // public setBackgroundColor(color: string) {
+  //   this.game.stage.backgroundColor = color;
   // }
-
-  // public overlap(obj1: Sprite | Group, obj2: Sprite | Group, callback?) {
-  //   let arg1;
-  //   let arg2;
-  //   if (obj1 instanceof Group) {
-  //     arg1 = obj1.phaserGroup;
-  //   } else {
-  //     arg1 = obj1.phaserSprite;
-  //   }
-
-  //   if (obj2 instanceof Group) {
-  //     arg2 = obj2.phaserGroup;
-  //   } else {
-  //     arg2 = obj2.phaserSprite;
-  //   }
-    
-  //   if (callback === undefined) {
-  //     return this.game.physics.arcade.overlap(arg1, arg2);
-  //   } else {
-  //     return this.game.physics.arcade.overlap(arg1, arg2, callback);
-  //   }
-//   }
-
-  public setGravity(g: number) {
-    this.game.physics.arcade.gravity.y = g ? g : 100;
-  }
 }
