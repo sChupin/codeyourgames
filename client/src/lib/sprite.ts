@@ -32,6 +32,14 @@ export class Sprite extends Phaser.Sprite {
   public resetScale() {
     this.scale.setTo(1);
   }
+
+  public hide() {
+    this.visible = false;
+  }
+  
+  public show() {
+    this.visible = true;
+  }
 }
 
 class Platformer extends Sprite {
