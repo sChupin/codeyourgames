@@ -33,7 +33,7 @@
     "bgnd-gallery-title": "Gallerie d'arrière-plans",
     "bgnd-label": "Arrière-plan",
     "bgnd-set": "Définir arrière-plan",
-    "no-bgnd": "Pas d'arrière plan",
+    "no-bgnd": "Pas d'arrière-plan",
     "bgndType": "Type d'arrière-plan",
     "bgndFixed": "Fixe",
     "bgndCamera": "Caméra",
@@ -77,6 +77,10 @@
     "errorUniq": "Le nom du lutin doit être unique"
   },
   "img-gallery": {
+    "backgrounds": "Arrière-plans",
+    "sprites": "Lutins",
+    "tiles": "Plateformes",
+    "items": "Objects",
     "cancel": "Annuler",
     "ok": "Ok"
   },

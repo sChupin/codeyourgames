@@ -5,6 +5,8 @@ import {BoardInfo, CodeUpdate} from '../../../services/messages';
 import {BoardInfoParser} from '../../../services/boardInfoParser';
 import {TranspilerService} from "../../../services/transpiler-service";
 
+import * as ace from 'ace';
+
 @autoinject
 export class Editor {
   private subscriber: Subscription;
@@ -23,6 +25,7 @@ export class Editor {
   constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService) { }
 
   attached() {
+    console.log(ace);
     // Process game info from board initializer
     this.subscriber = this.ea.subscribe(BoardInfo, boardInfo => {
       this.preloadCode = this.boardInfoParser.toPreloadCode(boardInfo);
@@ -35,6 +38,8 @@ export class Editor {
     this.createEditor = this.createAceEditor.au.ace.viewModel.editor;
     this.eventEditor = this.eventAceEditor.au.ace.viewModel.editor;
     this.functionEditor = this.functionAceEditor.au.ace.viewModel.editor;
+
+    this.createEditor.setOptions({enableBasicAutocompletion: true});
 
     // this.createEditor.setReadOnly(true);
   }

@@ -78,6 +78,10 @@
     "errorUniq": "Sprite name should be unique"
   },
   "img-gallery": {
+    "backgrounds": "Backgrounds",
+    "sprites": "Sprites",
+    "tiles": "Tiles",
+    "items": "Items",
     "cancel": "Cancel",
     "ok": "Ok"
   },

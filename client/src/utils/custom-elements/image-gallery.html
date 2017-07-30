@@ -9,7 +9,7 @@
     <div class="row">
 
       <div if.bind="sections.length > 1" repeat.for="section of gallery">
-        <collapse-panel title.bind="sections[$index]" allow-collapse.bind="true" collapsed.bind="true">
+        <collapse-panel title.bind="sections[$index].name & t" allow-collapse.bind="true" collapsed.bind="true">
         <div class="col-md-3 col-sm-3" repeat.for="image of section">
           <div class="panel panel-default" class.bind="image == selectedImg ? 'selected': ''" click.delegate="selectImg(image)" dblclick.delegate="controller.ok(image)">
             <div class="panel-body" style="height: 80px;">

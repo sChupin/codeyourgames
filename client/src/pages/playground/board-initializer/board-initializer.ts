@@ -45,7 +45,7 @@ export class BoardInitializer {
   private openBackgroundGallery() {
     let model = {
       title: 'board-init.bgnd-gallery-title',
-      sections: ['Backgrounds']
+      sections: [{name: 'img-gallery.background', tag: 'Backgrounds'}]
     }
     this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {
       if (!response.wasCancelled && response.output != undefined) {

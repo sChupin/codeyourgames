@@ -50,7 +50,8 @@ export class SpriteList {
   private openSpriteGallery(): void {
     let model = {
       title: 'board-init.sprite-gallery-title',
-      sections: ['Sprites', 'Tiles', 'Items']
+      // sections: ['Sprites', 'Tiles', 'Items']
+      sections: [{name: 'img-gallery.sprites', tag: 'Sprites'}, {name: 'img-gallery.tiles', tag: 'Tiles'}, {name: 'img-gallery.items', tag: 'Items'}]
     }
 
     this.dialogService.open({ viewModel: ImageGallery, model: model }).whenClosed(response => {

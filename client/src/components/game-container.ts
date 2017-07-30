@@ -143,6 +143,14 @@ class Chapter extends Phaser.State {
   private initMouse() {
     this.mouse = new Mouse(this.input);
   }
+
+  // render() {
+  //   this.game.world.children.forEach(child => {
+  //     if (child instanceof Hero) {
+  //       this.game.debug.body(child);
+  //     }
+  //   });
+  // }
 }
 
 interface Chapter {

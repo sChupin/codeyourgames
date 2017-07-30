@@ -7,7 +7,7 @@ import {ImageInfo} from '../interfaces';
 @autoinject
 export class ImageGallery {
   private title: string = '';
-  private sections: Array<string> = [];
+  private sections: Array<any> = [];
   private gallery: Array<Array<ImageInfo>> = [];
 
   selectedImg: ImageInfo = null;
@@ -19,11 +19,12 @@ export class ImageGallery {
   activate(model) {
     this.title = model.title;
     this.sections = model.sections;
+    console.log(this.sections);
   }
 
   attached() {
     this.sections.forEach(section => {
-      this.backend.getImagesBySection(section).then(data => {
+      this.backend.getImagesBySection(section.tag).then(data => {
         this.gallery.push(JSON.parse(data.response));
       });
     });
