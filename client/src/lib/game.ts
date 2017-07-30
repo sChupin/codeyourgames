@@ -1,5 +1,5 @@
 import {Point, Color} from './utility';
-import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage} from './sprite';
+import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage, Obj} from './sprite';
 
 export class GameProps {
   private background: any;
@@ -126,6 +126,20 @@ export class GameProps {
     this.background.sendToBack();
     
     return this.background;
+  }
+
+  public createObject(key: string, opts?: any) {
+    return new Obj(this.game, 0, 0, key, 0, opts);
+  }
+
+  public addObject(x: number, y: number, key: string, opts?: any) {
+    return this.game.add.existing(new Obj(this.game, x, y, key, 0, opts));
+  }
+
+  public addSprite(x: number, y: number, sprite: Sprite) {
+    sprite.x = x;
+    sprite.y = y;
+    return this.game.add.existing(sprite);
   }
 
   // public setBackgroundColor(color: string) {

@@ -577,3 +577,10 @@ export class TextImage extends Phaser.Text {
     this.setStyle({ fill: this.color, fontSize: this.fontSize });
   }
 }
+
+export class Obj extends Sprite {
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+            public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame, opts); 
+  }
+}
