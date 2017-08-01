@@ -32,11 +32,11 @@ export class BoardInfoParser {
     // Add each body on the board
     boardInfo.sprites.forEach(sprite => {
 
-      if (sprite.type == 'weapon') {
+      if (sprite.type == 'Weapon') {
         code += "var " + sprite.name + " = Game.createWeapon('" + sprite.key + "'";
       } else {
         code += "var " + sprite.name + " = Game.add" + sprite.type.charAt(0).toUpperCase() + sprite.type.slice(1) + "(" + sprite.x + ", " + sprite.y + ", '" + sprite.key + "'";
-        if (sprite.spritesheet && (sprite.type == 'hero' || sprite.type == 'enemy')) {
+        if (sprite.spritesheet && (sprite.type == 'Hero' || sprite.type == 'Enemy')) {
           let opts = '{ animated: true }';
           code += ", " + opts;
         }
