@@ -100,10 +100,9 @@ export class GameProps {
     // return new Weapon(this.game, key, opts);
     return this.game.add.plugin(new Weapon(this.game, key, 0, opts));
   }
-
-  public addText(x: number, y: number, text: string, color: string = '#000000', fontSize: number = 32) {
-    // return this.game.add.text(x, y, 'text', {fill: color, fontSize: fontSize});
-    return this.game.add.existing(new TextImage(this.game, x, y, text, color, fontSize));
+  
+  public addText(x: number, y: number, text: string, opts?: any): TextImage {
+    return this.game.add.existing(new TextImage(this.game, x, y, text, opts));
   }
 
   public setBackground(backgroundKey: string, backgroundType: string) {

@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "bootstrap": {
       "deps": [
@@ -13,6 +14,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
@@ -46,11 +48,13 @@ System.config({
     "json": "github:systemjs/plugin-json@0.3.0",
     "lipis/flag-icon-css": "github:lipis/flag-icon-css@2.8.0",
     "markusslima/bootstrap-filestyle": "github:markusslima/bootstrap-filestyle@1.2.1",
+    "martingust/aurelia-repeat-strategies": "github:martingust/aurelia-repeat-strategies@master",
     "phaser": "github:photonstorm/phaser@2.6.2",
     "silviomoreto/bootstrap-select": "github:silviomoreto/bootstrap-select@1.12.2",
     "split.js": "npm:split.js@1.1.1",
     "text": "github:systemjs/plugin-text@0.0.8",
     "typedoc": "npm:typedoc@0.7.1",
+    "yavorskiy/comment-parser": "github:yavorskiy/comment-parser@0.3.1",
     "github:abalmus/aurelia-ace-editor@master": {
       "ace": "github:ajaxorg/ace-builds@1.2.5"
     },
@@ -122,6 +126,9 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "github:martingust/aurelia-repeat-strategies@master": {
+      "aurelia-templating-resources": "npm:aurelia-templating-resources@1.4.0"
     },
     "github:twbs/bootstrap@3.3.7": {
       "jquery": "npm:jquery@3.2.1"

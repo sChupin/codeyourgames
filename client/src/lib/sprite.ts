@@ -2,7 +2,24 @@ import {Point, Angle, Velocity, Direction, Color} from './utility';
 
 import Phaser = require('phaser');
 
+
+/**
+ * @class Sprite
+ * @private
+ * 
+ * @property {number} x Sprite horizontal position
+ * @property {number} y Sprite vertical position
+ * @property {number} width Sprite width
+ * @property {number} height Sprite height
+ * @property {number} angle Sprite angle
+ */
 export class Sprite extends Phaser.Sprite {
+
+  private initX: number;
+  private initY: number;
+  private initWidth: number;
+  private initHeight: number;
+  private initAngle: number;
   
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -15,6 +32,21 @@ export class Sprite extends Phaser.Sprite {
     if (opts.hasOwnProperty('width')) { this.width = opts.width; }
     if (opts.hasOwnProperty('height')) { this.height = opts.height; }
     if (opts.hasOwnProperty('angle')) { this.angle = opts.angle; }
+
+    // Set initial properties
+    this.initX = x;
+    this.initY = y;
+    this.initWidth = this.width;
+    this.initHeight = this.height;
+    this.initAngle = this.angle;
+  }
+
+  protected restart() {
+    this.x = this.initX;
+    this.y = this.initY;
+    this.width = this.initWidth;
+    this.height = this.initHeight;
+    this.angle = this.initAngle;
   }
 
   public changeCostume(costumeNo: number) {
@@ -33,15 +65,77 @@ export class Sprite extends Phaser.Sprite {
     this.scale.setTo(1);
   }
 
+
+  /**
+   * Set the sprite invisible
+   * 
+   * @method hide
+   * @return {void}
+   * @memberof Sprite
+   */
   public hide() {
     this.visible = false;
   }
   
+
+  /**
+   * Set the sprite visible
+   * 
+   * @method show
+   * @return {void}
+   * @memberof Sprite
+   */
   public show() {
     this.visible = true;
   }
+
+  /**
+   * Move the sprite one layer up
+   * 
+   * @method moveUp
+   * @return {void}
+   * @memberof Sprite
+   */
+  // Implemented by Phaser.Sprite
+
+  /**
+   * Move the sprite one layer down
+   * 
+   * @method moveDown
+   * @return {void}
+   * @memberof Sprite
+   */
+  // Implemented by Phaser.Sprite
+
+  /**
+   * Send the sprite to the lowest layer
+   * 
+   * @method sendToBack
+   * @return {void}
+   * @memberof Sprite
+   */
+  // public sendToBack() {
+  //   super.sendToBack();
+  //   // if background
+  //   this.moveUp();
+  // }
+
+  /**
+   * Bring the sprite to the highest layer
+   * 
+   * @method bringToTop
+   * @return {void}
+   * @memberof Sprite
+   */
+  // Implemented by Phaser.Sprite
 }
 
+
+/** 
+ * @class Platformer
+ * @extends {Sprite}
+ * @private
+ */
 class Platformer extends Sprite {
 
   public speed: number;
@@ -117,6 +211,22 @@ export class Group extends Phaser.Group {
   }
 }
 
+
+/**
+ * Main character of a platform game. It is controllable with the keyboard arrows.
+ * 
+ * @class Hero
+ * @extends {Platformer}
+ * 
+ * @property {boolean} [canFall=true] Allows hero to fall below the bottom border of the game
+ * @property {number} [speed=200] Hero movement speed
+ * @property {number} [gravity=500] Gravity applied to the hero
+ * @property {number} [jumpForce=250] Hero jump force
+ * 
+ * @event isHit Indicates whether the hero is hit by a bullet
+ * @event fell Indicates whether the hero has fallen below the bottom border of the game
+ * @event touchEnemy Indicates whether the hero is touching an Enemy
+ */
 export class Hero extends Platformer {
 
   private cursors: Phaser.CursorKeys;
@@ -128,8 +238,6 @@ export class Hero extends Platformer {
   public touchEnemy: boolean = false; // Touch enemy notification
   
   // Initial properties
-  private initX: number;
-  private initY: number;
   private initFrame: number | string;
   private initJumpForce: number;
   private initGravity: number;
@@ -141,7 +249,7 @@ export class Hero extends Platformer {
   private defaultGravity = 500;
   private defaultJumpForce = 250;
 
-  // Physics properties
+  // Properties
   public canFall: boolean;
   public speed: number; // Useless as inherited, redeclared for doc purpose only
   public gravity: number;
@@ -161,8 +269,6 @@ export class Hero extends Platformer {
     this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
 
     // Set initial properties
-    this.initX = x;
-    this.initY = y;
     this.initFrame = frame;
     this.initJumpForce = this.jumpForce;
     this.initGravity = this.gravity;
@@ -238,9 +344,15 @@ export class Hero extends Platformer {
     super.update();
   }
 
-  public restart() {
-    this.x = this.initX;
-    this.y = this.initY;
+  /**
+   * Reset the hero properties to its initial values: position, width, height, angle, costume, jumpForce, gravity and speed
+   * 
+   * @method restart
+   * @return {void}
+   * @memberof Hero
+   */
+  public restart(): void {
+    super.restart();
     this.frame = this.initFrame;
     this.jumpForce = this.initJumpForce;
     this.gravity = this.initGravity;
@@ -265,30 +377,70 @@ export class Hero extends Platformer {
     }
   }
 
-  public equipWeapon(weapon: Weapon) {
+  /**
+   * Equip an existing weapon. Note: use fire() to use the equipped weapon
+   * 
+   * @method equipWeapon
+   * @param {Weapon} weapon The weapon to equip
+   * @return {void}
+   * @memberof Hero
+   */
+  public equipWeapon(weapon: Weapon): void {
     this.weapon = weapon;
     this.weapon.trackSprite(this);
     this.weapon.fireAngle = Phaser.ANGLE_RIGHT - 25;
     this.weapon.bulletGravity.y = this.gravity;
   }
 
-  public fire() {
+  /**
+   * Use the weapon equipped by the hero if any
+   * 
+   * @method fire
+   * @return {void}
+   * @memberof Hero
+   */
+  public fire(): void {
     if (this.weapon) {
       this.weapon.fire();
     }
   }
 
+  /**
+   * Unequip the equipped weapon if any
+   * 
+   * @method equipWeapon
+   * @return {void}
+   * @memberof Hero
+   */
   public unequipWeapon() {
     this.weapon.trackedSprite = null;
     this.weapon = null;
   }
 }
 
+
+/**
+ * Platform on which hero and enemies can stand
+ * 
+ * @class Platform
+ * @extends {Sprite}
+ * 
+ * @property {boolean} [bottomBlocking=true] If false, a hero can jump on the platform from below
+ */
 export class Platform extends Sprite {
+
+  // Default properties
+  private defaultBottomBlocking: boolean = true;
+
+  // Properties
+  public bottomBlocking: boolean;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame);
+
+    // Set platform properties
+    this.bottomBlocking = opts.hasOwnProperty('bottomBlocking') ? opts.bottomBlocking : this.defaultBottomBlocking;
 
     // Enable platform physics
     this.game.physics.arcade.enable(this);
@@ -296,8 +448,19 @@ export class Platform extends Sprite {
     // Set immovable 
     this.body.immovable = true;
   }
+  
+  update() {
+    this.body.checkCollision.down = this.bottomBlocking;
+  }
 }
 
+
+/**
+ * An image that won't interact with other sprites. It is automatically set in the background.
+ * 
+ * @class Decor
+ * @extends {Sprite}
+ */
 export class Decor extends Sprite {
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
@@ -306,6 +469,18 @@ export class Decor extends Sprite {
   }
 }
 
+
+/**
+ * Platform ennemy that automatically walks on platforms
+ * 
+ * @class Enemy
+ * @extends {Platformer}
+ * 
+ * @property {number} [speed=200] Enemy movement speed
+ * @property {boolean} [autoMove=true] Enable automatic motion of the enemy
+ * 
+ * @event isHit Indicates whether the enemy is hit by a bullet
+ */
 export class Enemy extends Platformer {
 
   private directionRight: boolean = true; // true <-> right; false <-> left
@@ -314,16 +489,12 @@ export class Enemy extends Platformer {
   public isHit: boolean = false;
   
   // Default properties
-  private defaultCanFall: boolean = true;
   private defaultSpeed: number = 150;
-  private defaultGravity = 500;
-  private defaultMove: boolean = true;
+  private defaultAutoMove: boolean = true;
 
-  // Physics properties
-  public canFall: boolean;
+  // Properties
   public speed: number; // Useless as inherited, redeclared for doc purpose only
-  public gravity: number;
-  public move: boolean;
+  public autoMove: boolean;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -333,28 +504,22 @@ export class Enemy extends Platformer {
     this.game.physics.arcade.enable(this);
 
     // Set enemy properties
-    this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
     this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
-    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
-    this.move = opts.hasOwnProperty('move') ? opts.move : this.defaultMove;
+    this.autoMove = opts.hasOwnProperty('autoMove') ? opts.autoMove : this.defaultAutoMove;
 
     // Enable collision with world bounds
-    this.body.collideWorldBounds = !this.canFall;
+    this.body.collideWorldBounds = true;
     // todo enable collision without left/right in any case
 
     // Set enemy gravity
-    this.body.gravity.y = this.gravity;
+    this.body.gravity.y = 500;
   }
 
   update() {
     // Reset the hit notification
     this.isHit = false;
 
-    // Apply properties in case they changed
-    this.body.collideWorldBounds = !this.canFall;
-    this.body.gravity.y = this.gravity; 
-
-    if (!this.move) {
+    if (!this.autoMove) {
       this.body.velocity.x = 0;
     }
 
@@ -365,7 +530,7 @@ export class Enemy extends Platformer {
       if (child instanceof Platform) {
         this.game.physics.arcade.collide(this, child, (enemy, platform) => {
           // Initiate enemy motion when on a platform
-          if (this.body.velocity.x == 0 && this.move) {
+          if (this.body.velocity.x == 0 && this.autoMove) {
             this.body.velocity.x = this.speed;
           }
 
@@ -374,7 +539,7 @@ export class Enemy extends Platformer {
               || enemy.body.velocity.x < 0 && enemy.x - enemy.width / 2 < platform.x - platform.width / 2) {
             this.directionRight = !this.directionRight;
           }
-          if (this.move) {
+          if (this.autoMove) {
             this.body.velocity.x = this.directionRight ? this.speed : -this.speed;
           }
         });
@@ -386,6 +551,17 @@ export class Enemy extends Platformer {
   }
 }
 
+
+/**
+ * Main character of a space game. It is controllable with the keyboard arrows
+ * 
+ * @class Spaceship
+ * @extends {Sprite}
+ * 
+ * @property {number} [speed=250] Spaceship movement speed
+ * 
+ * @event isHit Indicates whether the spaceship is hit by a bullet
+ */
 export class Spaceship extends Sprite {
 
   private cursors: Phaser.CursorKeys;
@@ -400,7 +576,7 @@ export class Spaceship extends Sprite {
   // Default properties
   private defaultSpeed: number = 250;
 
-  // Physics properties
+  // Properties
   public speed: number;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
@@ -469,17 +645,29 @@ export class Spaceship extends Sprite {
   }
 }
 
+
+/**
+ * Represents the bullet this weapon can shoot. A weapon cannot be directly add to the game but can be equipped by some types of sprite.
+ * 
+ * @class Weapon
+ * 
+ * @property {number} width Bullets width
+ * @property {number} height Bullets height
+ * @property {number} [angle=0]  Bullets image orientation
+ * @property {number} [fireAngle=Angle.UP] Direction toward which the bullets are fired. It will be updated automatically if equipped by a Hero.
+ * @property {number} [fireRate=200] Time in ms between two shots when the weapon fires continuously.
+ * @property {number} [bulletSpeed=300] Bullets flying speed in px/s
+ */
 export class Weapon extends Phaser.Weapon {
 
   // private previousAmmoQuantity: number;
 
   // Default properties
-  private defaultAmmoQuantity: number = -1;
   private defaultFireAngle: number = Phaser.ANGLE_UP;
   private defaultFireRate: number = 200;
   private defaultBulletSpeed: number = 300;
 
-  // Physics properties
+  // Properties
   public width: number;
   public height: number;
   public angle: number = 0;
@@ -494,7 +682,7 @@ export class Weapon extends Phaser.Weapon {
     super(game, game.plugins);
 
     // Set weapon properties
-    this.ammoQuantity = opts.hasOwnProperty('ammoQuantity') ? opts.ammoQuantity : this.defaultAmmoQuantity;
+    this.ammoQuantity = -1;
     this.fireAngle = opts.hasOwnProperty('fireAngle') ? opts.fireAngle : this.defaultFireAngle;
     this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
     this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
@@ -556,28 +744,59 @@ export class Weapon extends Phaser.Weapon {
         });
       }
     }
-
-    // Check for ammoQuantity change
-    // if (this.previousAmmoQuantity != this.ammoQuantity) {
-    //   this.previousAmmoQuantity = this.ammoQuantity;
-    //   this.bullets.forEachDead((bullet) => bullet.destroy(), this);
-    //   this.createBullets(this.ammoQuantity - this.bullets.countLiving(), this.bulletKey);
-    // }
   }
 }
 
+
+/**
+ * Editable text
+ * 
+ * @class Text
+ * 
+ * @property {string} text The text to display
+ * @property {string} [color=Color.Black] Text color
+ * @property {number} [fontSize=32] Text font size
+ * @property {boolean} [italic=false] Whether the text is in italic
+ * @property {boolean} [bold=true] Whether the text is in bold
+ */
 export class TextImage extends Phaser.Text {
 
+  // Default properties
+  private defaultColor: string = Color.Black;
+  private defaultFontSize: number = 32;
+  private defaultItalic: boolean = false;
+  private defaultBold: boolean = true;
+
+  // Properties
+  public color: string;
+  public italic: boolean;
+  public bold: boolean;
+
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public text: string, public color: string, public fontSize: number) {
-    super(game, x, y, text, {fill: color, fontSize: fontSize});
+              public text: string, opts: any = {}) {
+    super(game, x, y, text, opts);
+
+    // Set text properties
+    this.color = opts.hasOwnProperty('color') ? opts.color : this.defaultColor;
+    this.fontSize = opts.hasOwnProperty('fontSize') ? opts.fontSize : this.defaultFontSize;
+    this.italic = opts.hasOwnProperty('italic') ? opts.italic : this.defaultItalic;
+    this.bold = opts.hasOwnProperty('bold') ? opts.bold : this.defaultBold;
   }
 
   update() {
-    this.setStyle({ fill: this.color, fontSize: this.fontSize });
+    this.addColor(this.color, 0);
+    this.fontStyle = this.italic ? 'italic' : 'normal';
+    this.fontWeight = this.bold ? 'bold' : 'normal';
   }
 }
 
+
+/**
+ * An object can interact with all type of sprite.
+ * 
+ * @class Object
+ * @extends {Sprite}
+ */
 export class Obj extends Sprite {
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
             public key: string = '', public frame: number | string = '', opts: any = {}) {

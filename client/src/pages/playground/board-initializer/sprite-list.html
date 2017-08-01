@@ -48,17 +48,25 @@
     <div class="tab-content" style="margin: 10px;">
       <!--Type tab-->
       <div role="tabpanel" class="tab-pane active" id.bind="'type-'+$index">
-          <div class="row">
-            <!--Sprite type-->
-            <div class="form-inline">
-              <div class="form-group">
-                <span>${ 'board-init.spriteType' & t }</span>                
-                <select class="form-control" value.bind="sprite.data.type" required="required" style="margin-left: 15px;">
-                  <option repeat.for="[key, value] of spriteTypes" value.bind="key">${ value.name & t}</option>
-                </select>
-              </div>
+        <div class="row">
+
+          <!--Sprite type selector-->
+          <div class="form-inline">
+            <div class="form-group">
+              <span>${ 'board-init.spriteType' & t }</span>                
+              <select class="form-control" value.bind="sprite.data.type" required="required" style="margin-left: 15px;">
+                <option repeat.for="[key, value] of spriteTypes | iterable" value.bind="key" if.bind="!value.private">${ value.name }</option>
+              </select>
             </div>
           </div>
+
+          <!--Sprite type description, properties and methods-->
+          <div class="row">
+            <div class="col-md-12" style="margin-top: 10px;">Description: blablablablablablablablablablablabla</div>
+            <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">Properties</div>
+            <div class="col-md-6" style="margin-top: 10px;">Methods</div>
+          </div>
+        </div>
       </div>
       <!-- Properties tab -->
       <div role="tabpanel" class="tab-pane" id.bind="'props-'+$index">

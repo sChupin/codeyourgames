@@ -14,6 +14,7 @@ export function configure(aurelia: Aurelia) {
     .plugin('aurelia-dialog', config => {
       config.useDefaults();
     })
+    .plugin('martingust/aurelia-repeat-strategies')
     .plugin('abalmus/aurelia-ace-editor')
     .plugin('aurelia-validation')
     .plugin('aurelia-i18n', (instance) => {

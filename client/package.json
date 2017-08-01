@@ -36,6 +36,7 @@
     "gulp": "^3.9.1",
     "gulp-bump": "^2.5.0",
     "gulp-changed": "^1.3.2",
+    "gulp-clean": "^0.3.2",
     "gulp-dest": "^0.2.3",
     "gulp-htmlmin": "^3.0.0",
     "gulp-mustache": "^2.3.0",
@@ -43,6 +44,8 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-protractor": "3.0.0",
+    "gulp-read-my-comments": "0.0.2",
+    "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-tslint": "^6.1.3",
     "gulp-typedoc": "^2.0.2",
@@ -97,10 +100,12 @@
       "json": "github:systemjs/plugin-json@^0.3.0",
       "lipis/flag-icon-css": "github:lipis/flag-icon-css@^2.8.0",
       "markusslima/bootstrap-filestyle": "github:markusslima/bootstrap-filestyle@^1.2.1",
+      "martingust/aurelia-repeat-strategies": "github:martingust/aurelia-repeat-strategies@master",
       "phaser": "github:photonstorm/phaser@^2.6.2",
       "silviomoreto/bootstrap-select": "github:silviomoreto/bootstrap-select@^1.12.2",
       "split.js": "npm:split.js@^1.1.1",
-      "text": "github:systemjs/plugin-text@^0.0.8"
+      "text": "github:systemjs/plugin-text@^0.0.8",
+      "yavorskiy/comment-parser": "github:yavorskiy/comment-parser@^0.3.1"
     },
     "devDependencies": {
       "typedoc": "npm:typedoc@^0.7.1"

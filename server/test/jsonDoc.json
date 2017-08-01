@@ -1,0 +1,346 @@
+{
+  "Sprite": {
+    "name": "Sprite",
+    "descr": "",
+    "private": true,
+    "properties": [
+      {
+        "name": "x",
+        "type": "number",
+        "descr": "Sprite horizontal position"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "descr": "Sprite vertical position"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "descr": "Sprite width"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "descr": "Sprite height"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "descr": "Sprite angle"
+      }
+    ],
+    "events": [],
+    "methods": [
+      {
+        "name": "hide",
+        "descr": "Set the sprite invisible",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "show",
+        "descr": "Set the sprite visible",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "moveUp",
+        "descr": "Move the sprite one layer up",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "moveDown",
+        "descr": "Move the sprite one layer down",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "sendToBack",
+        "descr": "Send the sprite to the lowest layer",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "bringToTop",
+        "descr": "Bring the sprite to the highest layer",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      }
+    ]
+  },
+  "Platformer": {
+    "name": "Platformer",
+    "descr": "",
+    "private": true,
+    "properties": [],
+    "events": [],
+    "methods": []
+  },
+  "Hero": {
+    "name": "Hero",
+    "descr": "Main character of a platform game. It is controllable with the keyboard arrows.",
+    "private": false,
+    "properties": [
+      {
+        "name": "canFall",
+        "type": "boolean",
+        "descr": "Allows hero to fall below the bottom border of the game",
+        "defVal": "true"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "descr": "Hero movement speed",
+        "defVal": "200"
+      },
+      {
+        "name": "gravity",
+        "type": "number",
+        "descr": "Gravity applied to the hero",
+        "defVal": "500"
+      },
+      {
+        "name": "jumpForce",
+        "type": "number",
+        "descr": "Hero jump force",
+        "defVal": "250"
+      }
+    ],
+    "events": [
+      {
+        "name": "isHit",
+        "descr": "Indicates whether the hero is hit by a bullet"
+      },
+      {
+        "name": "fell",
+        "descr": "Indicates whether the hero has fallen below the bottom border of the game"
+      },
+      {
+        "name": "touchEnemy",
+        "descr": "Indicates whether the hero is touching an Enemy"
+      }
+    ],
+    "methods": [
+      {
+        "name": "restart",
+        "descr": "Reset the hero properties to its initial values: position, width, height, angle, costume, jumpForce, gravity and speed",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "equipWeapon",
+        "descr": "Equip an existing weapon. Note: use fire() to use the equipped weapon",
+        "params": [
+          {
+            "name": "weapon",
+            "type": "Weapon",
+            "descr": "The weapon to equip"
+          }
+        ],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "fire",
+        "descr": "Use the weapon equipped by the hero if any",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "equipWeapon",
+        "descr": "Unequip the equipped weapon if any",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      }
+    ]
+  },
+  "Platform": {
+    "name": "Platform",
+    "descr": "Platform on which hero and enemies can stand",
+    "private": false,
+    "properties": [
+      {
+        "name": "bottomBlocking",
+        "type": "boolean",
+        "descr": "If false, a hero can jump on the platform from below",
+        "defVal": "true"
+      }
+    ],
+    "events": [],
+    "methods": []
+  },
+  "Decor": {
+    "name": "Decor",
+    "descr": "An image that won't interact with other sprites. It is automatically set in the background.",
+    "private": false,
+    "properties": [],
+    "events": [],
+    "methods": []
+  },
+  "Enemy": {
+    "name": "Enemy",
+    "descr": "Platform ennemy that automatically walks on platforms",
+    "private": false,
+    "properties": [
+      {
+        "name": "speed",
+        "type": "number",
+        "descr": "Enemy movement speed",
+        "defVal": "200"
+      },
+      {
+        "name": "autoMove",
+        "type": "boolean",
+        "descr": "Enable automatic motion of the enemy",
+        "defVal": "true"
+      }
+    ],
+    "events": [
+      {
+        "name": "isHit",
+        "descr": "Indicates whether the enemy is hit by a bullet"
+      }
+    ],
+    "methods": []
+  },
+  "Spaceship": {
+    "name": "Spaceship",
+    "descr": "Main character of a space game. It is controllable with the keyboard arrows",
+    "private": false,
+    "properties": [
+      {
+        "name": "speed",
+        "type": "number",
+        "descr": "Spaceship movement speed",
+        "defVal": "250"
+      }
+    ],
+    "events": [
+      {
+        "name": "isHit",
+        "descr": "Indicates whether the spaceship is hit by a bullet"
+      }
+    ],
+    "methods": []
+  },
+  "Weapon": {
+    "name": "Weapon",
+    "descr": "Represents the bullet this weapon can shoot. A weapon cannot be directly add to the game but can be equipped by some types of sprite.",
+    "private": false,
+    "properties": [
+      {
+        "name": "width",
+        "type": "number",
+        "descr": "Bullets width"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "descr": "Bullets height"
+      },
+      {
+        "name": "angle",
+        "type": "number",
+        "descr": "Bullets image orientation",
+        "defVal": "0"
+      },
+      {
+        "name": "fireAngle",
+        "type": "number",
+        "descr": "Direction toward which the bullets are fired. It will be updated automatically if equipped by a Hero.",
+        "defVal": "Angle.UP"
+      },
+      {
+        "name": "fireRate",
+        "type": "number",
+        "descr": "Time in ms between two shots when the weapon fires continuously.",
+        "defVal": "200"
+      },
+      {
+        "name": "bulletSpeed",
+        "type": "number",
+        "descr": "Bullets flying speed in px/s",
+        "defVal": "300"
+      }
+    ],
+    "events": [],
+    "methods": []
+  },
+  "Text": {
+    "name": "Text",
+    "descr": "Editable text",
+    "private": false,
+    "properties": [
+      {
+        "name": "text",
+        "type": "string",
+        "descr": "The text to display"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "descr": "Text color",
+        "defVal": "Color.Black"
+      },
+      {
+        "name": "fontSize",
+        "type": "number",
+        "descr": "Text font size",
+        "defVal": "32"
+      },
+      {
+        "name": "italic",
+        "type": "boolean",
+        "descr": "Whether the text is in italic",
+        "defVal": "false"
+      },
+      {
+        "name": "bold",
+        "type": "boolean",
+        "descr": "Whether the text is in bold",
+        "defVal": "true"
+      }
+    ],
+    "events": [],
+    "methods": []
+  },
+  "Object": {
+    "name": "Object",
+    "descr": "An object can interact with all type of sprite.",
+    "private": false,
+    "properties": [],
+    "events": [],
+    "methods": []
+  }
+}
