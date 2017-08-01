@@ -520,12 +520,12 @@ var doc = [
     "tags": [
       {
         "tag": "method",
-        "name": "equipWeapon",
+        "name": "unequipWeapon",
         "optional": false,
         "type": "",
         "description": "",
         "line": 410,
-        "source": "@method equipWeapon"
+        "source": "@method unequipWeapon"
       },
       {
         "tag": "return",
@@ -548,7 +548,7 @@ var doc = [
     ],
     "line": 407,
     "description": "Unequip the equipped weapon if any",
-    "source": "Unequip the equipped weapon if any\n\n@method equipWeapon\n@return {void}\n@memberof Hero"
+    "source": "Unequip the equipped weapon if any\n\n@method unequipWeapon\n@return {void}\n@memberof Hero"
   },
   {
     "tags": [

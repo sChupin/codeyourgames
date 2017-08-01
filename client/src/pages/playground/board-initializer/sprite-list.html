@@ -1,6 +1,7 @@
 <template>
 <require from="../../../utils/custom-elements/image-gallery"></require>
 <require from="../../../utils/value-converters/round-number"></require>
+<require from="../../../utils/custom-elements/popover"></require>
 <require from="./sprite-picker"></require>
 <require from="./animation-creator"></require>
 
@@ -62,9 +63,47 @@
 
           <!--Sprite type description, properties and methods-->
           <div class="row">
-            <div class="col-md-12" style="margin-top: 10px;">Description: blablablablablablablablablablablabla</div>
-            <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">Properties</div>
-            <div class="col-md-6" style="margin-top: 10px;">Methods</div>
+            <div class="col-md-12" style="margin-top: 10px; font-style: italic;">${ spriteTypes[sprite.data.type].descr }</div>
+            <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">
+              <div style="font-weight: bold;">Properties</div>
+              <ul style="padding-left: 30px;">
+                <li repeat.for="property of spriteTypes[sprite.data.type].properties" style="margin: 5px 5px 5px 0px;">
+                  <span>${ property.name }&nbsp;</span>
+                  <popover-element placement="top" trigger="hover" style="display: inline-block">
+                    <!--<div slot="popoverTarget" style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis; font-style: italic;">${ property.descr }</div>-->
+                    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;"></span>
+                    <div slot="popoverTemplate" class="popover" role="tooltip">
+                      <div class="arrow"></div>
+                      <div style="margin: 5px">
+                      <div>${ property.descr }</div>
+                      <div><span style="font-style: italic">Value type: </span>${ property.type }</div>
+                      <div><span style="font-style: italic">Default value: </span>${ property.defVal }</div>
+                      </div>
+                    </div>
+                  </popover-element>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6" style="margin-top: 10px;">
+              <div style="font-weight: bold;">Methods</div>
+              <!--todo: if spriteTypes[...].methods == [] => No specific methods for this type-->
+              <ul>
+                <li repeat.for="method of spriteTypes[sprite.data.type].methods">
+                  <span>${ method.name }()</span>
+                  <popover-element placement="top" trigger="hover" style="display: inline-block">
+                    <!--<div slot="popoverTarget" style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis; font-style: italic;">${ property.descr }</div>-->
+                    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;"></span>
+                    <div slot="popoverTemplate" class="popover" role="tooltip">
+                      <div class="arrow"></div>
+                      <div style="margin: 5px">
+                      <div>${ method.descr }</div>
+                      <div><span style="font-style: italic">Returns: </span>todo</div>
+                      </div>
+                    </div>
+                  </popover-element>  
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

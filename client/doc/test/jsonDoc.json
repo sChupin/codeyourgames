@@ -175,7 +175,7 @@
         }
       },
       {
-        "name": "equipWeapon",
+        "name": "unequipWeapon",
         "descr": "Unequip the equipped weapon if any",
         "params": [],
         "return": {

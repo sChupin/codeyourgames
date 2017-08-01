@@ -408,7 +408,7 @@ export class Hero extends Platformer {
   /**
    * Unequip the equipped weapon if any
    * 
-   * @method equipWeapon
+   * @method unequipWeapon
    * @return {void}
    * @memberof Hero
    */
