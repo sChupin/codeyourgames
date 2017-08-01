@@ -61,13 +61,14 @@
             </div>
           </div>
 
-          ${sprite.data.type}
-
           <!--Sprite type description, properties and methods-->
           <div class="row">
+            <!--Description-->
             <div class="col-md-12" style="margin-top: 10px; font-style: italic;">${ spriteTypes[sprite.data.type].descr }</div>
+            <!--Properties-->
             <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">
               <div style="font-weight: bold;">Properties</div>
+              <span show.bind="spriteTypes[sprite.data.type].properties.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>              
               <ul style="padding-left: 30px;">
                 <li repeat.for="property of spriteTypes[sprite.data.type].properties" style="margin: 5px 5px 5px 0px;">
                   <span>${ property.name }&nbsp;</span>
@@ -86,12 +87,13 @@
                 </li>
               </ul>
             </div>
+            <!--Methods-->
             <div class="col-md-6" style="margin-top: 10px;">
               <div style="font-weight: bold;">Methods</div>
-              <!--todo: if spriteTypes[...].methods == [] => No specific methods for this type-->
+              <span show.bind="spriteTypes[sprite.data.type].methods.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>
               <ul>
                 <li repeat.for="method of spriteTypes[sprite.data.type].methods">
-                  <span>${ method.name }()</span>
+                  <span>${ method.name }()&nbsp;</span>
                   <popover-element placement="top" trigger="hover" style="display: inline-block">
                     <!--<div slot="popoverTarget" style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis; font-style: italic;">${ property.descr }</div>-->
                     <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;"></span>
