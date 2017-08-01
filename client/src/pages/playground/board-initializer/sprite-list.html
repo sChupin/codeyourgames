@@ -56,10 +56,12 @@
             <div class="form-group">
               <span>${ 'board-init.spriteType' & t }</span>                
               <select class="form-control" value.bind="sprite.data.type" required="required" style="margin-left: 15px;">
-                <option repeat.for="[key, value] of spriteTypes | iterable" value.bind="key" if.bind="!value.private">${ value.name }</option>
+                <option repeat.for="[key, value] of spriteTypes | iterable" value.bind="key" if.bind="!value.private && key != '__observers__'">${ value.name }</option>
               </select>
             </div>
           </div>
+
+          ${sprite.data.type}
 
           <!--Sprite type description, properties and methods-->
           <div class="row">
