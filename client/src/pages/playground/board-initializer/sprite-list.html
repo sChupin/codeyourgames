@@ -63,16 +63,38 @@
 
           <!--Sprite type description, properties and methods-->
           <div class="row">
+
             <!--Description-->
             <div class="col-md-12" style="margin-top: 10px; font-style: italic;">${ spriteTypes[sprite.data.type].descr }</div>
+
             <!--Properties-->
             <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">
-              <div style="font-weight: bold;">Properties</div>
+
+              <div style="font-weight: bold;">
+                <span>Properties&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <div slot="popoverTemplate" class="popover" role="tooltip">
+                      <div class="arrow"></div>
+                      <div style="margin: 5px">
+                        Click for more info on properties
+                        <!--A sprite property is a characteristic of a sprite such as its speed, its width,...
+                        It has a type: number, string (text) or boolean (true or false).
+                        Its value can be accessed as follow: mySpriteName.propertyName;
+                        Its value can be modified by assigning a new one.
+                        Example: myHero.speed = 500;
+                        It has a default value, so it is not mandatory to set it.-->
+                      </div>
+                    </div>
+                  </popover-element>
+              </div>
+
               <span show.bind="spriteTypes[sprite.data.type].properties.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>              
+
               <ul>
                 <li repeat.for="property of spriteTypes[sprite.data.type].properties" style="margin: 5px 5px 5px 0px;">
                   <span>${ property.name }&nbsp;</span>
-                  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
+                  <popover-element placement="top" trigger="click" style="display: inline-block" container="body">
                     <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px; cursor: help;"></span>
                     <div slot="popoverTemplate" class="popover" role="tooltip">
                       <div class="arrow"></div>
@@ -86,11 +108,32 @@
                   </popover-element>
                 </li>
               </ul>
+
             </div>
+
             <!--Methods-->
             <div class="col-md-6" style="margin-top: 10px;">
-              <div style="font-weight: bold;">Methods</div>
+
+              <div style="font-weight: bold;">
+                <span>Methods&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <div slot="popoverTemplate" class="popover" role="tooltip">
+                      <div class="arrow"></div>
+                      <div style="margin: 5px">
+                        Click for more info on methods
+                        <!--A sprite method is an action that the sprite can execute such as jump, fire,...
+                        It can be executed as follow: mySpriteName.myMethodName()
+                        The parentheses are mandatory and the method can take parameters within those parentheses.
+                        Example: myHero.equipWeapon(myWeapon);
+                        A parameter as a type that has to be respected.
+                        A method can also return a value that can be assigned to a variable.-->
+                    </div>
+                  </popover-element>
+              </div>
+
               <span show.bind="spriteTypes[sprite.data.type].methods.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>
+
               <ul>
                 <li repeat.for="method of spriteTypes[sprite.data.type].methods" style="margin: 5px 5px 5px 0px;">
                   <span>${ method.name }(<span repeat.for="param of method.params">${param.name}<span if.bind="!$last">, </span></span>)&nbsp;</span>
@@ -120,11 +163,33 @@
                   </popover-element>  
                 </li>
               </ul>
+              
             </div>
             <!--Events-->
             <div class="col-md-12" style="margin-top: 10px;">
-              <div style="font-weight: bold;">Events</div>
+              
+              <div style="font-weight: bold;">
+                <span>Events&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <div slot="popoverTemplate" class="popover" role="tooltip">
+                      <div class="arrow"></div>
+                      <div style="margin: 5px">
+                        Click for more info on events
+                        <!--A sprite event is a boolean value that is automatically set when a specific event happens to this sprite such as a collision.
+                        It cannot be manually set.
+                        It can be usefully used in an event condition.
+                        Example:
+                        when myHero.isHit
+                        do {
+                          myHero.die()
+                        }-->
+                    </div>
+                  </popover-element>
+              </div>
+
               <span show.bind="spriteTypes[sprite.data.type].events.length == 0" style="font-style: italic; font-size: 13px;">No specific events for this sprite type.</span>
+
               <ul>
                 <li repeat.for="event of spriteTypes[sprite.data.type].events" style="margin: 5px 5px 5px 0px;">
                   <span>${ event.name }()&nbsp;</span>
@@ -139,6 +204,7 @@
                   </popover-element>  
                 </li>
               </ul>
+
             </div>
           </div>
         </div>

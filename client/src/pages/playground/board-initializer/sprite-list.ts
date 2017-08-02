@@ -6,7 +6,7 @@ import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
 import {BoardCanvas} from '../../../services/board-canvas';
 import {ImageInfo} from '../../../utils/interfaces';
 
-import * as jsonDoc from '../../../../doc/test/jsonDoc.json!json';
+import * as jsonDoc from '../../../../doc/sprite.json!json';
 
 @autoinject
 export class SpriteList {

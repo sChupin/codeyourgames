@@ -1,20 +1,21 @@
 var clean = require("gulp-clean");
-var readMyComments = require("gulp-read-my-comments");
+// var readJsdoc = require("./custom_plugins/read_jsdoc.js");
+ readJsdoc = require("./read_jsdoc");
 var gulp = require("gulp");
 var rename = require("gulp-rename");
  
 gulp.task("cleandoc", function() {
-    return gulp.src(["doc/test/*"])
+    return gulp.src(["doc/*"])
         .pipe(clean());
 });
  
 gulp.task("builddoc", ["cleandoc"], function() {
     gulp.src(["src/lib/sprite.ts"])
-        .pipe(readMyComments())
+        .pipe(readJsdoc())
         .pipe(rename({
             extname: ".json",
         }))
-        .pipe(gulp.dest("doc/test/"));
+        .pipe(gulp.dest("doc/"));
 });
  
 gulp.task("doc", ["cleandoc", "builddoc"]);
