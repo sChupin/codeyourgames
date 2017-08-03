@@ -16,8 +16,7 @@ System.config({
   map: {
     "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
-    "abalmus/aurelia-ace-editor": "github:abalmus/aurelia-ace-editor@master",
-    "ace": "github:ajaxorg/ace-builds@1.2.5",
+    "ace": "github:ajaxorg/ace-builds@1.2.8",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-auth": "npm:aurelia-auth@3.0.5",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
@@ -53,9 +52,6 @@ System.config({
     "text": "github:systemjs/plugin-text@0.0.8",
     "typedoc": "npm:typedoc@0.7.1",
     "yavorskiy/comment-parser": "github:yavorskiy/comment-parser@0.3.1",
-    "github:abalmus/aurelia-ace-editor@master": {
-      "ace": "github:ajaxorg/ace-builds@1.2.5"
-    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },

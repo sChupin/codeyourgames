@@ -10,33 +10,9 @@
     </div>
 
     <div class="col-md-10 full-height tab-content" style="padding-left: 0px">
-      <div id="create-editor" class="tab-pane fade full-height">
-        <ace config-theme="ace/theme/monokai"
-            config-mode="ace/mode/typescript"
-            config-read-only="false"
-            ref="createAceEditor">
-          
-          
-        </ace>
-      </div>
-      <div id="event-editor" class="tab-pane fade in active full-height">
-        <ace config-theme="ace/theme/monokai"
-            config-mode="ace/mode/typescript"
-            config-read-only="false"
-            ref="eventAceEditor">
-          
-        </ace>
-        <button type="button" class="btn btn-default" click.delegate="addNewEvent()">Add new event</button>        
-      </div>
-      <div id="function-editor" class="tab-pane fade full-height">
-        <ace config-theme="ace/theme/monokai"
-            config-mode="ace/mode/typescript"
-            config-read-only="false"
-            ref="functionAceEditor">
-          
-        </ace>
-        <button type="button" class="btn btn-default" click.delegate="addNewFunction()">Add new function</button>        
-      </div>
+      <div id="create-editor" class="tab-pane fade full-height"></div>
+      <div id="event-editor" class="tab-pane fade in active full-height"></div>
+      <div id="function-editor" class="tab-pane fade full-height"></div>
     </div>
     </div>    
     <div class="row">
@@ -47,5 +23,3 @@
   </div>
     
 </template>
-
-

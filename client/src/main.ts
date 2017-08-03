@@ -15,7 +15,6 @@ export function configure(aurelia: Aurelia) {
       config.useDefaults();
     })
     .plugin('martingust/aurelia-repeat-strategies')
-    .plugin('abalmus/aurelia-ace-editor')
     .plugin('aurelia-validation')
     .plugin('aurelia-i18n', (instance) => {
       let aliases = ['t', 'i18n'];
