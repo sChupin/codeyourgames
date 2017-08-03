@@ -44,6 +44,7 @@ app.use('/jspm_packages', express.static(path.join(__dirname, '../client/jspm_pa
 app.use('/styles', express.static(path.join(__dirname, '../client/styles')));
 app.use('/media', express.static(path.join(__dirname, '../client/media')));
 app.use('/locales', express.static(path.join(__dirname, '../client/locales')));
+app.use('/doc', express.static(path.join(__dirname, '../client/doc')));
 
 // Serve media files
 app.use('/public', express.static(path.join(__dirname, './public')));
