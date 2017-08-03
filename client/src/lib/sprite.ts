@@ -76,7 +76,7 @@ export class Sprite extends Phaser.Sprite {
   public hide() {
     this.visible = false;
   }
-  
+
 
   /**
    * Set the sprite visible
