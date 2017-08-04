@@ -107,16 +107,9 @@ export class GameProps {
 
   public setBackground(backgroundKey: string, backgroundType: string) {
     if (backgroundType == 'scroll') {
-      // Get original image size
-      let bgCache = this.game.cache.getImage(backgroundKey);
-      let imgWidth = bgCache.width;
-      let imgHeight = bgCache.height;
-
       // Create scrollable background
-      let bg: Phaser.TileSprite = this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, backgroundKey);
-      
-      // Scale image so it fits game size
-      bg.tileScale.set(this.game.width/imgWidth, this.game.height/imgHeight);
+      this.background = this.game.add.existing(new ScrollableBackground(this.game, this.game.width, this.game.height, backgroundKey));
+
     } else {
       this.background = this.game.add.image(0, 0, backgroundKey);
       this.background.width = this.game.world.width;
@@ -125,6 +118,26 @@ export class GameProps {
     this.background.sendToBack();
     
     return this.background;
+  }
+
+  public scrollBackground(speed: number = 50, direction: number = Phaser.ANGLE_DOWN) {
+    if (!this.background) {
+      throw Error('No background set');
+    }
+
+    if (!(this.background instanceof ScrollableBackground)) {
+      throw Error('The background is not scrollable');
+    }
+
+    if (direction == Phaser.ANGLE_UP) {
+      this.background.autoScroll(0, -speed);
+    } else if (direction == Phaser.ANGLE_DOWN) {
+      this.background.autoScroll(0, speed);
+    } else if (direction == Phaser.ANGLE_LEFT) {
+      this.background.autoScroll(-speed, 0);
+    } else if (direction == Phaser.ANGLE_RIGHT) {
+      this.background.autoScroll(speed, 0);
+    }
   }
 
   public createObject(key: string, opts?: any) {
@@ -144,4 +157,26 @@ export class GameProps {
   // public setBackgroundColor(color: string) {
   //   this.game.stage.backgroundColor = color;
   // }
+}
+
+class ScrollableBackground extends Phaser.TileSprite {
+  constructor(game, width, height, key) {
+    super(game, 0, 0, width, height, key);
+
+    // Get original image size
+    let bgCache = this.game.cache.getImage(key);
+    let imgWidth = bgCache.width;
+    let imgHeight = bgCache.height;
+
+    // Scale image so it fits game size
+    this.tileScale.set(this.game.width/imgWidth, this.game.height/imgHeight);
+  }
+
+  public scrollHorizontal(speed: number) {
+    this.autoScroll(speed, 0);
+  }
+
+  public scrollVertical(speed: number) {
+    this.autoScroll(0, speed);
+  }
 }

@@ -799,6 +799,9 @@ export class TextImage extends Phaser.Text {
 export class Obj extends Sprite {
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
             public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts); 
+    super(game, x, y, key, frame, opts);
+
+    // Enable enemy physics
+    this.game.physics.arcade.enable(this);
   }
 }

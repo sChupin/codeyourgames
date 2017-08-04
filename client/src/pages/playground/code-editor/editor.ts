@@ -22,6 +22,8 @@ export class Editor {
 
   private preloadCode: string = "";
 
+  private genCodeLength: number = 0;
+
   constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService) { }
 
   attached() {
@@ -46,25 +48,25 @@ export class Editor {
       });
 
       // var customCompleter = {
-      //   getCompletions: function(editor, session, pos, prefix, callback) {
-      //     // let regex = /^[A-z]\w*(\((( )*\w*( )*(\,( )*\w*)( )*)\))?\.$/;
-      //       // if (prefix.length === 0) { callback(null, []); return }
-      //       // $.getJSON(
-      //       //     "http://rhymebrain.com/talk?function=getRhymes&word=" + prefix,
-      //       //     function(wordList) {
-      //       //         // wordList like [{"word":"flow","freq":24,"score":300,"flags":"bc","syllables":"1"}]
-      //       //         callback(null, wordList.map(function(ea) {
-      //       //             return {name: ea.word, value: ea.word, score: ea.score, meta: "rhyme"}
-      //       //         }));
-      //       //     });
-      //   }
-      // }
-      // langTools.addCompleter(customCompleter);
+        //   getCompletions: function(editor, session, pos, prefix, callback) {
+        //     // let regex = /^[A-z]\w*(\((( )*\w*( )*(\,( )*\w*)( )*)\))?\.$/;
+        //       // if (prefix.length === 0) { callback(null, []); return }
+        //       // $.getJSON(
+        //       //     "http://rhymebrain.com/talk?function=getRhymes&word=" + prefix,
+        //       //     function(wordList) {
+        //       //         // wordList like [{"word":"flow","freq":24,"score":300,"flags":"bc","syllables":"1"}]
+        //       //         callback(null, wordList.map(function(ea) {
+        //       //             return {name: ea.word, value: ea.word, score: ea.score, meta: "rhyme"}
+        //       //         }));
+        //       //     });
+        //   }
+        // }
+        // langTools.addCompleter(customCompleter);
 
-      // editor.commands.on("afterExec", function(e){
-      //     if (e.command.name == "insertstring"&&/^[\w.]$/.test(e.args)) {
-      //         editor.execCommand("startAutocomplete")
-      //     }
+        // editor.commands.on("afterExec", function(e){
+        //     if (e.command.name == "insertstring"&&/^[\w.]$/.test(e.args)) {
+        //         editor.execCommand("startAutocomplete")
+        //     }
       // });
 
       session.setMode('ace/mode/typescript')
@@ -74,37 +76,40 @@ export class Editor {
       session.setWrapLimitRange(80, 80);
     });
 
+    // Prevent editing auto-generated code and prevent backspace on first editable line
+    let commands: any = this.createEditor.commands; // fix typedef bug
+    commands.on('exec', e => {
+      console.log(this.genCodeLength);
+      let authorizedCommands = [
+        'gotoleft', 'gotoright', 'golineup', 'golinedown',
+        'gotowordright', 'gotowordleft', 'gotolinestart', 'gotolineend',
+        'selectleft', 'selectright', 'selectwordleft', 'selectwordright', 'selectup', 'selectdown'];        
+      let commandName = e.command.name;
+      
+      var rowCol = this.createEditor.selection.getCursor();
+      if ((rowCol.row >= 0 && rowCol.row <= this.genCodeLength - 2 && authorizedCommands.indexOf(commandName) == -1) ||
+          (e.command.name == 'backspace' && rowCol.row == this.genCodeLength - 1 && rowCol.column == 0)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
     // Subscribe to board initializer saves
     this.subscriber = this.ea.subscribe(BoardInfo, boardInfo => {
       this.preloadCode = this.boardInfoParser.toPreloadCode(boardInfo);
       let createCode = this.boardInfoParser.toCreateCode(boardInfo);
       
+      // Insert generated code from board initializer in create editor
       this.createEditor.setValue('// The code below has been generated automatically from the board initializer.\n// You can add more code initialization at the end of this editor.\n\n', 1);
       this.createEditor.insert(createCode);
       this.createEditor.insert('// You can add more code initialization below this comment.\n');
 
-      let commands: any = this.createEditor.commands; // fix typedef bug
-      let genCodeLength = this.createEditor.session.getLength();      
-      commands.on('exec', e => {
-        let authorizedCommands = [
-          'gotoleft', 'gotoright', 'golineup', 'golinedown',
-          'gotowordright', 'gotowordleft', 'gotolinestart', 'gotolineend',
-          'selectleft', 'selectright', 'selectwordleft', 'selectwordright', 'selectup', 'selectdown'];        
-        let commandName = e.command.name;
-        
-        // Prevent editing auto-generated code and prevent backspace on first editable line
-        var rowCol = this.createEditor.selection.getCursor();
-        if ((rowCol.row >= 0 && rowCol.row <= genCodeLength - 2 && authorizedCommands.indexOf(commandName) == -1) ||
-            (e.command.name == 'backspace' && rowCol.row == genCodeLength - 1 && rowCol.column == 0)) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
+      // Get new code generated length
+      this.genCodeLength = this.createEditor.session.getLength();
 
       // Reset the undo stack
       this.createEditor.getSession().setUndoManager(new (<any>ace).UndoManager());
     });
-
   }
 
   detached() {
@@ -127,13 +132,17 @@ export class Editor {
       let test = JSON.parse(value.response);
       let eventCode = this.transpiler.addEvents(test);
       let createCode = parseCreate(this.createEditor.getValue()) + eventCode.create;
+      createCode = appendTryCatch(createCode);
       let updateCode = eventCode.update;
       this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));
-      console.log(parseCreate(this.createEditor.getValue()));
     });
   }
 }
 
 function parseCreate(createCode: string) {
   return createCode.replace(/repeat( )*\(( )*(\d+)( )*\)( )*{/g, 'for (let _i = 0; _i < ' + '$3' + '; _i++) {');
+}
+
+function appendTryCatch(code: string) {
+  return 'try {\n\n' + code + '\n\n} catch(err) {\n  console.log("Code error: " + err.message);\n}';
 }
