@@ -42,8 +42,7 @@ export class Sprite extends Phaser.Sprite {
   }
 
   protected restart() {
-    this.x = this.initX;
-    this.y = this.initY;
+    this.reset(this.initX, this.initY);
     this.width = this.initWidth;
     this.height = this.initHeight;
     this.angle = this.initAngle;
