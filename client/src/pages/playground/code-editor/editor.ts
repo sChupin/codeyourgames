@@ -84,18 +84,18 @@ export class Editor {
       this.createEditor.insert('// You can add more code initialization below this comment.\n');
 
       let commands: any = this.createEditor.commands; // fix typedef bug
+      let genCodeLength = this.createEditor.session.getLength();      
       commands.on('exec', e => {
         let authorizedCommands = [
           'gotoleft', 'gotoright', 'golineup', 'golinedown',
           'gotowordright', 'gotowordleft', 'gotolinestart', 'gotolineend',
           'selectleft', 'selectright', 'selectwordleft', 'selectwordright', 'selectup', 'selectdown'];        
         let commandName = e.command.name;
-        let currentLength = this.createEditor.session.getLength();
         
         // Prevent editing auto-generated code and prevent backspace on first editable line
         var rowCol = this.createEditor.selection.getCursor();
-        if ((rowCol.row >= 0 && rowCol.row <= currentLength - 2 && authorizedCommands.indexOf(commandName) == -1) ||
-            (e.command.name == 'backspace' && rowCol.row == currentLength - 1 && rowCol.column == 0)) {
+        if ((rowCol.row >= 0 && rowCol.row <= genCodeLength - 2 && authorizedCommands.indexOf(commandName) == -1) ||
+            (e.command.name == 'backspace' && rowCol.row == genCodeLength - 1 && rowCol.column == 0)) {
           e.preventDefault();
           e.stopPropagation();
         }
@@ -126,9 +126,14 @@ export class Editor {
     this.transpiler.transpileEvents(this.eventEditor.getValue()).then(value => {
       let test = JSON.parse(value.response);
       let eventCode = this.transpiler.addEvents(test);
-      let createCode = this.createEditor.getValue() + eventCode.create;
+      let createCode = parseCreate(this.createEditor.getValue()) + eventCode.create;
       let updateCode = eventCode.update;
       this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));
+      console.log(parseCreate(this.createEditor.getValue()));
     });
   }
+}
+
+function parseCreate(createCode: string) {
+  return createCode.replace(/repeat( )*\(( )*(\d+)( )*\)( )*{/g, 'for (let _i = 0; _i < ' + '$3' + '; _i++) {');
 }
