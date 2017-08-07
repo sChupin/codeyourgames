@@ -79,7 +79,6 @@ export class Editor {
     // Prevent editing auto-generated code and prevent backspace on first editable line
     let commands: any = this.createEditor.commands; // fix typedef bug
     commands.on('exec', e => {
-      console.log(this.genCodeLength);
       let authorizedCommands = [
         'gotoleft', 'gotoright', 'golineup', 'golinedown',
         'gotowordright', 'gotowordleft', 'gotolinestart', 'gotolineend',

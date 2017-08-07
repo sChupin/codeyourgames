@@ -20,6 +20,8 @@ export class Sprite extends Phaser.Sprite {
   private initWidth: number;
   private initHeight: number;
   private initAngle: number;
+
+  private firstPreUpdate: boolean = true;
   
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -32,13 +34,21 @@ export class Sprite extends Phaser.Sprite {
     if (opts.hasOwnProperty('width')) { this.width = opts.width; }
     if (opts.hasOwnProperty('height')) { this.height = opts.height; }
     if (opts.hasOwnProperty('angle')) { this.angle = opts.angle; }
+  }
 
+  preUpdate() {
+    super.preUpdate();
+    
     // Set initial properties
-    this.initX = x;
-    this.initY = y;
-    this.initWidth = this.width;
-    this.initHeight = this.height;
-    this.initAngle = this.angle;
+    if (this.firstPreUpdate) {
+      this.initX = this.x;
+      this.initY = this.y;
+      this.initWidth = this.width;
+      this.initHeight = this.height;
+      this.initAngle = this.angle;
+
+      this.firstPreUpdate = false;
+    }
   }
 
   protected restart() {
@@ -231,11 +241,6 @@ export class Hero extends Platformer {
   private cursors: Phaser.CursorKeys;
   private weapon: Weapon = null;
   
-  // Event notification
-  public isHit: boolean = false; // Hit notification
-  public fell: boolean = false // Fall notification
-  public touchEnemy: boolean = false; // Touch enemy notification
-  
   // Initial properties
   private initFrame: number | string;
   private initJumpForce: number;
@@ -253,6 +258,11 @@ export class Hero extends Platformer {
   public speed: number; // Useless as inherited, redeclared for doc purpose only
   public gravity: number;
   public jumpForce: number;
+
+  // Event notification
+  public isHit: boolean = false; // Hit notification
+  public fell: boolean = false // Fall notification
+  public touchEnemy: boolean = false; // Touch enemy notification
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -832,6 +842,9 @@ export class FlappyBird extends Sprite {
   public flyForce: number;
   public flySpeed: number
 
+  // Event notification
+  public crashed: boolean = false;
+
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
             public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame, opts);
@@ -849,7 +862,20 @@ export class FlappyBird extends Sprite {
   }
 
   update() {
+    // Reset event notifications
+    this.crashed = false;
+    
+    // Apply properties in case they changed
     this.body.gravity.y = this.gravity;
     this.body.velocity.x = this.flySpeed;
+
+    // Set collision with platforms
+    let children = this.game.world.children;
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child instanceof Platform) {
+        this.game.physics.arcade.collide(this, child, () => this.crashed = true);
+      }
+    }
   }
 }
