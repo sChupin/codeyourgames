@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <button type="button" class="btn btn-default add-sprite" click.delegate="openSpriteGallery()"><span class="glyphicon glyphicon-plus" style="font-size: 25px"></button>
+    <button type="button" class="btn btn-default add-sprite" click.delegate="openSpriteGallery()" title.bind="'board-init.addSpriteTitle' & t"><span class="glyphicon glyphicon-plus" style="font-size: 25px"></button>
   </div>
 </div>
 
@@ -94,7 +94,7 @@
               <ul>
                 <li repeat.for="property of spriteTypes[sprite.data.type].properties" style="margin: 5px 5px 5px 0px;">
                   <span>${ property.name }&nbsp;</span>
-                  <popover-element placement="top" trigger="click" style="display: inline-block" container="body">
+                  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
                     <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px; cursor: help;"></span>
                     <div slot="popoverTemplate" class="popover" role="tooltip">
                       <div class="arrow"></div>
