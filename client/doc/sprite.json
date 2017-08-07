@@ -342,5 +342,31 @@
     "properties": [],
     "events": [],
     "methods": []
+  },
+  "FlappyBird": {
+    "name": "FlappyBird",
+    "descr": "Flappy bird-like sprite. You can fly with the spacebar and check when it crashes into a platform.",
+    "private": false,
+    "properties": [
+      {
+        "name": "gravity",
+        "type": "number",
+        "descr": "Gravity applied to the flappy bird",
+        "defVal": "500"
+      },
+      {
+        "name": "flyForce",
+        "type": "number",
+        "descr": "The vertical speed the bird takes when it flaps its wings",
+        "defVal": "250"
+      }
+    ],
+    "events": [
+      {
+        "name": "crashed",
+        "descr": "Indicates wheter the bird crashed into a platform"
+      }
+    ],
+    "methods": []
   }
 }

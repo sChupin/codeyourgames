@@ -805,3 +805,51 @@ export class Obj extends Sprite {
     this.game.physics.arcade.enable(this);
   }
 }
+
+
+/**
+ * Flappy bird-like sprite. You can fly with the spacebar and check when it crashes into a platform.
+ * 
+ * @class FlappyBird
+ * @extends {Sprite}
+ * 
+ * @property {number} [gravity=500] Gravity applied to the flappy bird
+ * @property {number} [flyForce=250] The vertical speed the bird takes when it flaps its wings
+ * 
+ * @event crashed Indicates wheter the bird crashed into a platform
+ */
+export class FlappyBird extends Sprite {
+
+  private flyKey: Phaser.Key;
+
+  // Default properties
+  private defaultGravity: number = 500;
+  private defaultFlyForce: number = 250;
+  private defaultFlySpeed: number = 200;
+
+  // Properties
+  public gravity: number;
+  public flyForce: number;
+  public flySpeed: number
+
+  constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
+            public key: string = '', public frame: number | string = '', opts: any = {}) {
+    super(game, x, y, key, frame, opts);
+
+    // Enable enemy physics
+    this.game.physics.arcade.enable(this);
+
+    // Set properties
+    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
+    this.flyForce = opts.hasOwnProperty('flyForce') ? opts.flyForce : this.defaultFlyForce;
+
+    // Set fly key
+    this.flyKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.flyKey.onDown.add(() => this.body.velocity.y = -this.flyForce);
+  }
+
+  update() {
+    this.body.gravity.y = this.gravity;
+    this.body.velocity.x = this.flySpeed;
+  }
+}

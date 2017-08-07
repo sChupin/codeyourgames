@@ -1,5 +1,5 @@
 import {Point, Color} from './utility';
-import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage, Obj} from './sprite';
+import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage, Obj, FlappyBird} from './sprite';
 
 export class GameProps {
   private background: any;
@@ -146,6 +146,10 @@ export class GameProps {
 
   public addObject(x: number, y: number, key: string, opts?: any) {
     return this.game.add.existing(new Obj(this.game, x, y, key, 0, opts));
+  }
+
+  public addFlappyBird(x: number, y: number, key, string, opts?: any) {
+    return this.game.add.existing(new FlappyBird(this.game, x, y, key, 0, opts));
   }
 
   public addSprite(x: number, y: number, sprite: Sprite) {

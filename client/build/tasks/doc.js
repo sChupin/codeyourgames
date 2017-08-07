@@ -1,6 +1,6 @@
 var clean = require("gulp-clean");
-// var readJsdoc = require("./custom_plugins/read_jsdoc.js");
- readJsdoc = require("./read_jsdoc");
+var readJsdoc = require("./custom_plugins/parse_doc");
+//  readJsdoc = require("./read_jsdoc");
 var gulp = require("gulp");
 var rename = require("gulp-rename");
  
