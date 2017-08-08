@@ -85,6 +85,26 @@
           "type": "void",
           "descr": ""
         }
+      },
+      {
+        "name": "",
+        "descr": "Resize the Sprite hitbox",
+        "params": [
+          {
+            "name": "ratioX",
+            "type": "number",
+            "descr": "the ratio between the original hitbox width and the new one (> 1: bigger hitbox, < 1: smaller hitbox)"
+          },
+          {
+            "name": "ratioY",
+            "type": "number",
+            "descr": "the ratio between the original hitbox height and the new one (> 1: bigger hitbox, < 1: smaller hitbox), set to ratioX if not defined"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
       }
     ]
   },

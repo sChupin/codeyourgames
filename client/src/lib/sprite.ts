@@ -22,6 +22,8 @@ export class Sprite extends Phaser.Sprite {
   private initAngle: number;
 
   private firstPreUpdate: boolean = true;
+
+  public showHitBox: boolean = false; // only for hard lvl
   
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
               public key: string = '', public frame: number | string = '', opts: any = {}) {
@@ -137,6 +139,38 @@ export class Sprite extends Phaser.Sprite {
    * @memberof Sprite
    */
   // Implemented by Phaser.Sprite
+
+
+  
+  /**
+   * Resize the Sprite hitbox
+   * 
+   * @param {number} ratioX the ratio between the original hitbox width and the new one (> 1: bigger hitbox, < 1: smaller hitbox)
+   * @param {number} ratioY the ratio between the original hitbox height and the new one (> 1: bigger hitbox, < 1: smaller hitbox), set to ratioX if not defined
+   * @memberof Sprite
+   */
+  public resizeHitBox(ratioX: number, ratioY?: number) {
+    if (ratioY == undefined || ratioY == null) {
+      ratioY = ratioX;
+    }
+    let hitboxWidth = this.width * ratioX;
+    let hitboxHeight = this.height * ratioY;
+    let hitboxOffsetX = (this.width - hitboxWidth) / 2;
+    let hitboxOffsetY = (this.height - hitboxHeight) / 2;
+
+    this.body.setSize(hitboxWidth, hitboxHeight, hitboxOffsetX, hitboxOffsetY);
+  }
+
+  update() {
+    if (this.showHitBox) {
+      if (this.body) {
+        this.game.debug.body(this);
+      } else {
+        // Maybe should enable physics on every sprite?? (even for Decor?)
+        throw Error('The current sprite has no hitbox because no physics is applied on it.');
+      }
+    }
+  }
 }
 
 
@@ -195,6 +229,8 @@ class Platformer extends Sprite {
         }
       }
     }
+
+    super.update();
   }
 
   private speedToFrameRate(speed: number) {
@@ -460,6 +496,8 @@ export class Platform extends Sprite {
   
   update() {
     this.body.checkCollision.down = this.bottomBlocking;
+
+    super.update();
   }
 }
 
@@ -633,6 +671,8 @@ export class Spaceship extends Sprite {
     if (this.fireButton.isDown && this.weapons.length != 0) {
       this.weapons.forEach((weapon) => weapon.fire());
     }
+
+    super.update();
   }
 
   public equipWeapon(weapon: Weapon) {
@@ -753,6 +793,8 @@ export class Weapon extends Phaser.Weapon {
         });
       }
     }
+
+    super.update();
   }
 }
 
@@ -796,6 +838,8 @@ export class TextImage extends Phaser.Text {
     this.addColor(this.color, 0);
     this.fontStyle = this.italic ? 'italic' : 'normal';
     this.fontWeight = this.bold ? 'bold' : 'normal';
+
+    super.update();
   }
 }
 
@@ -877,5 +921,7 @@ export class FlappyBird extends Sprite {
         this.game.physics.arcade.collide(this, child, () => this.crashed = true);
       }
     }
+
+    super.update();
   }
 }
