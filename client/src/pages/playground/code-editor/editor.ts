@@ -95,6 +95,16 @@ export class Editor {
 
     // Subscribe to board initializer saves
     this.subscriber = this.ea.subscribe(BoardInfo, boardInfo => {
+      
+      // Save previously written user code
+      let previousUserCreateCode = '';
+      if (this.genCodeLength !== 0) {
+        this.createEditor.selectAll();
+        let range = this.createEditor.getSelectionRange();
+        range.setStart(this.genCodeLength - 1, 0);
+        previousUserCreateCode = this.createEditor.getSession().getTextRange(range);
+      }
+
       this.preloadCode = this.boardInfoParser.toPreloadCode(boardInfo);
       let createCode = this.boardInfoParser.toCreateCode(boardInfo);
       
@@ -105,6 +115,9 @@ export class Editor {
 
       // Get new code generated length
       this.genCodeLength = this.createEditor.session.getLength();
+
+      // Insert previously written user code
+      this.createEditor.insert(previousUserCreateCode);
 
       // Reset the undo stack
       this.createEditor.getSession().setUndoManager(new (<any>ace).UndoManager());
