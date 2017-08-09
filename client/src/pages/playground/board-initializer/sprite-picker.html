@@ -1,7 +1,3 @@
 <template>
-<require from="../../../utils/value-converters/to-json"></require>
-<a href="#" class="no-underline" data-toggle="popover">
-  <!--<img src.bind="sprite.sheetUrl" style.bind="'object-fit: none; object-position: '+offsetX+'px '+offsetY+'px; width: '+sprite.spriteWidth+'px; height: '+sprite.spriteHeight+'px;'">-->
-  <img src.bind="sprite.sheetUrl" css="object-fit: none; object-position: ${offsetX}px ${offsetY}px; width: ${sprite.spriteWidth}px; height: ${sprite.spriteHeight}px;">
-</a>
+  <img src.bind="sprite.sheetUrl" css="object-fit: none; object-position: ${offsetX}px ${offsetY}px; width: ${sprite.spriteWidth}px; height: ${sprite.spriteHeight}px;" style="cursor: pointer;" click.delegate="openSelector()"></img>
 </template>

@@ -76,7 +76,11 @@
     "errorReq": "Sprite name is required",
     "errorLow": "Sprite name should start with lower case letter",
     "errorSpec": "Sprite name shouldn't contain special character",
-    "errorUniq": "Sprite name should be unique"
+    "errorUniq": "Sprite name should be unique",
+    "costumes": "Costumes & Animations",
+    "defaultCostume": "Default costume",
+    "animations": "Animations",
+    "selectCostume": "Select a costume"
   },
   "img-gallery": {
     "backgrounds": "Backgrounds",

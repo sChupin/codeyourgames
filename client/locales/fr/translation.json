@@ -75,13 +75,17 @@
     "errorReq": "Le nom du lutin est obligatoire",
     "errorLow": "Le nom du lutin doit commencer par une minuscule",
     "errorSpec": "Le nom du lutin ne doit pas contenir de caractères spéciaux",
-    "errorUniq": "Le nom du lutin doit être unique"
+    "errorUniq": "Le nom du lutin doit être unique",
+    "costumes": "Costumes & Animations",
+    "defaultCostume": "Costume par défaut",
+    "animations": "Animations",
+    "selectCostume": "Selectionne un costume"
   },
   "img-gallery": {
     "backgrounds": "Arrière-plans",
     "sprites": "Lutins",
     "tiles": "Plateformes",
-    "items": "Objects",
+    "items": "Objets",
     "cancel": "Annuler",
     "ok": "Ok"
   },

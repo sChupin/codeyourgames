@@ -31,12 +31,13 @@ export class BoardInfoParser {
 
     // Add each body on the board
     boardInfo.sprites.forEach(sprite => {
+      let spritesheet = sprite.spritesheet;
 
       if (sprite.type == 'Weapon') {
         code += "var " + sprite.name + " = Game.createWeapon('" + sprite.key + "'";
       } else {
         code += "var " + sprite.name + " = Game.add" + sprite.type.charAt(0).toUpperCase() + sprite.type.slice(1) + "(" + sprite.x + ", " + sprite.y + ", '" + sprite.key + "'";
-        if (sprite.spritesheet && (sprite.type == 'Hero' || sprite.type == 'Enemy')) {
+        if (spritesheet && (sprite.type == 'Hero' || sprite.type == 'Enemy')) {
           let opts = '{ animated: true }';
           code += ", " + opts;
         }
@@ -45,6 +46,11 @@ export class BoardInfoParser {
       code += sprite.name + ".width = " + sprite.width + ";\n";
       code += sprite.name + ".height = " + sprite.height + ";\n";
       code += sprite.name + ".angle = " + sprite.angle + ";\n\n";
+
+      if (spritesheet && spritesheet.defaultSpriteNo !== 0) {
+        code += sprite.name + ".changeCostume(" + spritesheet.defaultSpriteNo + ");\n\n"
+      }
+
     });
 
     code += "\n";

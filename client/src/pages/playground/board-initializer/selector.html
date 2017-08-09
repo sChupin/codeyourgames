@@ -1,0 +1,19 @@
+<template>
+<ux-dialog style="min-width: 0px;">
+
+  <ux-dialog-header>
+    <button type="button" class="close" click.trigger="controller.cancel()">&times;</button>
+    ${ 'board-init.selectCostume' & t}
+  </ux-dialog-header>
+
+  <ux-dialog-body>
+    <span repeat.for="i of sprite.verticalNbr">
+      <span repeat.for="j of sprite.horizontalNbr" class="popover-click">
+        <img src.bind="sprite.sheetUrl" class="popover-img" style.bind="getImgPositionStyle(i, j)" click.delegate="controller.ok(i*sprite.verticalNbr+j)">
+      </span>
+      <br>
+    </span>
+  </ux-dialog-body>
+
+</ux-dialog>
+</template>

@@ -161,6 +161,50 @@ export class Sprite extends Phaser.Sprite {
     this.body.setSize(hitboxWidth, hitboxHeight, hitboxOffsetX, hitboxOffsetY);
   }
 
+  public goLeft(speed: number) {
+    if (!this.body) {
+      if (this instanceof Decor) {
+        throw Error('A decor cannot move');
+      }
+      throw Error('Cannot move this sprite');
+    }
+
+    this.body.velocity.x = -speed;
+  }
+
+  public goRight(speed: number) {
+    if (!this.body) {
+      if (this instanceof Decor) {
+        throw Error('A decor cannot move');
+      }
+      throw Error('Cannot move this sprite');
+    }
+
+    this.body.velocity.x = speed;
+  }
+
+  public goUp(speed: number) {
+    if (!this.body) {
+      if (this instanceof Decor) {
+        throw Error('A decor cannot move');
+      }
+      throw Error('Cannot move this sprite');
+    }
+
+    this.body.velocity.y = -speed;
+  }
+
+  public goDown(speed: number) {
+    if (!this.body) {
+      if (this instanceof Decor) {
+        throw Error('A decor cannot move');
+      }
+      throw Error('Cannot move this sprite');
+    }
+
+    this.body.velocity.y = speed;
+  }
+
   update() {
     if (this.showHitBox) {
       if (this.body) {
