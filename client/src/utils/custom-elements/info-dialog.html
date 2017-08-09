@@ -1,0 +1,14 @@
+<template>
+<ux-dialog class="modal-dialog">
+
+  <ux-dialog-header>
+    <button type="button" class="close" click.trigger="controller.cancel()">&times;</button>
+    ${ title & t}
+  </ux-dialog-header>
+
+  <ux-dialog-body>
+    ${info & t}
+  </ux-dialog-body>
+
+</ux-dialog>
+</template>

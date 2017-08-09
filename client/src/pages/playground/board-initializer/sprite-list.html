@@ -73,17 +73,11 @@
               <div style="font-weight: bold;">
                 <span>Properties&nbsp;</span>
                 <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.propertiesTitle', 'board-init.propertiesInfo')"></span>
                     <div slot="popoverTemplate" class="popover" role="tooltip">
                       <div class="arrow"></div>
                       <div style="margin: 5px">
-                        Click for more info on properties
-                        <!--A sprite property is a characteristic of a sprite such as its speed, its width,...
-                        It has a type: number, string (text) or boolean (true or false).
-                        Its value can be accessed as follow: mySpriteName.propertyName;
-                        Its value can be modified by assigning a new one.
-                        Example: myHero.speed = 500;
-                        It has a default value, so it is not mandatory to set it.-->
+                        ${ 'board-init.propertiesClickInfo' & t }
                       </div>
                     </div>
                   </popover-element>
@@ -117,17 +111,11 @@
               <div style="font-weight: bold;">
                 <span>Methods&nbsp;</span>
                 <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.methodsTitle', 'board-init.methodsInfo')"></span>
                     <div slot="popoverTemplate" class="popover" role="tooltip">
                       <div class="arrow"></div>
                       <div style="margin: 5px">
-                        Click for more info on methods
-                        <!--A sprite method is an action that the sprite can execute such as jump, fire,...
-                        It can be executed as follow: mySpriteName.myMethodName()
-                        The parentheses are mandatory and the method can take parameters within those parentheses.
-                        Example: myHero.equipWeapon(myWeapon);
-                        A parameter as a type that has to be respected.
-                        A method can also return a value that can be assigned to a variable.-->
+                        ${ 'board-init.methodsClickInfo' & t }
                     </div>
                   </popover-element>
               </div>
@@ -171,19 +159,11 @@
               <div style="font-weight: bold;">
                 <span>Events&nbsp;</span>
                 <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;"></span>
+                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.eventsTitle', 'board-init.eventsInfo')"></span>
                     <div slot="popoverTemplate" class="popover" role="tooltip">
                       <div class="arrow"></div>
                       <div style="margin: 5px">
-                        Click for more info on events
-                        <!--A sprite event is a boolean value that is automatically set when a specific event happens to this sprite such as a collision.
-                        It cannot be manually set.
-                        It can be usefully used in an event condition.
-                        Example:
-                        when myHero.isHit
-                        do {
-                          myHero.die()
-                        }-->
+                        ${ 'board-init.eventsClickInfo' & t }
                     </div>
                   </popover-element>
               </div>

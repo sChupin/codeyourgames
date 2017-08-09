@@ -79,7 +79,16 @@
     "costumes": "Costumes & Animations",
     "defaultCostume": "Costume par défaut",
     "animations": "Animations",
-    "selectCostume": "Selectionne un costume"
+    "propertiesClickInfo": "Clique pour plus d'info sur les propriétés",
+    "methodsClickInfo": "Clique pour plus d'info sur les méthodes",
+    "eventsClickInfo": "Clique pour plus d'info sur les événements",
+    "selectCostume": "Selectionne un costume",
+    "propertiesTitle": "Propriétés",
+    "methodsTitle": "Méthodes",
+    "eventsTitle": "Evénements",
+    "propertiesInfo": "A sprite property is a characteristic of a sprite such as its speed, its width,...\nIt has a type: number, string (text) or boolean (true or false).\nIts value can be accessed as follow: mySpriteName.propertyName;\nIts value can be modified by assigning a new one.\nExample: myHero.speed = 500;\nIt has a default value, so it is not mandatory to set it.",
+    "methodsInfo": "A sprite method is an action that the sprite can execute such as jump, fire,...\nIt can be executed as follow: mySpriteName.myMethodName()\nThe parentheses are mandatory and the method can take parameters within those parentheses.\nExample: myHero.equipWeapon(myWeapon);\nA parameter as a type that has to be respected.\nA method can also return a value that can be assigned to a variable.",
+    "eventsInfo": "A sprite event is a boolean value that is automatically set when a specific event happens to this sprite such as a collision.\nIt cannot be manually set.\nIt can be usefully used in an event condition.\nExample:\nwhen myHero.isHit\ndo {\nmyHero.die()\n}"
   },
   "img-gallery": {
     "backgrounds": "Arrière-plans",
