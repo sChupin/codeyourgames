@@ -139,9 +139,7 @@ export class Sprite extends Phaser.Sprite {
    * @memberof Sprite
    */
   // Implemented by Phaser.Sprite
-
-
-  
+ 
   /**
    * Resize the Sprite hitbox
    * 
@@ -203,6 +201,14 @@ export class Sprite extends Phaser.Sprite {
     }
 
     this.body.velocity.y = speed;
+  }
+
+  public createAnimation(name: string, costumes: Array<number>, changeRate: number, loop:boolean) {
+    this.animations.add(name, costumes, changeRate, loop);
+  }
+
+  public playAnimation(name: string) {
+    this.animations.play(name);
   }
 
   update() {
