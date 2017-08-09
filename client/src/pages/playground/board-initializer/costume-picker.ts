@@ -5,7 +5,7 @@ import {SpriteSheetInfo} from '../../../utils/interfaces';
 import {Selector} from './selector';
 
 @autoinject
-export class SpritePicker {
+export class CostumePicker {
   @bindable sprite: SpriteSheetInfo;
 
   private offsetX: number = 0;

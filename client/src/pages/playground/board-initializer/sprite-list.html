@@ -2,8 +2,7 @@
 <require from="../../../utils/custom-elements/image-gallery"></require>
 <require from="../../../utils/value-converters/round-number"></require>
 <require from="../../../utils/custom-elements/popover"></require>
-<require from="./sprite-picker"></require>
-<require from="./animation-creator"></require>
+<require from="./costume-picker"></require>
 
 <!--Sprites List-->
 <div class="row">
@@ -39,10 +38,10 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-pills custom-nav" role="tablist">
-        <li role="presentation" class="active"><a href.bind="'#type-'+$index" role="tab" data-toggle="tab">${ 'board-init.type' & t }</a></li>
-        <li role="presentation"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">${ 'board-init.props' & t }</a></li>
-        <li role="presentation"><a href.bind="'#opts-'+$index" role="tab" data-toggle="tab">${ 'board-init.opts' & t }</a></li>
-        <li role="presentation" if.bind="sprite.data.spritesheet"><a href.bind="'#anim-'+$index" role="tab" data-toggle="tab">${ 'board-init.costumes' & t }</a></li>
+      <li role="presentation" class="active"><a href.bind="'#type-'+$index" role="tab" data-toggle="tab">${ 'board-init.type' & t }</a></li>
+      <li role="presentation"><a href.bind="'#props-'+$index" role="tab" data-toggle="tab">${ 'board-init.props' & t }</a></li>
+      <li role="presentation"><a href.bind="'#opts-'+$index" role="tab" data-toggle="tab">${ 'board-init.opts' & t }</a></li>
+      <li role="presentation" if.bind="sprite.data.spritesheet"><a href.bind="'#anim-'+$index" role="tab" data-toggle="tab">${ 'board-init.costumes' & t }</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -210,11 +209,7 @@
       <div if.bind="sprite.data.spritesheet" role="tabpanel" class="tab-pane" id.bind="'anim-'+$index">
           <div class="row">
             ${ 'board-init.defaultCostume' & t}:
-            <sprite-picker sprite.bind="sprite.data.spritesheet"></sprite-picker>
-          </div>
-          <div class="row">
-            ${ 'board-init.animations' & t }:
-            <animation-creator spritesheet.bind="sprite.data.spritesheet"></animation-creator>
+            <costume-picker sprite.bind="sprite.data.spritesheet"></costume-picker>
           </div>
       </div>
     </div>
