@@ -255,10 +255,8 @@ class Platformer extends Sprite {
     this.animated = opts.hasOwnProperty('animated') ? opts.animated : this.defaultAnimated;
 
     // Create animations
-    if (this.animated) {
-      this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
-      this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
-    }
+    this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
+    this.animations.add('moveLeft', [4, 5, 6, 7], 10, true);
   }
 
   update() {
