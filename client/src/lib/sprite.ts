@@ -911,7 +911,7 @@ export class TextImage extends Phaser.Text {
  * @class Object
  * @extends {Sprite}
  * 
- * @event collected Indicates whether an object has been collected. Once an object is collected, it cannot be uncollected.
+ * @event collected Indicates whether an object has been collected. Once an object is collected, it disappears and cannot be uncollected.
  */
 export class Obj extends Sprite {
 
@@ -933,7 +933,7 @@ export class Obj extends Sprite {
       if (child instanceof Hero || child instanceof Spaceship) {
         this.game.physics.arcade.overlap(this, child, () => {
           this.collected = true
-          this.hide();
+          this.destroy();
         });
       }
     }

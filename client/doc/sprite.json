@@ -360,7 +360,12 @@
     "descr": "An object can interact with all type of sprite.",
     "private": false,
     "properties": [],
-    "events": [],
+    "events": [
+      {
+        "name": "collected",
+        "descr": "Indicates whether an object has been collected. Once an object is collected, it disappears and cannot be uncollected."
+      }
+    ],
     "methods": []
   },
   "FlappyBird": {
