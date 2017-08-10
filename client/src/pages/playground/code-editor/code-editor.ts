@@ -2,7 +2,7 @@ import {EventAggregator, Subscription} from "aurelia-event-aggregator";
 import {autoinject, bindable} from "aurelia-framework";
 
 import {BoardInfo} from "../../../services/messages";
-import {BoardInfoParser} from "../../../services/boardInfoParser";
+import {BoardInfoParser} from "../../../services/board-info-parser";
 import {Dimensions} from "../../../utils/interfaces";
 
 @autoinject

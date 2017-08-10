@@ -1,9 +1,11 @@
 import {autoinject, bindable} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
+import {I18N} from 'aurelia-i18n';
 
 import {BoardInfo, CodeUpdate} from '../../../services/messages';
-import {BoardInfoParser} from '../../../services/boardInfoParser';
+import {BoardInfoParser} from '../../../services/board-info-parser';
 import {TranspilerService} from "../../../services/transpiler-service";
+import {CodeTranslator} from "../../../services/code-translator";
 
 import * as ace from 'ace';
 import 'ace/theme-monokai';
@@ -27,7 +29,7 @@ export class Editor {
 
   @bindable private difficulty: string;
 
-  constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService) { }
+  constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService, private i18n: I18N, private translator: CodeTranslator) { }
 
   attached() {
     // Initialize editors
@@ -148,10 +150,19 @@ export class Editor {
    * Execute the code from all editors
    */
   public runCode() {
-    this.transpiler.transpileEvents(this.eventEditor.getValue()).then(value => {
-      let test = JSON.parse(value.response);
-      let eventCode = this.transpiler.addEvents(test);
-      let createCode = parseCreate(this.createEditor.getValue()) + eventCode.create;
+    
+    let enCreateCode = this.createEditor.getValue();
+    let enEventCode = this.eventEditor.getValue();
+
+    // Translate code from fr to en
+    if (this.i18n.getLocale() == 'fr') {
+      enCreateCode = this.translator.translateToEnglish(enCreateCode);
+      enEventCode = this.translator.translateToEnglish(enEventCode);
+    }
+
+    this.transpiler.transpileEvents(enEventCode).then(value => {
+      let eventCode = this.transpiler.addEvents(JSON.parse(value.response));
+      let createCode = parseCreate(enCreateCode) + eventCode.create;
       createCode = appendTryCatch(createCode);
       let updateCode = eventCode.update;
       this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));

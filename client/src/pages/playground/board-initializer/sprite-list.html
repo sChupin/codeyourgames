@@ -70,16 +70,25 @@
             <div class="col-md-6" style="border-right: 1px solid; margin-top: 10px;">
 
               <div style="font-weight: bold;">
-                <span>Properties&nbsp;</span>
-                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.propertiesTitle', 'board-init.propertiesInfo')"></span>
-                    <div slot="popoverTemplate" class="popover" role="tooltip">
-                      <div class="arrow"></div>
-                      <div style="margin: 5px">
-                        ${ 'board-init.propertiesClickInfo' & t }
-                      </div>
+                <span>${ 'board-init.properties' & t}&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'en'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.propertiesTitle', 'board-init.propertiesInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.propertiesClickInfoEN' & t }
                     </div>
-                  </popover-element>
+                  </div>
+                </popover-element>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'fr'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.propertiesTitle', 'board-init.propertiesInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.propertiesClickInfoFR' & t }
+                    </div>
+                  </div>
+                </popover-element>
               </div>
 
               <span show.bind="spriteTypes[sprite.data.type].properties.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>              
@@ -108,15 +117,23 @@
             <div class="col-md-6" style="margin-top: 10px;">
 
               <div style="font-weight: bold;">
-                <span>Methods&nbsp;</span>
-                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.methodsTitle', 'board-init.methodsInfo')"></span>
-                    <div slot="popoverTemplate" class="popover" role="tooltip">
-                      <div class="arrow"></div>
-                      <div style="margin: 5px">
-                        ${ 'board-init.methodsClickInfo' & t }
-                    </div>
-                  </popover-element>
+                <span>${ 'board-init.methods' & t }&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'en'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.methodsTitle', 'board-init.methodsInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.methodsClickInfoEN' & t }
+                  </div>
+                </popover-element>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'fr'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.methodsTitle', 'board-init.methodsInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.methodsClickInfoFR' & t }
+                  </div>
+                </popover-element>
               </div>
 
               <span show.bind="spriteTypes[sprite.data.type].methods.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>
@@ -156,15 +173,23 @@
             <div class="col-md-12" style="margin-top: 10px;">
               
               <div style="font-weight: bold;">
-                <span>Events&nbsp;</span>
-                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.eventsTitle', 'board-init.eventsInfo')"></span>
-                    <div slot="popoverTemplate" class="popover" role="tooltip">
-                      <div class="arrow"></div>
-                      <div style="margin: 5px">
-                        ${ 'board-init.eventsClickInfo' & t }
-                    </div>
-                  </popover-element>
+                <span>${ 'board-init.events' & t }&nbsp;</span>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'en'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.eventsTitle', 'board-init.eventsInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.eventsClickInfoEN' & t }
+                  </div>
+                </popover-element>
+                <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" if.bind="language == 'fr'">
+                  <span slot="popoverTarget" class="glyphicon glyphicon-question-sign" style="cursor: pointer;" click.delegate="openInfoDialog('board-init.eventsTitle', 'board-init.eventsInfo')"></span>
+                  <div slot="popoverTemplate" class="popover" role="tooltip">
+                    <div class="arrow"></div>
+                    <div style="margin: 5px">
+                      ${ 'board-init.eventsClickInfoFR' & t }
+                  </div>
+                </popover-element>
               </div>
 
               <span show.bind="spriteTypes[sprite.data.type].events.length == 0" style="font-style: italic; font-size: 13px;">No specific events for this sprite type.</span>

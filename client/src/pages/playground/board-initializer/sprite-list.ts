@@ -1,6 +1,8 @@
 import {autoinject, bindable, bindingMode} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import {ValidationControllerFactory, ValidationRules, ValidationController, ValidateResult} from '../../../../jspm_packages/npm/aurelia-validation@1.0.0/aurelia-validation';
+import {I18N} from 'aurelia-i18n';
 
 import {ImageGallery} from '../../../utils/custom-elements/image-gallery';
 import {BoardCanvas} from '../../../services/board-canvas';
@@ -20,9 +22,16 @@ export class SpriteList {
 
   private groupSelected = false;
   private spriteTypes = jsonDoc;
+
+  private language: string;
   
-  constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory) {
+  constructor(private dialogService: DialogService, private controllerFactory: ValidationControllerFactory, private i18n: I18N, private ea: EventAggregator) {
     this.controller = controllerFactory.createForCurrentScope();
+    
+    this.language = i18n.getLocale();
+    ea.subscribe('i18n:locale:changed', payload => {
+      this.language = i18n.getLocale();
+    });
   }
 
   attached() {
