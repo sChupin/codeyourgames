@@ -5,7 +5,6 @@
   <div class="full-height">
     <div class="row">
     <div class="col-md-6">
-      <!--<ul class="nav nav-tabs nav-justified" style="display: inline-block; width: calc(50% - 30px); margin-bottom: -5px; margin-left: 15px;">-->
       <ul class="nav nav-tabs nav-justified">
         <li class="active"><a href="#board-initializer" data-toggle="tab">${ 'playground.board-init' & t }</a></li>
         <li><a href="#code-editor" data-toggle="tab">${ 'playground.code-edit' & t}</a></li>
@@ -15,10 +14,10 @@
     <div class="row" style="height: calc(100% - 42.4px)">
     <div class="tab-content full-height">
       <div class="tab-pane fade in active" id="board-initializer" style="height:100%;">
-        <board-initializer></board-initializer>
+        <board-initializer difficulty.bind="difficulty"></board-initializer>
       </div>
       <div class="tab-pane fade" id="code-editor" style="height:100%;">
-        <code-editor></code-editor>
+        <code-editor difficulty.bind="difficulty"></code-editor>
       </div>
     </div>
     </div>

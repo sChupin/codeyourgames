@@ -1,5 +1,5 @@
 import {EventAggregator, Subscription} from "aurelia-event-aggregator";
-import {autoinject} from "aurelia-framework";
+import {autoinject, bindable} from "aurelia-framework";
 
 import {BoardInfo} from "../../../services/messages";
 import {BoardInfoParser} from "../../../services/boardInfoParser";
@@ -13,6 +13,8 @@ export class CodeEditor {
 
   private gameWidth: number;
   private gameHeight: number;
+
+  @bindable private difficulty: string;
 
   constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser) { }
 

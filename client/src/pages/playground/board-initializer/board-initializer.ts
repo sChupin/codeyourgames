@@ -25,6 +25,7 @@ export class BoardInitializer {
   private spriteErrors: Array<any> = [];
 
   @bindable private backgroundType: string;
+  @bindable private difficulty: string;
 
   private bgndTypes = new Map([
     ['fixed', { name: 'board-init.bgndFixed', descr: 'board-init.bgndFixedDescr' }],
