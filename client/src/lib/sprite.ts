@@ -139,6 +139,18 @@ export class Sprite extends Phaser.Sprite {
    * @memberof Sprite
    */
   // Implemented by Phaser.Sprite
+
+  moveBehind(sprite: Sprite) {
+    while (this.z > sprite.z) {
+      this.moveDown();
+    }
+  }
+
+  moveAhead(sprite: Sprite) {
+    while (this.z < sprite.z) {
+      this.moveUp();
+    }
+  }
  
   /**
    * Resize the Sprite hitbox
@@ -836,7 +848,6 @@ export class Weapon extends Phaser.Weapon {
         this.game.physics.arcade.overlap(this.bullets, child, (target, bullet) => {
           // Kill bullet (can be replace by user logic <todo later>)
           bullet.kill();
-          console.log('bullet killed by overlap');
           
           // Notify the target it is hit by a bullet
           target.isHit = true;
@@ -899,14 +910,33 @@ export class TextImage extends Phaser.Text {
  * 
  * @class Object
  * @extends {Sprite}
+ * 
+ * @event collected Indicates whether an object has been collected. Once an object is collected, it cannot be uncollected.
  */
 export class Obj extends Sprite {
+
+  public collected: boolean = false;
+
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
             public key: string = '', public frame: number | string = '', opts: any = {}) {
     super(game, x, y, key, frame, opts);
 
     // Enable enemy physics
     this.game.physics.arcade.enable(this);
+  }
+
+  update() {
+    // Set collision with platforms
+    let children = this.game.world.children;
+    for (let i = 0; i < children.length; i++) {
+      let child = children[i];
+      if (child instanceof Hero || child instanceof Spaceship) {
+        this.game.physics.arcade.overlap(this, child, () => {
+          this.collected = true
+          this.hide();
+        });
+      }
+    }
   }
 }
 
