@@ -1,4 +1,4 @@
-import {autoinject} from 'aurelia-framework';
+import {autoinject, bindable} from 'aurelia-framework';
 import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 
 import {BoardInfo, CodeUpdate} from '../../../services/messages';
@@ -18,11 +18,14 @@ export class Editor {
 
   private createEditor: AceAjax.Editor;
   private eventEditor: AceAjax.Editor;
-  private functionEditor: AceAjax.Editor;
+  // private functionEditor: AceAjax.Editor;
+  private typeEditor: AceAjax.Editor;
 
   private preloadCode: string = "";
 
   private genCodeLength: number = 0;
+
+  @bindable private difficulty: string;
 
   constructor(private ea: EventAggregator, private boardInfoParser: BoardInfoParser, private transpiler: TranspilerService) { }
 
@@ -31,9 +34,14 @@ export class Editor {
     let editors: Array<AceAjax.Editor> = [];
     this.createEditor = ace.edit('create-editor');
     this.eventEditor = ace.edit('event-editor');
-    this.functionEditor = ace.edit('function-editor');
+    // this.functionEditor = ace.edit('function-editor');
     
-    editors.push(this.createEditor, this.eventEditor, this.functionEditor);
+    editors.push(this.createEditor, this.eventEditor);//, this.functionEditor);
+
+    if (this.difficulty == 'hard') {
+      this.typeEditor = ace.edit('type-editor');
+      editors.push(this.typeEditor);
+    }
 
     let langTools = ace.require('ace/ext/language_tools');
 
@@ -128,7 +136,7 @@ export class Editor {
     this.subscriber.dispose();
     
     let editors: Array<AceAjax.Editor> = [];
-    editors.push(this.createEditor, this.eventEditor, this.functionEditor);
+    editors.push(this.createEditor, this.eventEditor);//, this.functionEditor);
 
     editors.forEach(editor => {
       editor.destroy();

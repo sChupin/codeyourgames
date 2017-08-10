@@ -99,6 +99,12 @@
     "ok": "Ok"
   },
   "editor": {
+    "creation": "Création",
+    "events": "Evénements",
+    "types": "Types",
+    "creationTitle": "Code d'initialisation du jeu",
+    "eventsTitle": "Code de gestion des événements",
+    "typesTitle": "Code de création de types",
     "run-code": "Exécuter le code"
   }
 }
