@@ -1,0 +1,74 @@
+<template bindable="type, element, language">
+<require from="./popover"></require>
+
+  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" show.bind="language == 'en'">
+    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;  cursor: help;"></span>
+    <div slot="popoverTemplate" class="popover" role="tooltip">
+      <div class="arrow"></div>
+      <div style="margin: 5px">
+        <div>${ element.descr }</div>
+
+        <div show.bind="type == 'property'">
+          <br>
+          <div><span style="font-style: italic">Value type: </span>${ property.type }</div>
+          <div><span style="font-style: italic">Default value: </span>${ property.defVal }</div>
+        </div>
+        
+        <div show.bind="type == 'method'">
+          <div show.bind="element.params.length != 0">
+            <br>
+            <span style="font-style: italic">Parameters:</span>
+            <div repeat.for="param of element.params">
+              <span>${param.name}</span>
+              <span>[${param.type}] - </span>
+              <span>${param.descr}</span>
+            </div>
+          </div>
+          <div show.bind="element.return.type != 'void'">
+            <br>
+            <span style="font-style: italic">Returns: </span>
+            <span>[${element.return.type}] - </span>
+            <span>${element.return.descr}</span>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </popover-element>
+
+  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body" show.bind="language == 'fr'">
+    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;  cursor: help;"></span>
+    <div slot="popoverTemplate" class="popover" role="tooltip">
+      <div class="arrow"></div>
+      <div style="margin: 5px">
+        <div>${ element.descr.fr }</div>
+
+        <div show.bind="type == 'property'">
+          <br>
+          <div><span style="font-style: italic">Value type: </span>${ property.type }</div>
+          <div><span style="font-style: italic">Default value: </span>${ property.defVal }</div>
+        </div>
+
+        <div show.bind="type == 'method'">
+          <div show.bind="element.params.length != 0">
+            <br>
+            <span style="font-style: italic">Parameters:</span>
+            <div repeat.for="param of element.params">
+              <span>${param.name}</span>
+              <span>[${param.type}] - </span>
+              <span>${param.descr}</span>
+            </div>
+          </div>
+          <div show.bind="element.return.type != 'void'">
+            <br>
+            <span style="font-style: italic">Returns: </span>
+            <span>[${element.return.type}] - </span>
+            <span>${element.return.descr}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </popover-element>
+
+</template>

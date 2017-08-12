@@ -2,6 +2,7 @@
 <require from="../../../utils/custom-elements/image-gallery"></require>
 <require from="../../../utils/value-converters/round-number"></require>
 <require from="../../../utils/custom-elements/popover"></require>
+<require from="../../../utils/custom-elements/doc-popover.html"></require>
 <require from="./costume-picker"></require>
 
 <!--Sprites List-->
@@ -91,7 +92,7 @@
                 </popover-element>
               </div>
 
-              <span show.bind="spriteTypes[sprite.data.type].properties.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>              
+              <span show.bind="spriteTypes[sprite.data.type].properties.length == 0" style="font-style: italic; font-size: 13px;">${ 'board-init.noProperties' & t }</span>              
 
               <ul>
                 <li repeat.for="property of spriteTypes[sprite.data.type].properties" style="margin: 5px 5px 5px 0px;">
@@ -136,35 +137,12 @@
                 </popover-element>
               </div>
 
-              <span show.bind="spriteTypes[sprite.data.type].methods.length == 0" style="font-style: italic; font-size: 13px;">No specific methods for this sprite type.</span>
+              <span show.bind="spriteTypes[sprite.data.type].methods.length == 0" style="font-style: italic; font-size: 13px;">${ 'board-init.noMethods' & t }</span>
 
               <ul>
                 <li repeat.for="method of spriteTypes[sprite.data.type].methods" style="margin: 5px 5px 5px 0px;">
                   <span>${ method.name }(<span repeat.for="param of method.params">${param.name}<span if.bind="!$last">, </span></span>)&nbsp;</span>
-                  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;  cursor: help;"></span>
-                    <div slot="popoverTemplate" class="popover" role="tooltip">
-                      <div class="arrow"></div>
-                      <div style="margin: 5px">
-                      <div>${ method.descr }</div>
-                      <div show.bind="method.params.length != 0">
-                        <br>
-                        <span style="font-style: italic">Parameters:</span>
-                        <div repeat.for="param of method.params">
-                          <span>${param.name}</span>
-                          <span>[${param.type}] - </span>
-                          <span>${param.descr}</span>
-                        </div>
-                      </div>
-                      <div show.bind="method.return.type != 'void'">
-                        <br>
-                        <span style="font-style: italic">Returns: </span>
-                        <span>[${method.return.type}] - </span>
-                        <span>${method.return.descr}</span>
-                      </div>
-                      </div>
-                    </div>
-                  </popover-element>  
+                  <doc-popover type.bind="'method'" element.bind="method" language.bind="language"></doc-popover>
                 </li>
               </ul>
               
@@ -192,20 +170,12 @@
                 </popover-element>
               </div>
 
-              <span show.bind="spriteTypes[sprite.data.type].events.length == 0" style="font-style: italic; font-size: 13px;">No specific events for this sprite type.</span>
+              <span show.bind="spriteTypes[sprite.data.type].events.length == 0" style="font-style: italic; font-size: 13px;">${ 'board-init.noEvents' & t }</span>
 
               <ul>
                 <li repeat.for="event of spriteTypes[sprite.data.type].events" style="margin: 5px 5px 5px 0px;">
                   <span>${ event.name }()&nbsp;</span>
-                  <popover-element placement="top" trigger="hover" style="display: inline-block" container="body">
-                    <span slot="popoverTarget" class="glyphicon glyphicon-info-sign" style="color: #337ab7; font-size: 17px;  cursor: help;"></span>
-                    <div slot="popoverTemplate" class="popover" role="tooltip">
-                      <div class="arrow"></div>
-                      <div style="margin: 5px">
-                      <div>${ event.descr }</div>
-                      </div>
-                    </div>
-                  </popover-element>  
+                  <doc-popover type.bind="'event'" element.bind="event" language.bind="language"></doc-popover>
                 </li>
               </ul>
 
