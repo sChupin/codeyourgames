@@ -4,8 +4,9 @@ import Phaser = require('phaser');
 
 
 /**
+ * Default sprite. It only has access to methods and properties common to all sprites. No custom behaviors are defined for this sprite.
+ * 
  * @class Sprite
- * @private
  * 
  * @property {number} x Sprite horizontal position
  * @property {number} y Sprite vertical position

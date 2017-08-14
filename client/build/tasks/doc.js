@@ -10,7 +10,7 @@ gulp.task("cleandoc", function() {
 });
  
 gulp.task("builddoc", ["cleandoc"], function() {
-    gulp.src(["src/lib/sprite.ts"])
+    gulp.src(["src/api/sprite.ts"])
         .pipe(readJsdoc())
         .pipe(rename({
             extname: ".json",

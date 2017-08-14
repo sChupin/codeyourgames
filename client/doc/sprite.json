@@ -1,8 +1,8 @@
 {
   "Sprite": {
     "name": "Sprite",
-    "descr": "",
-    "private": true,
+    "descr": "Default sprite. It only has access to methods and properties common to all sprites. No custom behaviors are defined for this sprite.",
+    "private": false,
     "properties": [
       {
         "name": "x",

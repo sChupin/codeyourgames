@@ -63,6 +63,10 @@ export class GameProps {
     this.game.world.setBounds(0, 0, width, height);
   }
 
+  public addSprite(x: number, y: number, key: string, opts?: any): Sprite {
+    return this.game.add.existing(new Sprite(this.game, x, y, key, 0, opts));
+  }
+
   public addHero(x: number, y: number, key: string, opts?: any): Hero {
     return this.game.add.existing(new Hero(this.game, x, y, key, 0, opts));
   }
@@ -152,11 +156,11 @@ export class GameProps {
     return this.game.add.existing(new FlappyBird(this.game, x, y, key, 0, opts));
   }
 
-  public addSprite(x: number, y: number, sprite: Sprite) {
-    sprite.x = x;
-    sprite.y = y;
-    return this.game.add.existing(sprite);
-  }
+  // public addSprite(x: number, y: number, sprite: Sprite) {
+  //   sprite.x = x;
+  //   sprite.y = y;
+  //   return this.game.add.existing(sprite);
+  // }
 
   // public setBackgroundColor(color: string) {
   //   this.game.stage.backgroundColor = color;
