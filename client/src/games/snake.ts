@@ -1,4 +1,4 @@
-import {Color} from '../lib/utility';
+import {Color} from '../api/utility';
 
 import Phaser = require('phaser');
 

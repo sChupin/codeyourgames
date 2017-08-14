@@ -3,10 +3,10 @@ import {autoinject, bindable} from "aurelia-framework";
 
 import {CodeUpdate} from "../services/messages";
 
-import {Keyboard, Mouse} from "../lib/sensors";
-import {Group, Hero} from "../lib/sprite";
-import {GameProps} from "../lib/game";
-import {NumberMap, TextMap, BooleanMap} from "../lib/variables";
+import {Keyboard, Mouse} from "../api/sensors";
+import {Group, Hero} from "../api/sprite";
+import {GameProps} from "../api/game";
+import {NumberMap, TextMap, BooleanMap} from "../api/variables";
 
 import Phaser = require('phaser');
 
