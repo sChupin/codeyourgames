@@ -27,7 +27,7 @@
   "board-init": {
     "background-tab": "Background and Dimensions",
     "sprites-tab": "Sprites",
-    "save-board": "Save board",
+    "save-board": "Save this board",
     "game-dim-label": "Game dimensions",
     "game-dim-ok": "Ok",
     "bgnd-gallery-title": "Background Gallery",
