@@ -1,0 +1,67 @@
+
+lowercase_letter = "a" | "b" | "c" | "d" | "e" | "f" | "g"
+                 | "h" | "i" | "j" | "k" | "l" | "m" | "n" 
+                 | "o" | "p" | "q" | "r" | "s" | "t" | "u"
+                 | "v" | "w" | "x" | "y" | "z" ;
+
+uppercase_letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
+                 | "H" | "I" | "J" | "K" | "L" | "M" | "N" 
+                 | "O" | "P" | "Q" | "R" | "S" | "T" | "U"
+                 | "V" | "W" | "X" | "Y" | "Z" ;
+
+letter = lowercase_letter | uppercase_letter;
+
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+positive_integer = digit { digit };
+
+all_characters = ? all visible characters ? ;
+
+
+program = { p };
+
+p = instruction
+  | event
+  | function
+  | type
+;
+
+instruction = expr ";"
+           | assignation ";"
+           | declaration ";"
+           | control_flow
+;
+
+event = ( "when" | "while" | "once" ) "(" expr ")" "do" block;
+
+expr = text
+     | number
+     | boolean
+     | identifier { "." identifier } ["(" args ")"]
+     | expr ("+" | "-") expr
+     | expr ("*" | "/") expr
+     | expr ("greater" | "lower" | "equals") expr
+;
+
+assignation = var_identifier "=" expr;
+
+declaration = "var" var_identifier [ "=" expr ];
+
+control_flow = "if" "(" expr ")" "then" block [ "else" block ]
+             | "repeat" "(" expr ")" block
+             | "forever" block
+;
+
+block = "{" { instruction } "}";
+
+args = [ expr { "," expr } ];
+
+identifier = letter { letter | digit | "_" };
+
+var_identifier = lowercase_letter { letter | digit | "_" };
+
+text = '"' { all characters - '"' } '"';
+
+number = [ "-" ] positive_integer ["." positive_integer];
+
+boolean = "true" | "false";
