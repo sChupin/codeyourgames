@@ -24,7 +24,7 @@
     "board-init": "Plateau de jeu",
     "code-edit": "Éditeur de code"
   },
-    "board-init": {
+  "board-init": {
     "background-tab": "Arrière-plan et Dimensions",
     "sprites-tab": "Lutins",
     "save-board": "Sauver ce plateau",
@@ -115,5 +115,10 @@
     "eventsTitle": "Code de gestion des événements",
     "typesTitle": "Code de création de types",
     "run-code": "Exécuter le code"
+  },
+  "documentation": {
+    "heading": "Documentation",
+    "languageTitle": "Langage",
+    "globalsTitle": "Globals"
   }
 }

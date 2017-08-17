@@ -1,0 +1,18 @@
+<template>
+<require from="../../components/difficulty-picker"></require>
+<section class="au-animate">
+  <h1 style="text-align: center;">${ 'documentation.heading' & t }</h1>
+  <div>
+    <div class="col-md-2">
+      <ul class="well nav nav-pills nav-stacked">
+        <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+          <a href.bind="row.href">${ row.title & t }</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10" style="padding: 0">
+      <router-view></router-view>
+    </div>
+  </div>
+</section>
+</template> 

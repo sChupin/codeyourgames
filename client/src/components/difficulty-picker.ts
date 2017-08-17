@@ -15,9 +15,9 @@ export class DifficultyPicker {
 
   star_icon = ' <span style="top: 2px;" class="glyphicon glyphicon-star"></span>';
   difficulties = [
-    { value: 'easy', name: 'difficulty.lvl1', nbr_star: 1 },
-    { value: 'medium', name: 'difficulty.lvl2', nbr_star: 2 },
-    { value: 'hard', name: 'difficulty.lvl3', nbr_star: 3 }
+    { value: 'easy', name: 'difficulty.lvl1' },
+    { value: 'medium', name: 'difficulty.lvl2' },
+    { value: 'hard', name: 'difficulty.lvl3' }
   ];
   selectedLevel = 'easy';
 

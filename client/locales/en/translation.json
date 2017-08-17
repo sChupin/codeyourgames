@@ -116,5 +116,10 @@
     "eventsTitle": "Events management code",
     "typesTitle": "Types creation code",
     "run-code": "Run code"
+  },
+  "documentation": {
+    "heading": "Documentation",
+    "languageTitle": "Language",
+    "globalsTitle": "Globals"
   }
 }
