@@ -9,7 +9,7 @@ import {BoardCanvas} from '../../../services/board-canvas';
 import {ImageInfo} from '../../../utils/interfaces';
 import {InfoDialog} from '../../../utils/custom-elements/info-dialog';
 
-import * as jsonDoc from '../../../../doc/sprite.json!json';
+import * as jsonDoc from '../../../../assets/doc/sprite.json!json';
 
 @autoinject
 export class SpriteList {

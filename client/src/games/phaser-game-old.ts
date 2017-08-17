@@ -18,10 +18,10 @@ export class PhaserGame {
   }
 
   private preload() {
-    this.game.load.image('sky', '/media/phaser_img/sky.png');
-    this.game.load.image('ground', '/media/phaser_img/ground.png');
-    this.game.load.image('star', '/media/phaser_img/star.png');
-    this.game.load.spritesheet('dude', '/media/phaser_img/dude.png', 32, 48);
+    this.game.load.image('sky', 'assets/media/phaser_img/sky.png');
+    this.game.load.image('ground', 'assets/media/phaser_img/ground.png');
+    this.game.load.image('star', 'assets/media/phaser_img/star.png');
+    this.game.load.spritesheet('dude', 'assets/media/phaser_img/dude.png', 32, 48);
   }
 
   private create() {

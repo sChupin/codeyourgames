@@ -28,7 +28,7 @@ export function configure(aurelia: Aurelia) {
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
         backend: {                                  // <-- configure backend settings
-          loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+          loadPath: './assets/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
         },
         attributes: aliases,
         lng : 'en',

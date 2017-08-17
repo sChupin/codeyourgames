@@ -39,11 +39,11 @@ class GameWorld extends Phaser.State {
   private score2: number;
 
   preload() {
-    this.load.image('paddle', '/media/phaser_img/paddle.png');
-    this.load.image('ball', '/media/phaser_img/ball.png');
-    this.load.bitmapFont('font', '/media/phaser_img/font.png', '/media/phaser_img/font.xml');
-    this.load.audio('hit1', '/media/hit1.mp3');
-    this.load.audio('hit2', '/media/hit2.mp3');
+    this.load.image('paddle', '/assets/media/phaser_img/paddle.png');
+    this.load.image('ball', '/assets/media/phaser_img/ball.png');
+    this.load.bitmapFont('font', '/assets/media/phaser_img/font.png', '/assets/media/phaser_img/font.xml');
+    this.load.audio('hit1', '/assets/media/hit1.mp3');
+    this.load.audio('hit2', '/assets/media/hit2.mp3');
   }
 
   create() {

@@ -36,10 +36,10 @@ class GameWorld extends Phaser.State {
   private cursors: Phaser.CursorKeys;
 
   preload() {
-    this.load.image('sky', '/media/phaser_img/sky.png');
-    this.load.image('ground', '/media/phaser_img/ground.png');
-    this.load.image('star', '/media/phaser_img/star.png');
-    this.load.spritesheet('dude', '/media/phaser_img/dude.png', 32, 48);
+    this.load.image('sky', '/assets/media/phaser_img/sky.png');
+    this.load.image('ground', '/assets/media/phaser_img/ground.png');
+    this.load.image('star', '/assets/media/phaser_img/star.png');
+    this.load.spritesheet('dude', '/assets/media/phaser_img/dude.png', 32, 48);
   }
 
   create() {

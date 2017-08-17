@@ -37,8 +37,8 @@ class GameWorld extends Phaser.State {
   preload() {
     this.load.crossOrigin = 'anonymous';
     this.load.image('background', 'http://localhost:9000/public/images/Backgrounds/space19.png');
-    this.load.image('spaceship', '/media/phaser_img/player.png');
-    this.load.image('bullet', '/media/phaser_img/bullet.png');
+    this.load.image('spaceship', '/assets/media/phaser_img/player.png');
+    this.load.image('bullet', '/assets/media/phaser_img/bullet.png');
     this.load.image('space_enemy', 'http://localhost:9000/public/images/Sprites/astromechdroid2.png');
   }
 

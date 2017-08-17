@@ -31,8 +31,8 @@ class GameWorld extends Phaser.State {
   private modeText: Phaser.Text;
 
   preload() {
-    this.load.image('background', '/media/phaser_img/debug-grid-1920x1920.png');
-    this.load.spritesheet('dude', '/media/phaser_img/dude.png', 32, 48);
+    this.load.image('background', '/assets/media/phaser_img/debug-grid-1920x1920.png');
+    this.load.spritesheet('dude', '/assets/media/phaser_img/dude.png', 32, 48);
   }
 
   create() {

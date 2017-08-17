@@ -33,8 +33,8 @@ class GameWorld extends Phaser.State {
   private snakeModeStarted: boolean = false;
 
   preload() {
-    this.load.image('sky', '/media/phaser_img/sky.png');
-    this.load.spritesheet('dude', '/media/phaser_img/dude.png', 32, 48);
+    this.load.image('sky', '/assets/media/phaser_img/sky.png');
+    this.load.spritesheet('dude', '/assets/media/phaser_img/dude.png', 32, 48);
   }
 
   create() {
