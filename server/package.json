@@ -1,13 +1,12 @@
 {
-  "name": "aurelia-starter-node",
+  "name": "codeyourgames",
   "version": "1.0.0",
-  "description": "The server component for the Aurelia starter node",
+  "description": "Game development platform to learn programming",
   "main": "server.js",
   "scripts": {
-    "test": "gulp test",
     "start": "node server.js"
   },
-  "author": "Dwayne Charrington <dwaynecharrington@gmail.com>",
+  "author": "Simon Chupin <simonchupin@hotmail.com>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -17,6 +16,8 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-jwt": "^5.1.0",
+    "htmlparser2": "^3.9.2",
+    "image-size": "^0.5.5",
     "jison": "^0.4.17",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",

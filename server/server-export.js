@@ -32,32 +32,23 @@ app.use(cookieParser());
 // Provide api routes
 app.use(require('./api/api'));
 
-// Serve index and config.js
-app.get('/', (req, res) => res.render(path.join(__dirname, '../client/index.html'))); // index stored in client
-app.get('/config.js', (req, res) => res.sendFile(path.join(__dirname, '../client/config.js')));
 
-// Serve client static files
-// app.use(express.static(path.join(__dirname, '../client')));
-app.use('/dist', express.static(path.join(__dirname, '../client/dist')));
-app.use('/jspm_packages', express.static(path.join(__dirname, '../client/jspm_packages')));
-app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
+// Serve client side files
+app.get('/', (req, res) => res.render(path.join(__dirname, '../client/export/index.html')));
+app.use(express.static('../client/export/'));
 
 // Serve media files
 app.use('/public', express.static(path.join(__dirname, './public')));
-
 
 // Set application port
 app.set('port', process.env.PORT || 9005);
 
 // Connect to db
-db.connect(() => {
-    db.populateDb();
+db.connect();
 
-    // Listen to port
-    var server = app.listen(app.get('port'), function() {
-        console.log(`Express server listening on port ${server.address().port}`);
-    });
+// Listen to port
+var server = app.listen(app.get('port'), function() {
+    console.log(`Express server listening on port ${server.address().port}`);
 });
-
 
 module.exports = app;
