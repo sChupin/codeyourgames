@@ -22,7 +22,7 @@ var allowCrossDomain = function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use(favicon('../client/favicon.ico'));
+app.use(favicon('../client/export/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,14 +33,13 @@ app.use(cookieParser());
 app.use(require('./api/api'));
 
 // Serve index and config.js
-app.get('/', (req, res) => res.render(path.join(__dirname, '../client/index.html'))); // index stored in client
-app.get('/config.js', (req, res) => res.sendFile(path.join(__dirname, '../client/config.js')));
+app.get('/', (req, res) => res.render(path.join(__dirname, '../client/export/index.html')));
+app.get('/config.js', (req, res) => res.sendFile(path.join(__dirname, '../client/export/config.js')));
 
-// Serve client static files
-// app.use(express.static(path.join(__dirname, '../client')));
-app.use('/dist', express.static(path.join(__dirname, '../client/dist')));
-app.use('/jspm_packages', express.static(path.join(__dirname, '../client/jspm_packages')));
-app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
+// Serve client/export static files
+app.use('/dist', express.static(path.join(__dirname, '../client/export/dist')));
+app.use('/jspm_packages', express.static(path.join(__dirname, '../client/export/jspm_packages')));
+app.use('/assets', express.static(path.join(__dirname, '../client/export/assets')));
 
 // Serve media files
 app.use('/public', express.static(path.join(__dirname, './public')));

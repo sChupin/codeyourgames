@@ -5,6 +5,9 @@ var imgSize = require('image-size');
 
 var schema = require('./schema');
 
+if (process.env.APP_CONFIG) {
+    const config = JSON.parse(process.env.APP_CONFIG);
+}
 
 var dbpath = '';
 
