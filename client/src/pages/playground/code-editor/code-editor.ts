@@ -7,8 +7,6 @@ import {Dimensions} from "../../../utils/interfaces";
 
 @autoinject
 export class CodeEditor {
-  // private componentName = 'code-editor';
-
   private boardInfoSubscriber: Subscription;
 
   private gameWidth: number;

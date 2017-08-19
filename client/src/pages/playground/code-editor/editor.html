@@ -5,16 +5,16 @@
       <ul class="nav nav-pills nav-stacked">
         <li title.bind="'editor.creationTitle' & t" class="active"><a href="#create-editor" data-toggle="tab">${ 'editor.creation' & t }</a></li>
         <li title.bind="'editor.eventsTitle' & t"><a href="#event-editor" data-toggle="tab">${ 'editor.events' & t }</a></li>
-        <!--<li title.bind="'editor.functionsTitle' & t"><a href="#function-editor" data-toggle="tab">${ 'editor.functions' & t }</a></li>-->
-        <li title.bind="'editor.typesTitle' & t" if.bind="difficulty == 'hard'"><a href="#type-editor" data-toggle="tab">${ 'editor.types' & t }</a></li>
+        <li title.bind="'editor.functionsTitle' & t" show.bind="difficulty != 'easy'"><a href="#function-editor" data-toggle="tab">${ 'editor.functions' & t }</a></li>
+        <li title.bind="'editor.typesTitle' & t" show.bind="difficulty == 'hard'"><a href="#type-editor" data-toggle="tab">${ 'editor.types' & t }</a></li>
       </ul>
     </div>
 
     <div class="col-md-10 full-height tab-content" style="padding-left: 0px">
       <div id="create-editor" class="tab-pane fade in active full-height"></div>
       <div id="event-editor" class="tab-pane fade full-height"></div>
-      <!--<div id="function-editor" class="tab-pane fade full-height"></div>-->
-      <div id="type-editor" if.bind="difficulty == 'hard'" class="tab-pane fade full-height"></div>
+      <div id="function-editor" show.bind="difficulty != 'easy'" class="tab-pane fade full-height"></div>
+      <div id="type-editor" show.bind="difficulty == 'hard'" class="tab-pane fade full-height"></div>
     </div>
     </div>    
     <div class="row">

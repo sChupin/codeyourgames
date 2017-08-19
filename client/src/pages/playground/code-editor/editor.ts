@@ -18,10 +18,14 @@ import * as jsonDoc from '../../../../doc/sprite.json!json';
 export class Editor {
   private subscriber: Subscription;
 
-  private createEditor: AceAjax.Editor;
-  private eventEditor: AceAjax.Editor;
-  // private functionEditor: AceAjax.Editor;
-  private typeEditor: AceAjax.Editor;
+  private isAttached: boolean = false;
+
+  private editors: Array<AceAjax.Editor> = [];
+
+  private createEditor: AceAjax.Editor = null;
+  private eventEditor: AceAjax.Editor = null;
+  private functionEditor: AceAjax.Editor = null;
+  private typeEditor: AceAjax.Editor = null;
 
   private preloadCode: string = "";
 
@@ -33,21 +37,16 @@ export class Editor {
 
   attached() {
     // Initialize editors
-    let editors: Array<AceAjax.Editor> = [];
     this.createEditor = ace.edit('create-editor');
     this.eventEditor = ace.edit('event-editor');
-    // this.functionEditor = ace.edit('function-editor');
+    this.functionEditor = ace.edit('function-editor');
+    this.typeEditor = ace.edit('type-editor');
     
-    editors.push(this.createEditor, this.eventEditor);//, this.functionEditor);
-
-    if (this.difficulty == 'hard') {
-      this.typeEditor = ace.edit('type-editor');
-      editors.push(this.typeEditor);
-    }
+    this.editors.push(this.createEditor, this.eventEditor, this.functionEditor, this.typeEditor);
 
     let langTools = ace.require('ace/ext/language_tools');
 
-    editors.forEach((editor: AceAjax.Editor) => {
+    this.editors.forEach((editor: AceAjax.Editor) => {
       let session = editor.getSession();
       editor.setTheme('ace/theme/monokai');
       editor.$blockScrolling = Infinity;
@@ -132,18 +131,19 @@ export class Editor {
       // Reset the undo stack
       this.createEditor.getSession().setUndoManager(new (<any>ace).UndoManager());
     });
+
+    this.isAttached = true;
   }
 
   detached() {
     this.subscriber.dispose();
     
-    let editors: Array<AceAjax.Editor> = [];
-    editors.push(this.createEditor, this.eventEditor);//, this.functionEditor);
-
-    editors.forEach(editor => {
+    this.editors.forEach(editor => {
       editor.destroy();
       editor = null;
     });
+
+    this.isAttached = false;
   }
 
   /**
@@ -168,6 +168,7 @@ export class Editor {
       this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));
     });
   }
+
 }
 
 function parseCreate(createCode: string) {

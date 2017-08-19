@@ -111,9 +111,11 @@
   "editor": {
     "creation": "Creation",
     "events": "Events",
+    "functions": "Functions",
     "types": "Types",
     "creationTitle": "Game initialization code",
     "eventsTitle": "Events management code",
+    "functionsTitle": "Functions creation code",
     "typesTitle": "Types creation code",
     "run-code": "Run code"
   },
