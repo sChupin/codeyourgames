@@ -1,7 +1,7 @@
 {
   "name": "codeyourgames",
   "version": "1.0.0",
-  "description": "Game development platform to learn programming",
+  "description": "Game development platform to learn programming.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
