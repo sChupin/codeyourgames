@@ -19,7 +19,6 @@ export class ImageGallery {
   activate(model) {
     this.title = model.title;
     this.sections = model.sections;
-    console.log(this.sections);
   }
 
   attached() {

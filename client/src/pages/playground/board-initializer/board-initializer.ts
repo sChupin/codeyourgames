@@ -120,8 +120,6 @@ export class BoardInitializer {
         this.cameraSetWidth, this.cameraSetHeight
       );
 
-      console.log(boardInfo);
-
       this.ea.publish(boardInfo);
     }
   }
