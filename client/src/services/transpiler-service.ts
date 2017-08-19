@@ -13,27 +13,6 @@ export class TranspilerService {
     return this.backend.parseEventCode(eventCode);
   }
 
-  transpile(preloadCode, createCode, eventCode, functionCode) {
-    let parseEventCodePromise = this.backend.parseEventCode(eventCode);
-    let parseFunctionCodePromise = this.backend.parseFunctionCode(functionCode);
-
-    Promise.all([parseEventCodePromise, parseFunctionCodePromise])
-      .then(values => {
-        let eventData = values[0];
-        let functionData = values[1];
-
-        // Add events and functions to code
-        let eventCode = this.addEvents(JSON.parse(eventData.response));
-        let functionCode = this.addFunctions(JSON.parse(functionData.response));
-
-        let create = createCode + functionCode + eventCode.create;
-        let update = eventCode.update;
-
-        // Publish codes to game-container
-        this.ea.publish(new CodeUpdate(preloadCode, create, update));
-      });
-  }
-
   private addFunctions(functions) {
     let create = '';
     console.log(functions);
@@ -50,7 +29,7 @@ export class TranspilerService {
     return create;
   }
 
-  public addEvents(events: Array<any>): EventCode {
+  public addEvents(events: Array<any>) {
     let create = '';
     let update = '';
     console.log(events);
@@ -66,7 +45,7 @@ export class TranspilerService {
         if (type === "once") {
           create += "Once";
         }
-        create += "(() => {\n" + action + "\n}, this);\n";
+        create += "(" + action + ", this);\n";
         create += "\n";
 
         update += "if (" + condition + ") {\n";
@@ -84,10 +63,4 @@ export class TranspilerService {
     return {create: create, update: update};
   }
 
-}
-
-
-interface EventCode {
-  create: string;
-  update: string;
 }

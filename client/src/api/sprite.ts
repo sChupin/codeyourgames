@@ -1,4 +1,4 @@
-import {Point, Angle, Velocity, Direction, Color} from './utility';
+import {Point, Velocity, Direction, Color} from './utility';
 
 import Phaser = require('phaser');
 

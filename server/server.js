@@ -46,7 +46,7 @@ app.use('/public', express.static(path.join(__dirname, './public')));
 
 
 // Set application port
-app.set('port', process.env.PORT || 9005);
+app.set('port', process.env.PORT || 9000);
 
 // Connect to db
 db.connect(() => {

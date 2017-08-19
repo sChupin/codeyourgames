@@ -78,7 +78,7 @@ exports.retrieveUniqueItem = function(coll, query, callback) {
 exports.populateDb = function() {
     console.log('Inserting images into database...');
 
-    const baseURL = '/public/images/';
+    const baseURL = 'http://localhost:9000/public/images/';
     const imagesPath = path.join(__dirname, '../../public/images/');
 
     var db = mongoose.connection;

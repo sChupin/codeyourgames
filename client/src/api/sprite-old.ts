@@ -1,11 +1,11 @@
-import {Point, Angle, Velocity, Direction} from './utility';
+import {Point, Velocity, Direction} from './utility';
 
 import Phaser = require('phaser');
 
 export class Sprite {
   public readonly position: Point;
 
-  public readonly orientation: number | Angle;
+  public readonly orientation: number;
 
   // todo set phaserSprite private if possible
   constructor(public phaserSprite: Phaser.Sprite) {

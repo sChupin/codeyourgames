@@ -5,7 +5,7 @@ let parseEvent = function(req, res) {
     let eventActionPairs = [];
     if (code) {
         try {
-            eventActionPairs = parser.eventParser.parse(code);    
+            eventActionPairs = parser.eventParser.parse(code);
         } catch (e) {
             console.log(e);
         }

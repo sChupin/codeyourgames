@@ -3,10 +3,6 @@ export class Point {
   public y: number;
 }
 
-export class Angle {
-  
-}
-
 export class Velocity {
   static SLOW: number = 1;
   static MEDIUM: number = 10;
@@ -18,6 +14,30 @@ export class Direction {
   static DOWN: number = 90;
   static LEFT: number = -180;
   static UP: number = -90;
+  static NORTH_EAST: number = -45;
+  static NORTH_WEST: number = -135;
+  static SOUTH_EAST: number = 45;
+  static SOUTH_WEST: number = 135;
+}
+
+export class Time extends Phaser.Time {
+  static QUARTER_SECOND: number = Phaser.Timer.QUARTER;
+  static HALF_SECOND: number = Phaser.Timer.HALF;
+  static SECOND: number = Phaser.Timer.SECOND;
+  static MINUTE: number = Phaser.Timer.MINUTE;
+
+  
+  /**
+   * 
+   * 
+   * @param {number} time Number of ms to wait before executing the action
+   * @param {function} action The function to execute once the time hase elapsed.
+   * @memberof Time
+   */
+  public wait(time: number, action) {
+    let timer = this.create();
+    timer.add(time, action);
+  }
 }
 
 export class Color {
