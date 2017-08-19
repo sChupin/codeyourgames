@@ -161,7 +161,7 @@ export class Editor {
     }
 
     this.transpiler.transpileEvents(enEventCode).then(value => {
-      let eventCode = this.transpiler.addEvents(JSON.parse(value.response));
+      let eventCode = this.transpiler.addEvents(JSON.parse(value.response).events);
       let createCode = parseCreate(enCreateCode) + eventCode.create;
       createCode = appendTryCatch(createCode);
       let updateCode = eventCode.update;
