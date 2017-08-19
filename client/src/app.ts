@@ -10,7 +10,6 @@ export class App {
       { route: 'playground', moduleId: './pages/playground/difficulty', nav: true, title: 'nav-bar.playground' },
       { route: 'playground/:difficulty', name: 'playground', moduleId: './pages/playground/index', title: 'nav-bar.playground' },
       { route: 'documentation', name: 'documentation', moduleId: './pages/documentation/index', nav: true, title: 'nav-bar.doc' },
-      { route: 'games', moduleId: './games/games', title: 'nav-bar.games' },
       { route: 'about', name: 'about', moduleId: './pages/about/index', nav: true, title: 'nav-bar.about' }
     ]);
 
