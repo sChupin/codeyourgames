@@ -39,6 +39,8 @@ if (!('instructions' in yy)) {
 "while"                 return 'WHILE'
 "once"                  return 'ONCE'
 "do"                    return 'DO'
+"function"              return 'FUNCTION'
+"return"                return 'RETURN'
 "="                     return 'EQUAL'
 "+"                     return 'PLUS'
 "-"                     return 'MINUS'
@@ -109,6 +111,8 @@ instruction
     | declaration SEMICOLON
         {$$ = $1 + $2 + "\n";}
     | control_flow
+    | return_statement SEMICOLON
+        {$$ = $1 + $2;}
 ;
 
 instructions
@@ -195,6 +199,11 @@ control_flow
         {$$ = "while (true) " + $2;}
 ;
 
+return_statement
+    : RETURN expr
+        {$$ = $1 + " " + $2;}
+;
+
 block
     : LBRACE RBRACE
         {$$ = $1 + " " + $2;}
@@ -209,4 +218,23 @@ event
         {$$ = [$3, "() => " + $6, "while"];}
     | ONCE LPAR expr RPAR DO block
         {$$ = [$3, "() => " + $6, "once"];}
+;
+
+function
+    : FUNCTION IDENTIFIER LPAR params RPAR block
+        {$$ = $1 + " " + $2 + $3 + $4 + $5 + $6;}
+;
+
+params
+    : %empty
+        {$$ = "";}
+    | IDENTIFIER more-params
+        {$$ = $1 + $2;}
+;
+
+more-params
+    : %empty
+        {$$ = ""}
+    | COMMA IDENTIFIER more-params
+        {$$ = $1 + $2 + $3;}
 ;

@@ -30,9 +30,12 @@ instruction = expr ";"
            | assignation ";"
            | declaration ";"
            | control_flow
+           | return ";"
 ;
 
 event = ( "when" | "while" | "once" ) "(" expr ")" "do" block;
+
+function = "function" identifier "(" params ")" block;
 
 expr = text
      | number
@@ -52,9 +55,13 @@ control_flow = "if" "(" expr ")" "then" block [ "else" block ]
              | "forever" block
 ;
 
+return = "return" expr;
+
 block = "{" { instruction } "}";
 
 args = [ expr { "," expr } ];
+
+params = [ identifier { "," identifier } ];
 
 identifier = letter { letter | digit | "_" };
 
