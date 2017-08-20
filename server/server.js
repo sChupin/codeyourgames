@@ -19,8 +19,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
 };
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// Express middleware
 app.engine('html', require('ejs').renderFile);
 app.use(favicon('../client/export/favicon.ico'));
 app.use(logger('dev'));

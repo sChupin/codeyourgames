@@ -30,10 +30,4 @@ export class BackendService {
     return this.http.post('transpiler/function', postBody);
   }
 
-  parseCollisionCode(code) {
-    let postBody: any = {};
-    postBody.code = code;
-    return this.http.post('transpiler/collision', postBody);
-  }
-
 }

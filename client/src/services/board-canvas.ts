@@ -128,7 +128,7 @@ export class BoardCanvas extends fabric.Canvas {
 
   public addSprite(sprite: ImageInfo, callback): void {
 
-    fabric.Image.fromURL(sprite.url, (img) => {
+    (<any>fabric.Image).fromURL(sprite.url, (img) => {
       // Set anchor to 0.5 in both direction
       img.set({
         originX: "center", 
@@ -142,8 +142,8 @@ export class BoardCanvas extends fabric.Canvas {
   }
 
   public addSpriteSheet(spritesheet: SpriteSheetInfo, callback): void {
-    fabric.Image.fromURL(spritesheet.sheetUrl, (img) => {
-      fabric.Image.fromURL(img.toDataURL({ left: 0, top: 0, width: spritesheet.spriteWidth, height: spritesheet.spriteHeight }), (img) => {
+    (<any>fabric.Image).fromURL(spritesheet.sheetUrl, (img) => {
+      (<any>fabric.Image).fromURL(img.toDataURL({ left: 0, top: 0, width: spritesheet.spriteWidth, height: spritesheet.spriteHeight }), (img) => {
         img.set({
           originX: "center",
           originY: "center"

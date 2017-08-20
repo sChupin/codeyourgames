@@ -196,7 +196,14 @@
       <!-- Options tab -->
       <div role="tabpanel" class="tab-pane" id.bind="'opts-'+$index">
           <div class="row">
-              <div repeat.for="opt of spriteTypes.get(sprite.data.type).opts">${opt}</div>
+              <div repeat.for="property of spriteTypes[sprite.data.type].properties">
+                ${property.name}
+                <span style="margin-left: 15px;">
+                  ${property.defVal}
+                  <!-- <label class="radio-inline"><input type="radio">true</label>
+                  <label class="radio-inline"><input type="radio">false</label> -->
+                </span>
+              </div>
           </div>
       </div>
       

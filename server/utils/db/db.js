@@ -5,9 +5,7 @@ var imgSize = require('image-size');
 
 var schema = require('./schema');
 
-if (process.env.APP_CONFIG) {
-    const config = JSON.parse(process.env.APP_CONFIG);
-}
+const config = process.env.APP_CONFIG ? JSON.parse(process.env.APP_CONFIG) : null;
 
 var dbpath = '';
 
@@ -102,7 +100,7 @@ exports.populateDb = function() {
                     // For each file, insert it in db
                     files.forEach(file => {
                         // ignore subfolders
-                        if (file.match(/.*\.png/i)) {
+                        if (file.match(/.*\.(png|jpg|jpeg)/i)) {
                             
                             let image = {
                                 name: file.slice(0, -4),

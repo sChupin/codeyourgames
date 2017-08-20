@@ -22,6 +22,7 @@ export class SpriteList {
 
   private groupSelected = false;
   private spriteTypes = jsonDoc;
+  private spriteOptions = [];
 
   private language: string;
   
@@ -68,6 +69,12 @@ export class SpriteList {
           data.key = spriteInfo.name;
           data.name = this.createUniqueName(spriteInfo.name);
           data.url = spriteInfo.url;
+
+          // data.options = [];
+          // // Initialize spriteOptions
+          // this.spriteTypes[data.type].properties.forEach(property => {
+          //   data.options.push({name: property.name, defVal: property.defVal, changed: false});
+          // });
           
           // Set spritesheet info
           data.spritesheet = spriteInfo.spritesheet ? {} : undefined;
