@@ -40,21 +40,23 @@ function = "function" identifier "(" params ")" block;
 expr = text
      | number
      | boolean
-     | identifier { "." identifier } ["(" args ")"]
+     | property_access ["(" args ")"]
      | expr ("+" | "-") expr
      | expr ("*" | "/") expr
      | expr ("greater" | "lower" | "equals") expr
 ;
 
-assignation = var_identifier "=" expr;
+assignation = property_access =" expr;
 
-declaration = "var" var_identifier [ "=" expr ];
+declaration = "var" identifier [ "=" expr ];
 
 control_flow = "if" "(" expr ")" "then" block [ "else" block ]
              | "repeat" "(" expr ")" block
              | "repeat_until" "(" expr ")" block
              | "forever" block
 ;
+
+property_access = identifier { "." identifier };
 
 return = "return" expr;
 
@@ -65,8 +67,6 @@ args = [ expr { "," expr } ];
 params = [ identifier { "," identifier } ];
 
 identifier = letter { letter | digit | "_" };
-
-var_identifier = lowercase_letter { letter | digit | "_" };
 
 text = ( '"' { all_characters - '"' } '"' | "'" { all_characters - "'" } "'");
 
