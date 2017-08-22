@@ -6,7 +6,7 @@ export class BackendService {
 
   constructor(private http: HttpClient) {
     http.configure(config => {
-      config.withBaseUrl('api/');
+      config.withBaseUrl('http://localhost:9000/api/');
     });
   }
 

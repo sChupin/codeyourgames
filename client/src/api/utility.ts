@@ -22,13 +22,13 @@ export class Direction {
   static SOUTH_WEST: number = 135;
 }
 
-export class Time extends Phaser.Time {
+export class Time {
   static QUARTER_SECOND: number = Phaser.Timer.QUARTER;
   static HALF_SECOND: number = Phaser.Timer.HALF;
   static SECOND: number = Phaser.Timer.SECOND;
   static MINUTE: number = Phaser.Timer.MINUTE;
 
-  
+  constructor(private game: Phaser.Game) { }
   /**
    * 
    * 
@@ -36,9 +36,10 @@ export class Time extends Phaser.Time {
    * @param {function} action The function to execute once the time hase elapsed.
    * @memberof Time
    */
-  public wait(time: number, action) {
-    let timer = this.create();
+  public wait(time: number, action, ctx) {
+    let timer = this.game.time.create();
     timer.add(time, action);
+    timer.start();
   }
 }
 

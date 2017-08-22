@@ -4,7 +4,7 @@ import {autoinject, bindable} from "aurelia-framework";
 import {CodeUpdate} from "../services/messages";
 
 import {Keyboard, Mouse} from "../api/sensors";
-import {Group, Hero} from "../api/sprite";
+import {Time, Direction, Color} from "../api/utility";
 import {GameProps} from "../api/game";
 
 import Phaser = require('phaser');
@@ -84,7 +84,7 @@ class Game extends Phaser.Game {
     createCode += '\nreturn function() {\n' + updateCode + '\n};\n';
 
     chapter.userPreload = Function(preloadCode);
-    chapter.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', createCode);
+    chapter.userCreate = Function('Game', 'Keyboard', 'Mouse', 'Time', 'Direction', 'Color', createCode);
     // chapter.userCreate = Function('Game', 'Functions', 'Keyboard', 'Mouse', createCode);
     // chapter.userUpdate = Function('Game', 'Keyboard', 'Mouse', updateCode);
     
@@ -95,52 +95,21 @@ class Game extends Phaser.Game {
 
 class Chapter extends Phaser.State {
 
-  // Game properties handler accessed by global Game in user code
-  private gameProps: GameProps;
-
   private userEvents: Array<Phaser.Signal> = [];
-
-  // List of functions accessed by global Functions in user code
-  private userFunctions: FunctionMap = {};
-
-  // Keyboard events handler accessed by global Keyboard in user code
-  private keyboard: Keyboard;
-
-  // Mouse events handler accessed by global Mouse in user code
-  private mouse: Mouse;
 
   preload() {
     this.userPreload();
   }
 
   create() {
-    this.initGameProps();
-    this.initKeyboard();
-    this.initMouse();
-    
-    this.userUpdate = this.userCreate(this.gameProps, this.userFunctions, this.keyboard, this.mouse);
+    this.userUpdate = this.userCreate(new GameProps(this.game), new Keyboard(this.input.keyboard), new Mouse(this.input), new Time(this.game), new Direction, new Color());
   }
 
   update() {
-    // Bodies always collide with platforms
-    // this.physics.arcade.collide(this.groups.bodies, this.groups.platforms);
-
     // Ensure onInputOver/Out are dispatched even if mouse is not moving
     this.input.activePointer.dirty = true;
 
     this.userUpdate();
-  }
-
-  private initGameProps() {
-    this.gameProps = new GameProps(this.game);
-  }
-
-  private initKeyboard() {
-    this.keyboard = new Keyboard(this.input.keyboard);
-  }
-
-  private initMouse() {
-    this.mouse = new Mouse(this.input);
   }
 }
 
