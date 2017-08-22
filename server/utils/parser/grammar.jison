@@ -34,6 +34,7 @@ if (!('instructions' in yy)) {
 "then"                  return 'THEN'
 "else"                  return 'ELSE'
 "repeat"                return 'REPEAT'
+"repeat_until"          return 'UNTIL'
 "forever"               return 'FOREVER'
 "when"                  return 'WHEN'
 "while"                 return 'WHILE'
@@ -177,7 +178,7 @@ more-args
 ;
 
 assignment
-    : IDENTIFIER EQUAL expr
+    : field_access EQUAL expr
         {$$ = $1 + " = " + $3;}
 ;
 
@@ -195,6 +196,8 @@ control_flow
         {$$ = $1 + " " + $2 + $3 + $4 + " " + $6 + " " + $7 + " " + $8;}
     | REPEAT LPAR expr RPAR block
         {$$ = "for (let _i = 0; _i < " + $3 + "; _i++) " + $5;}
+    | UNTIL LPAR expr RPAR block
+        {$$ = "while " + $2 + $3 + $4 + " " + $5;}
     | FOREVER block
         {$$ = "while (true) " + $2;}
 ;

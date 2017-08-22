@@ -34,18 +34,15 @@ export class BoardInfoParser {
       let spritesheet = sprite.spritesheet;
 
       if (sprite.type == 'Weapon') {
-        code += "var " + sprite.name + " = Game.createWeapon('" + sprite.key + "'";
+        code += "let " + sprite.name + " = Game.createWeapon('" + sprite.key + "'";
         code += ");\n\n";      
       } else {
-        code += "var " + sprite.name + " = Game.add" + sprite.type.charAt(0).toUpperCase() + sprite.type.slice(1) + "(" + sprite.x + ", " + sprite.y + ", '" + sprite.key + "'";
+        code += "let " + sprite.name + " = Game.add" + sprite.type.charAt(0).toUpperCase() + sprite.type.slice(1) + "(" + sprite.x + ", " + sprite.y + ", '" + sprite.key + "'";
         code += ");\n\n";      
         if (spritesheet && (sprite.type == 'Hero' || sprite.type == 'Enemy')) {
-          // let opts = '{ animated: true }';
-          // code += ", " + opts;
           code += sprite.name + ".animated = true;\n";
         }
       }
-      // code += ");\n\n";
       code += sprite.name + ".width = " + sprite.width + ";\n";
       code += sprite.name + ".height = " + sprite.height + ";\n";
       code += sprite.name + ".angle = " + sprite.angle + ";\n\n";

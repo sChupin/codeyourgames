@@ -6,7 +6,7 @@ export class BackendService {
 
   constructor(private http: HttpClient) {
     http.configure(config => {
-      config.withBaseUrl('http://localhost:9000/api/');
+      config.withBaseUrl('api/');
     });
   }
 
@@ -18,16 +18,9 @@ export class BackendService {
     return this.http.get('img-gallery');
   }
 
-  parseEventCode(code): Promise<any> {
+  transpileCode(code): Promise<any> {
     let postBody: any = {};
     postBody.code = code;
-    return this.http.post('transpiler/event', postBody);
+    return this.http.post('transpiler', postBody);
   }
-  
-  parseFunctionCode(code) {
-    let postBody: any = {};
-    postBody.code = code;
-    return this.http.post('transpiler/function', postBody);
-  }
-
 }

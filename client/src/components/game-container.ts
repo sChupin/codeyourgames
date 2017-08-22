@@ -6,7 +6,6 @@ import {CodeUpdate} from "../services/messages";
 import {Keyboard, Mouse} from "../api/sensors";
 import {Group, Hero} from "../api/sprite";
 import {GameProps} from "../api/game";
-import {NumberMap, TextMap, BooleanMap} from "../api/variables";
 
 import Phaser = require('phaser');
 
@@ -143,14 +142,6 @@ class Chapter extends Phaser.State {
   private initMouse() {
     this.mouse = new Mouse(this.input);
   }
-
-  // render() {
-  //   this.game.world.children.forEach(child => {
-  //     if (child instanceof Hero) {
-  //       this.game.debug.body(child);
-  //     }
-  //   });
-  // }
 }
 
 interface Chapter {

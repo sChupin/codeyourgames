@@ -9,21 +9,15 @@ export class TranspilerService {
 
   constructor(private ea: EventAggregator, private backend: BackendService) { }
 
-  public transpileEvents(eventCode) {
-    return this.backend.parseEventCode(eventCode);
+  public transpileEvents(code) {
+    return this.backend.transpileCode(code);
   }
 
-  private addFunctions(functions) {
+  public addFunctions(functions) {
     let create = '';
-    console.log(functions);
-    functions.forEach(func => {
-      let name = func[0];
-      let body = func[1];
 
-      create += "\n";
-      create += "this.userFunctions." + name + " = function() {\n";
-      create += "\t" + body + ";\n";
-      create += "}\n";
+    functions.forEach(func => {
+      create += func + '\n';
     });
 
     return create;

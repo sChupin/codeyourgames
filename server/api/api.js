@@ -8,6 +8,6 @@ var router = express.Router();
 
 router.get('/api/img-gallery', gallery.getGalleries);
 router.get('/api/img-gallery/:id', gallery.getGalleryBySection);
-router.post('/api/transpiler/event', transpiler.parse);
+router.post('/api/transpiler', transpiler.parse);
 
 module.exports = router;

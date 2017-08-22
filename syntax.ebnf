@@ -52,6 +52,7 @@ declaration = "var" var_identifier [ "=" expr ];
 
 control_flow = "if" "(" expr ")" "then" block [ "else" block ]
              | "repeat" "(" expr ")" block
+             | "repeat_until" "(" expr ")" block
              | "forever" block
 ;
 
@@ -67,7 +68,7 @@ identifier = letter { letter | digit | "_" };
 
 var_identifier = lowercase_letter { letter | digit | "_" };
 
-text = '"' { all characters - '"' } '"';
+text = ( '"' { all_characters - '"' } '"' | "'" { all_characters - "'" } "'");
 
 number = [ "-" ] positive_integer ["." positive_integer];
 

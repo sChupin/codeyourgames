@@ -153,26 +153,38 @@ export class Editor {
     
     let enCreateCode = this.createEditor.getValue();
     let enEventCode = this.eventEditor.getValue();
+    let enFunctionCode = '';
+    
+    if (this.difficulty != 'easy') {
+      enFunctionCode = this.functionEditor.getValue();
+    }
 
     // Translate code from fr to en
     if (this.i18n.getLocale() == 'fr') {
       enCreateCode = this.translator.translateToEnglish(enCreateCode);
       enEventCode = this.translator.translateToEnglish(enEventCode);
+      enFunctionCode = this.translator.translateToEnglish(enFunctionCode);
     }
 
-    this.transpiler.transpileEvents(enEventCode).then(value => {
-      let eventCode = this.transpiler.addEvents(JSON.parse(value.response).events);
-      let createCode = parseCreate(enCreateCode) + eventCode.create;
+    let code = enCreateCode + enEventCode + enFunctionCode;
+
+    this.transpiler.transpileEvents(code).then(value => {
+      let response = JSON.parse(value.response);
+
+      let instructions = response.instructions;
+      let eventCode = this.transpiler.addEvents(response.events);
+      let functionCode = this.transpiler.addFunctions(response.functions);
+
+      let createCode = functionCode + '\n' + instructions + '\n' + eventCode.create;
       createCode = appendTryCatch(createCode);
+
       let updateCode = eventCode.update;
+      updateCode = appendTryCatch(updateCode);
+
       this.ea.publish(new CodeUpdate(this.preloadCode, createCode, updateCode));
     });
   }
 
-}
-
-function parseCreate(createCode: string) {
-  return createCode.replace(/repeat( )*\(( )*(\d+)( )*\)( )*{/g, 'for (let _i = 0; _i < ' + '$3' + '; _i++) {');
 }
 
 function appendTryCatch(code: string) {
