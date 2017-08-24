@@ -119,6 +119,22 @@
   "documentation": {
     "heading": "Documentation",
     "languageTitle": "Langage",
-    "globalsTitle": "Globals"
+    "globalsTitle": "Globals",
+    "typesTitle": "Types de lutins",
+    "typesDescr1": "Un type de lutin fournit un comportement prédéfini pour un lutin. Il définit un ensemble de propriétés, de méthodes et de variables d'événement.",
+    "typesDescr2": "Une propriété est un caractéristique du sprite, comme sa hauteur ou sa vitesse par exemple. Elle a une valeur par défaut et peut être changée à n'importe quel moment pour manipuler le lutin.",
+    "typesDescr3": "Une méthode est une action que le lutin peut effectuer.",
+    "typesDescr4": "Une variable d'événement est une sorte de propriété dont la valeur est soit vrai soit fausse. Elle change de valeur pour indiquer qu'un événement est survenu.",
+    "properties": "Propriétés",
+    "methods": "Méthodes",
+    "events": "Variables d'événement",
+    "defVal": "Valeur par défaut",
+    "noProps": "Ce type de lutin n'a pas de propriétés spécifiques.",
+    "noMethods": "Ce type de lutin n'a pas de méthodes spécifiques.",
+    "noEvents": "Ce type de lutin n'a pas de variable d'événement spécifiques.",
+    "parameters": "Paramètres",
+    "paramName": "Nom",
+    "paramType": "Type",
+    "paramDescr": "Description"
   }
 }

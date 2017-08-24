@@ -79,10 +79,8 @@ exports.populateDb = function() {
     let baseURL = '';
     if (process.env.APP_CONFIG) {
         baseURL = 'public/images/';
-        console.log('test');
     } else {
         baseURL = 'http://localhost:9000/public/images/';    
-        console.log('test2');
     }
 
     const imagesPath = path.join(__dirname, '../../public/images/');

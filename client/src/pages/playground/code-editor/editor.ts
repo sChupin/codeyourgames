@@ -50,7 +50,7 @@ export class Editor {
       let session = editor.getSession();
       editor.setTheme('ace/theme/monokai');
       editor.$blockScrolling = Infinity;
-
+      
       editor.setOptions({
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true
@@ -78,7 +78,7 @@ export class Editor {
         //     }
       // });
 
-      session.setMode('ace/mode/typescript')
+      session.setMode('ace/mode/typescript');
       session.setTabSize(2);
       session.setUseSoftTabs(true);
       session.setUseWrapMode(true);

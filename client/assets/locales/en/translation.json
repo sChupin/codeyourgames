@@ -122,6 +122,22 @@
   "documentation": {
     "heading": "Documentation",
     "languageTitle": "Language",
-    "globalsTitle": "Globals"
+    "globalsTitle": "Globals",
+    "typesTitle": "Sprite types",
+    "typesDescr1": "A sprite type provides a predefined behavior for a sprite. It defines a set of properties, methods and event variables.",
+    "typesDescr2": "A property is a characteristic of the sprite, as its height or its speed for instance. It has a default value and can be changed at any time to manipulate the sprite.",
+    "typesDescr3": "A method is an action that the sprite can perform.",
+    "typesDescr4": "An event variable is a sort of property whose value is either true or false. It changes its value automatically to indicates whether an event occured.",
+    "properties": "Properties",
+    "methods": "Methods",
+    "events": "Event variable",
+    "defVal": "Default value",
+    "noProps": "This sprite type has no specific properties",
+    "noMethods": "This sprite type has no specific methods",
+    "noEvents": "This sprite type has no specific event variables",
+    "parameters": "Parameters",
+    "paramName": "Name",
+    "paramType": "Type",
+    "paramDescr": "Description"
   }
 }

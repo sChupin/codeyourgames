@@ -1,13 +1,40 @@
 export class CodeTranslator {
 
   private enToFr = {
-    Game: 'Jeu',
-    addPlatform: 'ajouterPlateforme',
-    animated: 'animé',
+    // keywords
+    and:  'et',
+    or: 'ou',
+    not: 'non',
+    greater_than: 'plus_grand_que',
+    lower_than: 'plus_petit_que',
+    equals: 'égale',
     true: 'vrai',
-    width: 'largeur',
-    height: 'hauteur',
-    angle: 'angle'
+    false: 'faux',
+    if: 'si',
+    then: 'alors',
+    else: 'sinon',
+    repeat: 'répéter',
+    repeat_until: 'répéter_tant_que',
+    forever: 'toujours',
+    when: 'quand',
+    while: 'tant_que',
+    once: 'une_fois_que',
+    do: 'faire',
+    function: 'fonction',
+    return: 'retourner',
+    let: 'soit',
+    // Globals
+    Game: 'Jeu',
+    Keyboard: 'Clavier',
+    Mouse: 'Souris',
+    Math: 'Math',
+    Time: 'Temps',
+    Direction: 'Direction',
+    Color: 'Color',
+    // Sprite types
+    // Globals methods + properties
+    // Sprite types method + properties
+    // do it automatically
   };
 
   private frToEn = {

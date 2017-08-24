@@ -27,16 +27,11 @@ export class Sprite extends Phaser.Sprite {
   public showHitBox: boolean = false; // only for hard lvl
   
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
+              public key: string = '', public frame: number | string = '') {
     super(game, x, y, key, frame);
 
     // Center sprite to its position
     this.anchor.setTo(0.5);
-
-    // Set Sprite properties
-    if (opts.hasOwnProperty('width')) { this.width = opts.width; }
-    if (opts.hasOwnProperty('height')) { this.height = opts.height; }
-    if (opts.hasOwnProperty('angle')) { this.angle = opts.angle; }
   }
 
   preUpdate() {
@@ -156,6 +151,7 @@ export class Sprite extends Phaser.Sprite {
   /**
    * Resize the Sprite hitbox
    * 
+   * @method resizeHitBox
    * @param {number} ratioX the ratio between the original hitbox width and the new one (> 1: bigger hitbox, < 1: smaller hitbox)
    * @param {number} ratioY the ratio between the original hitbox height and the new one (> 1: bigger hitbox, < 1: smaller hitbox), set to ratioX if not defined
    * @memberof Sprite
@@ -246,14 +242,11 @@ class Platformer extends Sprite {
 
   public speed: number;
 
-  private animated: boolean; // Cannot be changed during game
-  private defaultAnimated: boolean = false;
+  private animated: boolean = false; // Cannot be changed during game
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
+              public key: string = '', public frame: number | string = '') {
     super(game, x, y, key, frame);
-
-    this.animated = opts.hasOwnProperty('animated') ? opts.animated : this.defaultAnimated;
 
     // Create animations
     this.animations.add('moveRight', [8, 9, 10, 11], 10, true);
@@ -351,10 +344,10 @@ export class Hero extends Platformer {
   private defaultJumpForce = 250;
 
   // Properties
-  public canFall: boolean;
-  public speed: number; // Useless as inherited, redeclared for doc purpose only
-  public gravity: number;
-  public jumpForce: number;
+  public canFall: boolean = true;
+  public speed: number = 200; // Useless as inherited, redeclared for doc purpose only
+  public gravity: number = 500;
+  public jumpForce: number = 250;
 
   // Event notification
   public isHit: boolean = false; // Hit notification
@@ -362,17 +355,11 @@ export class Hero extends Platformer {
   public touchEnemy: boolean = false; // Touch enemy notification
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts);
+              public key: string = '', public frame: number | string = '') {
+    super(game, x, y, key, frame);
 
     // Enable hero physics
     this.game.physics.arcade.enable(this);
-
-    // Set hero properties
-    this.canFall = opts.hasOwnProperty('canFall') ? opts.canFall : this.defaultCanFall;
-    this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
-    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
-    this.jumpForce = opts.hasOwnProperty('jumpForce') ? opts.jumpForce : this.defaultJumpForce;
 
     // Set initial properties
     this.initFrame = frame;
@@ -539,14 +526,11 @@ export class Platform extends Sprite {
   private defaultBottomBlocking: boolean = true;
 
   // Properties
-  public bottomBlocking: boolean;
+  public bottomBlocking: boolean = true;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
+              public key: string = '', public frame: number | string = '') {
     super(game, x, y, key, frame);
-
-    // Set platform properties
-    this.bottomBlocking = opts.hasOwnProperty('bottomBlocking') ? opts.bottomBlocking : this.defaultBottomBlocking;
 
     // Enable platform physics
     this.game.physics.arcade.enable(this);
@@ -572,7 +556,7 @@ export class Platform extends Sprite {
 export class Decor extends Sprite {
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
+              public key: string = '', public frame: number | string = '') {
     super(game, x, y, key, frame);
   }
 }
@@ -596,24 +580,16 @@ export class Enemy extends Platformer {
   // Hit notification
   public isHit: boolean = false;
   
-  // Default properties
-  private defaultSpeed: number = 150;
-  private defaultAutoMove: boolean = true;
-
   // Properties
-  public speed: number; // Useless as inherited, redeclared for doc purpose only
-  public autoMove: boolean;
+  public speed: number = 150; // Useless as inherited, redeclared for doc purpose only
+  public autoMove: boolean = true;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts);
+              public key: string = '', public frame: number | string = '') {
+    super(game, x, y, key, frame);
 
     // Enable enemy physics
     this.game.physics.arcade.enable(this);
-
-    // Set enemy properties
-    this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
-    this.autoMove = opts.hasOwnProperty('autoMove') ? opts.autoMove : this.defaultAutoMove;
 
     // Enable collision with world bounds
     this.body.collideWorldBounds = true;
@@ -681,21 +657,15 @@ export class Spaceship extends Sprite {
   // Hit notification
   public isHit: boolean = false;
 
-  // Default properties
-  private defaultSpeed: number = 250;
-
   // Properties
-  public speed: number;
+  public speed: number = 250;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts);
+              public key: string = '', public frame: number | string = '') {
+    super(game, x, y, key, frame);
 
     // Enable spaceship physics
     this.game.physics.arcade.enable(this);
-
-    // Set enemy properties
-    this.speed = opts.hasOwnProperty('speed') ? opts.speed : this.defaultSpeed;
 
     // Enable collision with world bounds
     this.body.collideWorldBounds = true;
@@ -788,14 +758,14 @@ export class Weapon extends Phaser.Weapon {
 
   public ammoQuantity: number;
 
-  constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '', opts: any = {}) {
+  constructor(public game: Phaser.Game, public key: string = '', public frame: number | string = '') {
     super(game, game.plugins);
 
     // Set weapon properties
     this.ammoQuantity = -1;
-    this.fireAngle = opts.hasOwnProperty('fireAngle') ? opts.fireAngle : this.defaultFireAngle;
-    this.fireRate = opts.hasOwnProperty('fireRate') ? opts.fireRate : this.defaultFireRate;
-    this.bulletSpeed = opts.hasOwnProperty('bulletSpeed') ? opts.bulletSpeed : this.defaultBulletSpeed;
+    this.fireAngle = this.defaultFireAngle;
+    this.fireRate = this.defaultFireRate;
+    this.bulletSpeed = this.defaultBulletSpeed;
     
     let imgCache = this.game.cache.getImage(key);
     this.initWidth = imgCache.width;
@@ -879,19 +849,18 @@ export class TextImage extends Phaser.Text {
   private defaultBold: boolean = true;
 
   // Properties
-  public color: string;
+  public color: string = Color.Black;
   public italic: boolean;
   public bold: boolean;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-              public text: string, opts: any = {}) {
-    super(game, x, y, text, opts);
+              public text: string) {
+    super(game, x, y, text);
 
     // Set text properties
-    this.color = opts.hasOwnProperty('color') ? opts.color : this.defaultColor;
-    this.fontSize = opts.hasOwnProperty('fontSize') ? opts.fontSize : this.defaultFontSize;
-    this.italic = opts.hasOwnProperty('italic') ? opts.italic : this.defaultItalic;
-    this.bold = opts.hasOwnProperty('bold') ? opts.bold : this.defaultBold;
+    this.fontSize = this.defaultFontSize;
+    this.italic = this.defaultItalic;
+    this.bold = this.defaultBold;
   }
 
   update() {
@@ -917,8 +886,8 @@ export class Obj extends Sprite {
   public collected: boolean = false;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-            public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts);
+            public key: string = '', public frame: number | string = '') {
+    super(game, x, y, key, frame);
 
     // Enable enemy physics
     this.game.physics.arcade.enable(this);
@@ -955,29 +924,20 @@ export class FlappyBird extends Sprite {
 
   private flyKey: Phaser.Key;
 
-  // Default properties
-  private defaultGravity: number = 500;
-  private defaultFlyForce: number = 250;
-  private defaultFlySpeed: number = 200;
-
   // Properties
-  public gravity: number;
-  public flyForce: number;
-  public flySpeed: number
+  public gravity: number = 500;
+  public flyForce: number = 250;
+  public flySpeed: number = 200;
 
   // Event notification
   public crashed: boolean = false;
 
   constructor(public game: Phaser.Game, public x: number = 0, public y: number = 0,
-            public key: string = '', public frame: number | string = '', opts: any = {}) {
-    super(game, x, y, key, frame, opts);
+            public key: string = '', public frame: number | string = '') {
+    super(game, x, y, key, frame);
 
     // Enable enemy physics
     this.game.physics.arcade.enable(this);
-
-    // Set properties
-    this.gravity = opts.hasOwnProperty('gravity') ? opts.gravity : this.defaultGravity;
-    this.flyForce = opts.hasOwnProperty('flyForce') ? opts.flyForce : this.defaultFlyForce;
 
     // Set fly key
     this.flyKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

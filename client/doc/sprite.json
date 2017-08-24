@@ -87,7 +87,7 @@
         }
       },
       {
-        "name": "",
+        "name": "resizeHitBox",
         "descr": "Resize the Sprite hitbox",
         "params": [
           {

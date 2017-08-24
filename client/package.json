@@ -63,6 +63,7 @@
       "@types/jquery": "npm:@types/jquery@^2.0.45",
       "EastDesire/jscolor": "github:EastDesire/jscolor@^2.0.4",
       "ace": "github:ajaxorg/ace-builds@^1.2.8",
+      "ace-code-editor": "npm:ace-code-editor@^1.2.3",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0",
       "aurelia-auth": "npm:aurelia-auth@^3.0.5",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0",
