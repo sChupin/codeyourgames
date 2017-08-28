@@ -1,23 +1,15 @@
-import {Point, Color} from './utility';
+import {Point, Color, Direction} from './utility';
 import {Sprite, Hero, Platform, Decor, Enemy, Spaceship, Weapon, TextImage, Obj, FlappyBird} from './sprite';
 
 
 /**
- * Manage game and background manipulation.
+ * Gives methods to control some aspects of the game. It lets you pause and resume the game, set and manipulate a background, add sprites and more.
  * 
  * @class Game
  */
 export class GameProps {
   private background: any;
 
-
-  /**
-   * Indicates whether the game is paused
-   * 
-   * @readonly
-   * @type {boolean}
-   * @memberof Game
-   */
   public readonly paused: boolean = false;
 
   constructor(private game: Phaser.Game) {
@@ -57,7 +49,7 @@ export class GameProps {
    * @param {string} backgroundKey Background image key
    * @param {string} backgroundType Background type
    * @returns returns the created background
-   * @memberof GameProps
+   * @memberof Game
    */
   public setBackground(backgroundKey: string, backgroundType: string) {
     if (backgroundType == 'scroll') {
@@ -74,7 +66,15 @@ export class GameProps {
     return this.background;
   }
 
-  public scrollBackground(speed: number = 50, direction: number = Phaser.ANGLE_DOWN) {
+  /**
+   * Scroll the background in the given direction with the given speed
+   * 
+   * @method scrollBackground
+   * @param {number} [speed=50] The scrolling speed
+   * @param {number} [direction=Direction.DOWN] The scrolling direction
+   * @memberof Game
+   */
+  public scrollBackground(speed: number = 50, direction: number = Direction.DOWN) {
     if (!this.background) {
       throw Error('No background set');
     }
@@ -293,11 +293,6 @@ export class GameProps {
   public addText(x: number, y: number, text: string): TextImage {
     return this.game.add.existing(new TextImage(this.game, x, y, text));
   }
-
-
-        // public createObject(key: string) {
-        //   return new Obj(this.game, 0, 0, key, 0);
-        // }
 }
 
 class ScrollableBackground extends Phaser.TileSprite {

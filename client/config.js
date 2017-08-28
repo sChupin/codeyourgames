@@ -17,7 +17,6 @@ System.config({
     "@types/jquery": "npm:@types/jquery@2.0.45",
     "EastDesire/jscolor": "github:EastDesire/jscolor@2.0.4",
     "ace": "github:ajaxorg/ace-builds@1.2.8",
-    "ace-code-editor": "npm:ace-code-editor@1.2.3",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-auth": "npm:aurelia-auth@3.0.5",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0",
@@ -133,21 +132,6 @@ System.config({
     },
     "npm:@types/shelljs@0.7.2": {
       "@types/node": "npm:@types/node@8.0.7"
-    },
-    "npm:ace-code-editor@1.2.3": {
-      "assert": "github:jspm/nodelibs-assert@0.1.0",
-      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
-      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "http": "github:jspm/nodelibs-http@1.7.1",
-      "https": "github:jspm/nodelibs-https@0.1.0",
-      "mime": "npm:mime@1.2.11",
-      "os": "github:jspm/nodelibs-os@0.1.0",
-      "path": "github:jspm/nodelibs-path@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "systemjs-json": "github:systemjs/plugin-json@0.1.2",
-      "url": "github:jspm/nodelibs-url@0.1.0",
-      "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:align-text@0.1.4": {
       "kind-of": "npm:kind-of@3.2.2",
@@ -594,12 +578,6 @@ System.config({
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.11.7",
       "brorand": "npm:brorand@1.1.0"
-    },
-    "npm:mime@1.2.11": {
-      "assert": "github:jspm/nodelibs-assert@0.1.0",
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "path": "github:jspm/nodelibs-path@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:minimatch@3.0.4": {
       "brace-expansion": "npm:brace-expansion@1.1.8",

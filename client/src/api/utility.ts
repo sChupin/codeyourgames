@@ -11,6 +11,20 @@ export class Velocity {
   static FAST: number = 100;
 }
 
+/**
+ * Gives access to principal directions
+ * 
+ * @class Direction
+ * 
+ * @property UP
+ * @property DOWN
+ * @property RIGHT
+ * @property LEFT
+ * @property NORTH_EAST
+ * @property NORTH_WEST
+ * @property SOUTH_EAST
+ * @property SOUTH_WEST
+ */
 export class Direction {
   static RIGHT: number = 0;
   static DOWN: number = 90;
@@ -22,6 +36,17 @@ export class Direction {
   static SOUTH_WEST: number = 135;
 }
 
+
+/**
+ * Provides a method to wait before executing a function and gives access to principal unit of times
+ * 
+ * @class Time
+ * 
+ * @property QUARTER_SECOND
+ * @property HALF_SECOND
+ * @property SECOND
+ * @property MINUTES
+ */
 export class Time {
   static QUARTER_SECOND: number = Phaser.Timer.QUARTER;
   static HALF_SECOND: number = Phaser.Timer.HALF;
@@ -29,20 +54,178 @@ export class Time {
   static MINUTE: number = Phaser.Timer.MINUTE;
 
   constructor(private game: Phaser.Game) { }
+
   /**
+   * Introduce a delay before executing a function
    * 
+   * @method wait
    * 
    * @param {number} time Number of ms to wait before executing the action
    * @param {function} action The function to execute once the time hase elapsed.
    * @memberof Time
    */
-  public wait(time: number, action, ctx) {
+  public wait(time: number, action) {
     let timer = this.game.time.create();
     timer.add(time, action);
     timer.start();
   }
 }
 
+
+/**
+ * Gives access to colors
+ * 
+ * @property AliceBlue '#F0F8FF';
+ * @property AntiqueWhite '#FAEBD7';
+ * @property Aqua '#00FFFF';
+ * @property Aquamarine '#7FFFD4';
+ * @property Azure '#F0FFFF';
+ * @property Beige '#F5F5DC';
+ * @property Bisque '#FFE4C4';
+ * @property Black '#000000';
+ * @property BlanchedAlmond '#FFEBCD';
+ * @property Blue '#0000FF';
+ * @property BlueViolet '#8A2BE2';
+ * @property Brown '#A52A2A';
+ * @property BurlyWood '#DEB887';
+ * @property CadetBlue '#5F9EA0';
+ * @property Chartreuse '#7FFF00';
+ * @property Chocolate '#D2691E';
+ * @property Coral '#FF7F50';
+ * @property CornflowerBlue '#6495ED';
+ * @property Cornsilk '#FFF8DC';
+ * @property Crimson '#DC143C';
+ * @property Cyan '#00FFFF';
+ * @property DarkBlue '#00008B';
+ * @property DarkCyan '#008B8B';
+ * @property DarkGoldenRod '#B8860B';
+ * @property DarkGray '#A9A9A9';
+ * @property DarkGrey '#A9A9A9';
+ * @property DarkGreen '#006400';
+ * @property DarkKhaki '#BDB76B';
+ * @property DarkMagenta '#8B008B';
+ * @property DarkOliveGreen '#556B2F';
+ * @property DarkOrange '#FF8C00';
+ * @property DarkOrchid '#9932CC';
+ * @property DarkRed '#8B0000';
+ * @property DarkSalmon '#E9967A';
+ * @property DarkSeaGreen '#8FBC8F';
+ * @property DarkSlateBlue '#483D8B';
+ * @property DarkSlateGray '#2F4F4F';
+ * @property DarkSlateGrey '#2F4F4F';
+ * @property DarkTurquoise '#00CED1';
+ * @property DarkViolet '#9400D3';
+ * @property DeepPink '#FF1493';
+ * @property DeepSkyBlue '#00BFFF';
+ * @property DimGray '#696969';
+ * @property DimGrey '#696969';
+ * @property DodgerBlue '#1E90FF';
+ * @property FireBrick '#B22222';
+ * @property FloralWhite '#FFFAF0';
+ * @property ForestGreen '#228B22';
+ * @property Fuchsia '#FF00FF';
+ * @property Gainsboro '#DCDCDC';
+ * @property GhostWhite '#F8F8FF';
+ * @property Gold '#FFD700';
+ * @property GoldenRod '#DAA520';
+ * @property Gray '#808080';
+ * @property Grey '#808080';
+ * @property Green '#008000';
+ * @property GreenYellow '#ADFF2F';
+ * @property HoneyDew '#F0FFF0';
+ * @property HotPink '#FF69B4';
+ * @property IndianRed  '#CD5C5C';
+ * @property Indigo   '#4B0082';
+ * @property Ivory '#FFFFF0';
+ * @property Khaki '#F0E68C';
+ * @property Lavender '#E6E6FA';
+ * @property LavenderBlush '#FFF0F5';
+ * @property LawnGreen '#7CFC00';
+ * @property LemonChiffon '#FFFACD';
+ * @property LightBlue '#ADD8E6';
+ * @property LightCoral '#F08080';
+ * @property LightCyan '#E0FFFF';
+ * @property LightGoldenRodYellow '#FAFAD2';
+ * @property LightGray '#D3D3D3';
+ * @property LightGrey '#D3D3D3';
+ * @property LightGreen '#90EE90';
+ * @property LightPink '#FFB6C1';
+ * @property LightSalmon '#FFA07A';
+ * @property LightSeaGreen '#20B2AA';
+ * @property LightSkyBlue '#87CEFA';
+ * @property LightSlateGray '#778899';
+ * @property LightSlateGrey '#778899';
+ * @property LightSteelBlue '#B0C4DE';
+ * @property LightYellow '#FFFFE0';
+ * @property Lime '#00FF00';
+ * @property LimeGreen '#32CD32';
+ * @property Linen '#FAF0E6';
+ * @property Magenta '#FF00FF';
+ * @property Maroon '#800000';
+ * @property MediumAquaMarine '#66CDAA';
+ * @property MediumBlue '#0000CD';
+ * @property MediumOrchid '#BA55D3';
+ * @property MediumPurple '#9370DB';
+ * @property MediumSeaGreen '#3CB371';
+ * @property MediumSlateBlue '#7B68EE';
+ * @property MediumSpringGreen '#00FA9A';
+ * @property MediumTurquoise '#48D1CC';
+ * @property MediumVioletRed '#C71585';
+ * @property MidnightBlue '#191970';
+ * @property MintCream '#F5FFFA';
+ * @property MistyRose '#FFE4E1';
+ * @property Moccasin '#FFE4B5';
+ * @property NavajoWhite '#FFDEAD';
+ * @property Navy '#000080';
+ * @property OldLace '#FDF5E6';
+ * @property Olive '#808000';
+ * @property OliveDrab '#6B8E23';
+ * @property Orange '#FFA500';
+ * @property OrangeRed '#FF4500';
+ * @property Orchid '#DA70D6';
+ * @property PaleGoldenRod '#EEE8AA';
+ * @property PaleGreen '#98FB98';
+ * @property PaleTurquoise '#AFEEEE';
+ * @property PaleVioletRed '#DB7093';
+ * @property PapayaWhip '#FFEFD5';
+ * @property PeachPuff '#FFDAB9';
+ * @property Peru '#CD853F';
+ * @property Pink '#FFC0CB';
+ * @property Plum '#DDA0DD';
+ * @property PowderBlue '#B0E0E6';
+ * @property Purple '#800080';
+ * @property RebeccaPurple '#663399';
+ * @property Red '#FF0000';
+ * @property RosyBrown '#BC8F8F';
+ * @property RoyalBlue '#4169E1';
+ * @property SaddleBrown '#8B4513';
+ * @property Salmon '#FA8072';
+ * @property SandyBrown '#F4A460';
+ * @property SeaGreen '#2E8B57';
+ * @property SeaShell '#FFF5EE';
+ * @property Sienna '#A0522D';
+ * @property Silver '#C0C0C0';
+ * @property SkyBlue '#87CEEB';
+ * @property SlateBlue '#6A5ACD';
+ * @property SlateGray '#708090';
+ * @property SlateGrey '#708090';
+ * @property Snow '#FFFAFA';
+ * @property SpringGreen '#00FF7F';
+ * @property SteelBlue '#4682B4';
+ * @property Tan '#D2B48C';
+ * @property Teal '#008080';
+ * @property Thistle '#D8BFD8';
+ * @property Tomato '#FF6347';
+ * @property Turquoise '#40E0D0';
+ * @property Violet '#EE82EE';
+ * @property Wheat '#F5DEB3';
+ * @property White '#FFFFFF';
+ * @property WhiteSmoke '#F5F5F5';
+ * @property Yellow '#FFFF00';
+ * @property YellowGreen '#9ACD32';
+ * 
+ * @class Color
+ */
 export class Color {
   static AliceBlue: string = '#F0F8FF';
   static AntiqueWhite: string = '#FAEBD7';

@@ -119,7 +119,7 @@
   "documentation": {
     "heading": "Documentation",
     "languageTitle": "Langage",
-    "globalsTitle": "Globals",
+    "globalsTitle": "Variables globales",
     "typesTitle": "Types de lutins",
     "typesDescr1": "Un type de lutin fournit un comportement prédéfini pour un lutin. Il définit un ensemble de propriétés, de méthodes et de variables d'événement.",
     "typesDescr2": "Une propriété est un caractéristique du sprite, comme sa hauteur ou sa vitesse par exemple. Elle a une valeur par défaut et peut être changée à n'importe quel moment pour manipuler le lutin.",
@@ -135,6 +135,9 @@
     "parameters": "Paramètres",
     "paramName": "Nom",
     "paramType": "Type",
-    "paramDescr": "Description"
+    "paramDescr": "Description",
+    "globalsDescr1": "Les variables globales aident la création du jeu et la manipulation des capteurs.",
+    "globalsDescr2": "Les propriétés des variables globales donnent de l'information sur le capteurs correspondant ou sur l'état du jeu. Elles ne peuvent pas être modifiées.",
+    "globalsDescr3": "Les méthodes des variables globales sont des outils pour créer ou intéragir avec le jeu."
   }
 }

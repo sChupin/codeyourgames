@@ -1,9 +1,64 @@
 import {Point} from './utility';
 
 /**
- * This global variable provides access to the keys of your keyboard.
+ * Gives access to the keys of your keyboard. A key can be in two states: up or down.
+ * You can check the state of a key.
+ * E.g.: Keyboard.SPACEBAR.isDown, Keyboard.A.isUp
  * 
- * @export
+ * @property A
+ * @property B
+ * @property C
+ * @property D
+ * @property E
+ * @property F
+ * @property G
+ * @property H
+ * @property I
+ * @property J
+ * @property K
+ * @property L
+ * @property M
+ * @property N
+ * @property O
+ * @property P
+ * @property Q
+ * @property R
+ * @property S
+ * @property T
+ * @property U
+ * @property V
+ * @property W
+ * @property X
+ * @property Y
+ * @property Z
+ * @property ZERO
+ * @property ONE
+ * @property TWO
+ * @property THREE
+ * @property FOUR
+ * @property FIVE
+ * @property SIX
+ * @property SEVEN
+ * @property EIGHT
+ * @property NINE
+ * @property BACKSPACE
+ * @property ENTER
+ * @property SHIFT
+ * @property CONTROL
+ * @property ALT
+ * @property ESC
+ * @property SPACEBAR
+ * @property DELETE
+ * @property LEFT
+ * @property UP
+ * @property RIGHT
+ * @property DOWN
+ * @property PLUS
+ * @property MINUS
+ * 
+ * @event <KEY_NAME>.isDown The key <KEY_NAME> is pressed
+ * @event <KEY_NAME>.isUp The key <KEY_NAME> is not pressed
+ * 
  * @class Keyboard
  */
 export class Keyboard {
@@ -160,6 +215,15 @@ export namespace Keyboard {
   }
 }
 
+
+/**
+ * Gives access to mouse position and click events.
+ * 
+ * @property position Coordinates of the cursor
+ * @event isDown Left button is pressed
+ * @event isUp Left button is not pressed
+ * @class Mouse
+ */
 export class Mouse {
   public position: Point;
 

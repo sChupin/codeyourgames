@@ -1,5 +1,96 @@
 <template>
 <div class="container">
+  <h2>${ 'documentation.languageTitle' & t }</h2>
+  <p>This section describes the language that is used to create games.</p>
+  <p>A program is composed of instructions, event definitions and function definitions.</p>
 
+  <!-- Instruction -->
+  <h3>Instructions</h3>
+  <p>An instruction can be a sprite or global variable property access or method call, an operation, a variable declaration, an assignation or a control flow statement.<br>
+  Instructions are executed sequentially.</p>
+
+  <!-- Property access -->
+  <h3>Property access</h3>
+  <p>Imagine a sprite stored in the variable <i>mySprite</i>, and you want to access the sprite property <i>width</i>.<br>
+  You would achieve this by writing: <code>mySprite.width</code>.<br>
+  </p>
+
+  <!-- Method call -->
+  <h3>Method call</h3>
+  <p>Imagine you want to pause your game at a precise moment in your game execution and you know that the <i>Game</i> global variable has a method called <i>pause</i>.<br>
+  You will call this method by accessing it as property and then execute it by appending two parentheses: <code>Game.pause()</code>.<br>
+  Without the parentheses, the method would not be called.<br>
+  A method can require parameters that will determine its execution behavior; those parameters are passed to the funciton inside the parentheses, separated by commas.</p>
+  
+  <!-- Operations -->
+  <h3>Operations</h3>
+  <p>You can use artihmetic operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) to combine two or more number values.<br>
+  You can use the plus (<code>+</code>) operator to combine two or more texts.<br>
+  You can use relational operators (<code>greater_than</code>, <code>lower_than</code>, <code>equals</code>) to compare two number values, <code>equals</code> can also be used to compare two text value. The result is a boolean value; a boolean value is either <code>true</code> or <code>false</code>.<br>
+  You can use logical operators (<code>and</code>, <code>or</code>, <code>not</code>) to combine boolean values.<br>
+  </p>
+
+  <!-- Declaration and assignation -->
+  <h3>Variable declaration and assignation</h3>
+  <p>You can create your own variables. A variable can either contain a number, a text or a boolean value. It also can contain a sprite created using the <code>Game</code> methods.<br>
+  Declaring a variable is achieved using the keyword <code>let</code>. E.g.: <code>let myVariable;</code>.<br>
+  A variable assignation is the action of setting a value to a declared variable, it is achieved with the <code>=</code> operator as follow: <code>myVariable = 5;</code>.</p>
+
+  <!-- Control flow -->
+  <h3>Control flow</h3>
+  <p>A program is executed sequentially, i.e. each instruction after each other. However you can modify the path of execution using control flow statements.<br>
+  You have two type of control flow: the conditions and the loops.<br>
+
+  <h4>Conditions</h4>
+  <p>A condition statement is composed of a condition expression and a body.<br>
+  The body contains instructions that are executed only if the condition expression has a boolean value evaluated to true. The condition expression is for instance the result of relational operation. It can also be a number, 0 is evaluated to flase and any other value is true; or a text, if the text is not empty it is evaluated to true.</p>
+  The structure of a condition statement is described by the following code:<br>
+<pre style="width: 200px;"><code>if (<i>condition</i>)
+then {
+  <i>instructions</i>
+}[ else {
+  <i>instructions</i>
+}]</code></pre>
+  the <i>else</i> part is optional and its body is executed if the result of the condition expression is false.
+
+  <h4>Loops</h4>
+  <p>A loop allows to execute the same instructions repeatedly. The <code>repeat</code> loop takes a number or an expression that evaluates to a number and execute its body as many time as that value.</p>
+  It is defined as follow:<br>
+<pre style="width: 200px;"><code>repeat(<i>expression</i>) {
+  <i>instructions</i>
+}</code></pre>
+
+  <!-- Event -->
+  <h2>Events</h2>
+  <p>Events are defined in the event editor and let you describe what to do when a specific event happens in the game.</p>
+  <p>An event definition is composed of condition and an action, the action is the instructions to execute when the condition is met. An event can be of 3 different types: when, while and once.</p>
+  <p>'when' event action is executed whenever the condition becomes true.<br>
+  'while' event action is executed in loop as long as the condition is true.<br>
+  'once' event action is executed only the first time the condition becomes true and never again.</p>
+  An event is defined as follow:<br>
+<pre style="width: 200px;"><code>when (<i>condition</i>)
+do {
+  <i>action</i>
+}</code></pre>
+  where the <i>when</i> keyword can be replaced by <i>while</i> or <i>once</i>.
+  
+  <!-- Function -->
+  <h2>Functions</h2>
+  <p>A function allows you to call a set of instructions in one line of code.<br>
+  A function can manipulate parameters and return a value.</p>
+Here is how to define a function:<br>
+<pre style="width: 300px;"><code>function myFunction([<i>arguments</i>]) {
+  <i>instructions</i>
+  [return <i>expression</i>;]
+}
+</code></pre>
+  The arguments and the return value are optional. If the function takes multiple arguments, they are separated by commas.<br>
+  Calling a function is done the same way as a method call: <code>myFunction([<i>arguments</i>]);</code>.<br>
+  If the function returns a value, it can be assigned to a variable or a sprite property.
+
+  <h2>Type definition</h2>
+
+
+  
 </div>
 </template>

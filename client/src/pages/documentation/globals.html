@@ -1,5 +1,85 @@
 <template>
 <div class="container">
-  
+  <h2>${ 'documentation.globalsTitle' & t }</h2>
+  <p>${ 'documentation.globalsDescr1' & t }</p>
+  <p>${ 'documentation.globalsDescr2' & t }<br>
+  ${ 'documentation.globalsDescr3' & t }<br></p>
+
+  <div repeat.for="[key, value] of globals | iterable" if.bind="!value.private">
+    <h3>${key}</h3>
+    <h5>${value.descr}</h5>
+
+    <div class="panel-group" id.bind="'accordion-'+$index">
+      <!-- Properties -->
+      <div class="panel panel-default" if.bind="value.properties.length !== 0">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href.bind="'#collapse-props-'+$index" data-parent.bind="'#accordion-'+$index">${ 'documentation.properties' & t }</a>
+          </h4>
+        </div>
+        <div id.bind="'collapse-props-'+$index" class="panel-collapse collapse">
+          <ul class="list-group">
+            <li class="list-group-item" repeat.for="property of value.properties">
+              <b>${property.name}</b><span if.bind="property.type">&nbsp;:&nbsp;<small>${property.type}</small></span>
+              <p if.bind="property.descr">${property.descr}</p>
+              <small show.bind="property.defVal !== undefined"><b>${ 'documentation.defVal' & t }</b>&nbsp;:&nbsp; ${property.defVal} </small>
+            </li>
+            <i class="list-group-item" if.bind="value.properties.length === 0">${ 'documentation.noProps' & t }</i>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Methods -->
+      <div class="panel panel-default" if.bind="value.methods.length !== 0" >
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href.bind="'#collapse-methods-'+$index" data-parent.bind="'#accordion-'+$index">${ 'documentation.methods' & t }</a>
+          </h4>
+        </div>
+        <div id.bind="'collapse-methods-'+$index" class="panel-collapse collapse">
+          <ul class="list-group">
+            <li class="list-group-item" repeat.for="method of value.methods">
+              <b>${ method.name }(<span repeat.for="param of method.params">${param.name}<span if.bind="!$last">, </span></span>)&nbsp;</b>
+              <p>${method.descr}</p>
+              <div if.bind="method.params.length !== 0">
+                <p><b>${ 'documentation.parameters' & t }</b></p>
+                <table class="table table-bordered table-responsive">
+                  <thead>
+                    <tr><th>${ 'documentation.paramName' & t }</th><th>${ 'documentation.paramType' & t }</th><th>${ 'documentation.paramDescr' & t }</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr repeat.for="param of method.params">
+                      <td>${param.name}</td>
+                      <td>${param.type}</td>
+                      <td>${param.descr}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <i class="list-group-item" if.bind="value.methods.length === 0">${ 'documentation.noMethods' & t }</i>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Event variables -->
+      <div class="panel panel-default" if.bind="value.events.length !== 0">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href.bind="'#collapse-events-'+$index" data-parent.bind="'#accordion-'+$index">${ 'documentation.events' & t }</a>
+          </h4>
+        </div>
+        <div id.bind="'collapse-events-'+$index" class="panel-collapse collapse">
+          <ul class="list-group">
+            <li class="list-group-item" repeat.for="event of value.events">
+              <b>${event.name}</b>
+              <p>${event.descr}</p>
+            </li>
+            <i class="list-group-item" if.bind="value.events.length === 0">${ 'documentation.noEvents' & t }</i>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </template>

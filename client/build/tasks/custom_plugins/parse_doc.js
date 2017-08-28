@@ -18,9 +18,9 @@ var readJsdoc = function(opts) {
         } else if (file.isBuffer()) {
             var parsed = commentParser(file.contents.toString());
             var condensed = JSON.stringify(docToSpriteType(parsed), null, 2);
-            // var condensed = parsed.map(function(item) {
-            //     return item.source;
-            // }).join("\n\n\n").trim();
+              // var condensed = parsed.map(function(item) {
+              //     return item.source;
+              // }).join("\n\n\n").trim();
             if (condensed) {
                 // If we have content, and only if we have content, re-add the
                 // file to the set and make it available.
@@ -39,7 +39,7 @@ var readJsdoc = function(opts) {
 
 function docToSpriteType(doc) {
     var spriteTypes = {};
-    doc.forEach(function (comment) {
+    doc.forEach(function(comment) {
         var tags = comment.tags;
         // Check if it's a class comment
         var classTag = tags.find(function (tagLine) { return tagLine.tag == 'class'; });
@@ -62,8 +62,7 @@ function docToSpriteType(doc) {
                     spriteType.private = true;
                 }
             });
-        }
-        else {
+        } else {
             // It's a method comment
             var className = tags.find(function (tagLine) { return tagLine.tag == 'memberof'; }).name;
             var method = { name: '', descr: comment.description, params: [], "return": { type: '', descr: '' } };

@@ -77,7 +77,6 @@ export class Sprite extends Phaser.Sprite {
    * Set the sprite invisible
    * 
    * @method hide
-   * @return {void}
    * @memberof Sprite
    */
   public hide() {
@@ -89,7 +88,6 @@ export class Sprite extends Phaser.Sprite {
    * Set the sprite visible
    * 
    * @method show
-   * @return {void}
    * @memberof Sprite
    */
   public show() {
@@ -100,10 +98,11 @@ export class Sprite extends Phaser.Sprite {
    * Move the sprite one layer up
    * 
    * @method moveUp
-   * @return {void}
    * @memberof Sprite
    */
-  // Implemented by Phaser.Sprite
+  public moveUp() {
+    return super.moveUp();
+  }
 
   /**
    * Move the sprite one layer down
@@ -112,7 +111,9 @@ export class Sprite extends Phaser.Sprite {
    * @return {void}
    * @memberof Sprite
    */
-  // Implemented by Phaser.Sprite
+  public moveDown() {
+    return super.moveDown();
+  }
 
   /**
    * Send the sprite to the lowest layer

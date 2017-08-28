@@ -122,7 +122,7 @@
   "documentation": {
     "heading": "Documentation",
     "languageTitle": "Language",
-    "globalsTitle": "Globals",
+    "globalsTitle": "Global variables",
     "typesTitle": "Sprite types",
     "typesDescr1": "A sprite type provides a predefined behavior for a sprite. It defines a set of properties, methods and event variables.",
     "typesDescr2": "A property is a characteristic of the sprite, as its height or its speed for instance. It has a default value and can be changed at any time to manipulate the sprite.",
@@ -138,6 +138,9 @@
     "parameters": "Parameters",
     "paramName": "Name",
     "paramType": "Type",
-    "paramDescr": "Description"
+    "paramDescr": "Description",
+    "globalsDescr1": "Global variables help the creation of the game and the manipulation of sensors.",
+    "globalsDescr2": "Global variable properties give information on the corresponding sensor or on the game. It cannot be modified.",
+    "globalsDescr3": "Global variable methods offer tools to create or interact with the game."
   }
 }

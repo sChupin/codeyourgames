@@ -1,0 +1,1508 @@
+{
+  "Game": {
+    "name": "Game",
+    "descr": "Gives methods to control some aspects of the game. It lets you pause and resume the game, set and manipulate a background, add sprites and more.",
+    "private": false,
+    "properties": [],
+    "events": [],
+    "methods": [
+      {
+        "name": "pause",
+        "descr": "Pause the game",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "resume",
+        "descr": "Resume the game",
+        "params": [],
+        "return": {
+          "type": "void",
+          "descr": ""
+        }
+      },
+      {
+        "name": "setBackground",
+        "descr": "Set the game background",
+        "params": [
+          {
+            "name": "backgroundKey",
+            "type": "string",
+            "descr": "Background image key"
+          },
+          {
+            "name": "backgroundType",
+            "type": "string",
+            "descr": "Background type"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "",
+        "descr": "Scroll the background in the given direction with the given speed",
+        "params": [
+          {
+            "name": "speed",
+            "type": "number",
+            "descr": "The scrolling speed"
+          },
+          {
+            "name": "direction",
+            "type": "number",
+            "descr": "The scrolling direction"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "setCamera",
+        "descr": "Define the camera size with optional deadzone. Moving inside the deadzone will no cause the camera to move.",
+        "params": [
+          {
+            "name": "cameraWidth",
+            "type": "number",
+            "descr": "camera width"
+          },
+          {
+            "name": "cameraHeight",
+            "type": "number",
+            "descr": "camera height"
+          },
+          {
+            "name": "gameWidth",
+            "type": "number",
+            "descr": "actual game width"
+          },
+          {
+            "name": "gameHeight",
+            "type": "number",
+            "descr": "actual game height"
+          },
+          {
+            "name": "deadzoneWidth",
+            "type": "number",
+            "descr": "deadzone width"
+          },
+          {
+            "name": "deadzoneHeight",
+            "type": "number",
+            "descr": "deadzone height"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "setDimensions",
+        "descr": "Set the dimensions of the game",
+        "params": [
+          {
+            "name": "width",
+            "type": "number",
+            "descr": "game width"
+          },
+          {
+            "name": "height",
+            "type": "number",
+            "descr": "game height"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addSprite",
+        "descr": "Create and add a sprite on the board game",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Sprite x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Sprite y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addHero",
+        "descr": "Create and add a sprite of type Hero.",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Hero x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Hero y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addPlatform",
+        "descr": "Create and add a sprite of type Platform",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Platform x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Platform y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addDecor",
+        "descr": "Create and add a sprite of type Decor",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Decor x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Decor y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addEnemy",
+        "descr": "Create and add a sprite of type Enemy",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Enemy x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Enemy y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addSpaceship",
+        "descr": "Create and add a sprite of type Spaceship",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Spaceship x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Spaceship y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addObject",
+        "descr": "Create and add a sprite of type Object",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Object x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Object y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addFlappyBird",
+        "descr": "Create and add a sprite of type FlappyBird",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "FlappyBird x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "FlappyBird y coordinate"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addWeapon",
+        "descr": "Create sprite of type Weapon",
+        "params": [
+          {
+            "name": "key",
+            "type": "string",
+            "descr": "Image key name"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      },
+      {
+        "name": "addText",
+        "descr": "Create sprite of type Text",
+        "params": [
+          {
+            "name": "x",
+            "type": "number",
+            "descr": "Text x coordinate"
+          },
+          {
+            "name": "y",
+            "type": "number",
+            "descr": "Text y coordinate"
+          },
+          {
+            "name": "text",
+            "type": "number",
+            "descr": "Text content"
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      }
+    ]
+  },
+  "Keyboard": {
+    "name": "Keyboard",
+    "descr": "Gives access to the keys of your keyboard. A key can be in two states: up or down.\nYou can check the state of a key.\nE.g.: Keyboard.SPACEBAR.isDown, Keyboard.A.isUp",
+    "private": false,
+    "properties": [
+      {
+        "name": "A",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "B",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "C",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "D",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "E",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "F",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "G",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "H",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "I",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "J",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "K",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "L",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "M",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "N",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "O",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "P",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "Q",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "R",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "S",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "T",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "U",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "V",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "W",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "X",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "Y",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "Z",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "ZERO",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "ONE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "TWO",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "THREE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "FOUR",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "FIVE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SIX",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SEVEN",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "EIGHT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "NINE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "BACKSPACE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "ENTER",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SHIFT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "CONTROL",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "ALT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "ESC",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SPACEBAR",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "DELETE",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "LEFT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "UP",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "RIGHT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "DOWN",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "PLUS",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "MINUS",
+        "type": "",
+        "descr": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "<KEY_NAME>.isDown",
+        "descr": "The key <KEY_NAME> is pressed"
+      },
+      {
+        "name": "<KEY_NAME>.isUp",
+        "descr": "The key <KEY_NAME> is not pressed"
+      }
+    ],
+    "methods": []
+  },
+  "Mouse": {
+    "name": "Mouse",
+    "descr": "Gives access to mouse position and click events.",
+    "private": false,
+    "properties": [
+      {
+        "name": "position",
+        "type": "",
+        "descr": "Coordinates of the cursor"
+      }
+    ],
+    "events": [
+      {
+        "name": "isDown",
+        "descr": "Left button is pressed"
+      },
+      {
+        "name": "isUp",
+        "descr": "Left button is not pressed"
+      }
+    ],
+    "methods": []
+  },
+  "Direction": {
+    "name": "Direction",
+    "descr": "Gives access to principal directions",
+    "private": false,
+    "properties": [
+      {
+        "name": "UP",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "DOWN",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "RIGHT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "LEFT",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "NORTH_EAST",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "NORTH_WEST",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SOUTH_EAST",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SOUTH_WEST",
+        "type": "",
+        "descr": ""
+      }
+    ],
+    "events": [],
+    "methods": []
+  },
+  "Time": {
+    "name": "Time",
+    "descr": "Provides a method to wait before executing a function and gives access to principal unit of times",
+    "private": false,
+    "properties": [
+      {
+        "name": "QUARTER_SECOND",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "HALF_SECOND",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "SECOND",
+        "type": "",
+        "descr": ""
+      },
+      {
+        "name": "MINUTES",
+        "type": "",
+        "descr": ""
+      }
+    ],
+    "events": [],
+    "methods": [
+      {
+        "name": "wait",
+        "descr": "Introduce a delay before executing a function",
+        "params": [
+          {
+            "name": "time",
+            "type": "number",
+            "descr": "Number of ms to wait before executing the action"
+          },
+          {
+            "name": "action",
+            "type": "function",
+            "descr": "The function to execute once the time hase elapsed."
+          }
+        ],
+        "return": {
+          "type": "",
+          "descr": ""
+        }
+      }
+    ]
+  },
+  "Color": {
+    "name": "Color",
+    "descr": "Gives access to colors",
+    "private": false,
+    "properties": [
+      {
+        "name": "AliceBlue",
+        "type": "",
+        "descr": "'#F0F8FF';"
+      },
+      {
+        "name": "AntiqueWhite",
+        "type": "",
+        "descr": "'#FAEBD7';"
+      },
+      {
+        "name": "Aqua",
+        "type": "",
+        "descr": "'#00FFFF';"
+      },
+      {
+        "name": "Aquamarine",
+        "type": "",
+        "descr": "'#7FFFD4';"
+      },
+      {
+        "name": "Azure",
+        "type": "",
+        "descr": "'#F0FFFF';"
+      },
+      {
+        "name": "Beige",
+        "type": "",
+        "descr": "'#F5F5DC';"
+      },
+      {
+        "name": "Bisque",
+        "type": "",
+        "descr": "'#FFE4C4';"
+      },
+      {
+        "name": "Black",
+        "type": "",
+        "descr": "'#000000';"
+      },
+      {
+        "name": "BlanchedAlmond",
+        "type": "",
+        "descr": "'#FFEBCD';"
+      },
+      {
+        "name": "Blue",
+        "type": "",
+        "descr": "'#0000FF';"
+      },
+      {
+        "name": "BlueViolet",
+        "type": "",
+        "descr": "'#8A2BE2';"
+      },
+      {
+        "name": "Brown",
+        "type": "",
+        "descr": "'#A52A2A';"
+      },
+      {
+        "name": "BurlyWood",
+        "type": "",
+        "descr": "'#DEB887';"
+      },
+      {
+        "name": "CadetBlue",
+        "type": "",
+        "descr": "'#5F9EA0';"
+      },
+      {
+        "name": "Chartreuse",
+        "type": "",
+        "descr": "'#7FFF00';"
+      },
+      {
+        "name": "Chocolate",
+        "type": "",
+        "descr": "'#D2691E';"
+      },
+      {
+        "name": "Coral",
+        "type": "",
+        "descr": "'#FF7F50';"
+      },
+      {
+        "name": "CornflowerBlue",
+        "type": "",
+        "descr": "'#6495ED';"
+      },
+      {
+        "name": "Cornsilk",
+        "type": "",
+        "descr": "'#FFF8DC';"
+      },
+      {
+        "name": "Crimson",
+        "type": "",
+        "descr": "'#DC143C';"
+      },
+      {
+        "name": "Cyan",
+        "type": "",
+        "descr": "'#00FFFF';"
+      },
+      {
+        "name": "DarkBlue",
+        "type": "",
+        "descr": "'#00008B';"
+      },
+      {
+        "name": "DarkCyan",
+        "type": "",
+        "descr": "'#008B8B';"
+      },
+      {
+        "name": "DarkGoldenRod",
+        "type": "",
+        "descr": "'#B8860B';"
+      },
+      {
+        "name": "DarkGray",
+        "type": "",
+        "descr": "'#A9A9A9';"
+      },
+      {
+        "name": "DarkGrey",
+        "type": "",
+        "descr": "'#A9A9A9';"
+      },
+      {
+        "name": "DarkGreen",
+        "type": "",
+        "descr": "'#006400';"
+      },
+      {
+        "name": "DarkKhaki",
+        "type": "",
+        "descr": "'#BDB76B';"
+      },
+      {
+        "name": "DarkMagenta",
+        "type": "",
+        "descr": "'#8B008B';"
+      },
+      {
+        "name": "DarkOliveGreen",
+        "type": "",
+        "descr": "'#556B2F';"
+      },
+      {
+        "name": "DarkOrange",
+        "type": "",
+        "descr": "'#FF8C00';"
+      },
+      {
+        "name": "DarkOrchid",
+        "type": "",
+        "descr": "'#9932CC';"
+      },
+      {
+        "name": "DarkRed",
+        "type": "",
+        "descr": "'#8B0000';"
+      },
+      {
+        "name": "DarkSalmon",
+        "type": "",
+        "descr": "'#E9967A';"
+      },
+      {
+        "name": "DarkSeaGreen",
+        "type": "",
+        "descr": "'#8FBC8F';"
+      },
+      {
+        "name": "DarkSlateBlue",
+        "type": "",
+        "descr": "'#483D8B';"
+      },
+      {
+        "name": "DarkSlateGray",
+        "type": "",
+        "descr": "'#2F4F4F';"
+      },
+      {
+        "name": "DarkSlateGrey",
+        "type": "",
+        "descr": "'#2F4F4F';"
+      },
+      {
+        "name": "DarkTurquoise",
+        "type": "",
+        "descr": "'#00CED1';"
+      },
+      {
+        "name": "DarkViolet",
+        "type": "",
+        "descr": "'#9400D3';"
+      },
+      {
+        "name": "DeepPink",
+        "type": "",
+        "descr": "'#FF1493';"
+      },
+      {
+        "name": "DeepSkyBlue",
+        "type": "",
+        "descr": "'#00BFFF';"
+      },
+      {
+        "name": "DimGray",
+        "type": "",
+        "descr": "'#696969';"
+      },
+      {
+        "name": "DimGrey",
+        "type": "",
+        "descr": "'#696969';"
+      },
+      {
+        "name": "DodgerBlue",
+        "type": "",
+        "descr": "'#1E90FF';"
+      },
+      {
+        "name": "FireBrick",
+        "type": "",
+        "descr": "'#B22222';"
+      },
+      {
+        "name": "FloralWhite",
+        "type": "",
+        "descr": "'#FFFAF0';"
+      },
+      {
+        "name": "ForestGreen",
+        "type": "",
+        "descr": "'#228B22';"
+      },
+      {
+        "name": "Fuchsia",
+        "type": "",
+        "descr": "'#FF00FF';"
+      },
+      {
+        "name": "Gainsboro",
+        "type": "",
+        "descr": "'#DCDCDC';"
+      },
+      {
+        "name": "GhostWhite",
+        "type": "",
+        "descr": "'#F8F8FF';"
+      },
+      {
+        "name": "Gold",
+        "type": "",
+        "descr": "'#FFD700';"
+      },
+      {
+        "name": "GoldenRod",
+        "type": "",
+        "descr": "'#DAA520';"
+      },
+      {
+        "name": "Gray",
+        "type": "",
+        "descr": "'#808080';"
+      },
+      {
+        "name": "Grey",
+        "type": "",
+        "descr": "'#808080';"
+      },
+      {
+        "name": "Green",
+        "type": "",
+        "descr": "'#008000';"
+      },
+      {
+        "name": "GreenYellow",
+        "type": "",
+        "descr": "'#ADFF2F';"
+      },
+      {
+        "name": "HoneyDew",
+        "type": "",
+        "descr": "'#F0FFF0';"
+      },
+      {
+        "name": "HotPink",
+        "type": "",
+        "descr": "'#FF69B4';"
+      },
+      {
+        "name": "IndianRed",
+        "type": "",
+        "descr": "'#CD5C5C';"
+      },
+      {
+        "name": "Indigo",
+        "type": "",
+        "descr": "'#4B0082';"
+      },
+      {
+        "name": "Ivory",
+        "type": "",
+        "descr": "'#FFFFF0';"
+      },
+      {
+        "name": "Khaki",
+        "type": "",
+        "descr": "'#F0E68C';"
+      },
+      {
+        "name": "Lavender",
+        "type": "",
+        "descr": "'#E6E6FA';"
+      },
+      {
+        "name": "LavenderBlush",
+        "type": "",
+        "descr": "'#FFF0F5';"
+      },
+      {
+        "name": "LawnGreen",
+        "type": "",
+        "descr": "'#7CFC00';"
+      },
+      {
+        "name": "LemonChiffon",
+        "type": "",
+        "descr": "'#FFFACD';"
+      },
+      {
+        "name": "LightBlue",
+        "type": "",
+        "descr": "'#ADD8E6';"
+      },
+      {
+        "name": "LightCoral",
+        "type": "",
+        "descr": "'#F08080';"
+      },
+      {
+        "name": "LightCyan",
+        "type": "",
+        "descr": "'#E0FFFF';"
+      },
+      {
+        "name": "LightGoldenRodYellow",
+        "type": "",
+        "descr": "'#FAFAD2';"
+      },
+      {
+        "name": "LightGray",
+        "type": "",
+        "descr": "'#D3D3D3';"
+      },
+      {
+        "name": "LightGrey",
+        "type": "",
+        "descr": "'#D3D3D3';"
+      },
+      {
+        "name": "LightGreen",
+        "type": "",
+        "descr": "'#90EE90';"
+      },
+      {
+        "name": "LightPink",
+        "type": "",
+        "descr": "'#FFB6C1';"
+      },
+      {
+        "name": "LightSalmon",
+        "type": "",
+        "descr": "'#FFA07A';"
+      },
+      {
+        "name": "LightSeaGreen",
+        "type": "",
+        "descr": "'#20B2AA';"
+      },
+      {
+        "name": "LightSkyBlue",
+        "type": "",
+        "descr": "'#87CEFA';"
+      },
+      {
+        "name": "LightSlateGray",
+        "type": "",
+        "descr": "'#778899';"
+      },
+      {
+        "name": "LightSlateGrey",
+        "type": "",
+        "descr": "'#778899';"
+      },
+      {
+        "name": "LightSteelBlue",
+        "type": "",
+        "descr": "'#B0C4DE';"
+      },
+      {
+        "name": "LightYellow",
+        "type": "",
+        "descr": "'#FFFFE0';"
+      },
+      {
+        "name": "Lime",
+        "type": "",
+        "descr": "'#00FF00';"
+      },
+      {
+        "name": "LimeGreen",
+        "type": "",
+        "descr": "'#32CD32';"
+      },
+      {
+        "name": "Linen",
+        "type": "",
+        "descr": "'#FAF0E6';"
+      },
+      {
+        "name": "Magenta",
+        "type": "",
+        "descr": "'#FF00FF';"
+      },
+      {
+        "name": "Maroon",
+        "type": "",
+        "descr": "'#800000';"
+      },
+      {
+        "name": "MediumAquaMarine",
+        "type": "",
+        "descr": "'#66CDAA';"
+      },
+      {
+        "name": "MediumBlue",
+        "type": "",
+        "descr": "'#0000CD';"
+      },
+      {
+        "name": "MediumOrchid",
+        "type": "",
+        "descr": "'#BA55D3';"
+      },
+      {
+        "name": "MediumPurple",
+        "type": "",
+        "descr": "'#9370DB';"
+      },
+      {
+        "name": "MediumSeaGreen",
+        "type": "",
+        "descr": "'#3CB371';"
+      },
+      {
+        "name": "MediumSlateBlue",
+        "type": "",
+        "descr": "'#7B68EE';"
+      },
+      {
+        "name": "MediumSpringGreen",
+        "type": "",
+        "descr": "'#00FA9A';"
+      },
+      {
+        "name": "MediumTurquoise",
+        "type": "",
+        "descr": "'#48D1CC';"
+      },
+      {
+        "name": "MediumVioletRed",
+        "type": "",
+        "descr": "'#C71585';"
+      },
+      {
+        "name": "MidnightBlue",
+        "type": "",
+        "descr": "'#191970';"
+      },
+      {
+        "name": "MintCream",
+        "type": "",
+        "descr": "'#F5FFFA';"
+      },
+      {
+        "name": "MistyRose",
+        "type": "",
+        "descr": "'#FFE4E1';"
+      },
+      {
+        "name": "Moccasin",
+        "type": "",
+        "descr": "'#FFE4B5';"
+      },
+      {
+        "name": "NavajoWhite",
+        "type": "",
+        "descr": "'#FFDEAD';"
+      },
+      {
+        "name": "Navy",
+        "type": "",
+        "descr": "'#000080';"
+      },
+      {
+        "name": "OldLace",
+        "type": "",
+        "descr": "'#FDF5E6';"
+      },
+      {
+        "name": "Olive",
+        "type": "",
+        "descr": "'#808000';"
+      },
+      {
+        "name": "OliveDrab",
+        "type": "",
+        "descr": "'#6B8E23';"
+      },
+      {
+        "name": "Orange",
+        "type": "",
+        "descr": "'#FFA500';"
+      },
+      {
+        "name": "OrangeRed",
+        "type": "",
+        "descr": "'#FF4500';"
+      },
+      {
+        "name": "Orchid",
+        "type": "",
+        "descr": "'#DA70D6';"
+      },
+      {
+        "name": "PaleGoldenRod",
+        "type": "",
+        "descr": "'#EEE8AA';"
+      },
+      {
+        "name": "PaleGreen",
+        "type": "",
+        "descr": "'#98FB98';"
+      },
+      {
+        "name": "PaleTurquoise",
+        "type": "",
+        "descr": "'#AFEEEE';"
+      },
+      {
+        "name": "PaleVioletRed",
+        "type": "",
+        "descr": "'#DB7093';"
+      },
+      {
+        "name": "PapayaWhip",
+        "type": "",
+        "descr": "'#FFEFD5';"
+      },
+      {
+        "name": "PeachPuff",
+        "type": "",
+        "descr": "'#FFDAB9';"
+      },
+      {
+        "name": "Peru",
+        "type": "",
+        "descr": "'#CD853F';"
+      },
+      {
+        "name": "Pink",
+        "type": "",
+        "descr": "'#FFC0CB';"
+      },
+      {
+        "name": "Plum",
+        "type": "",
+        "descr": "'#DDA0DD';"
+      },
+      {
+        "name": "PowderBlue",
+        "type": "",
+        "descr": "'#B0E0E6';"
+      },
+      {
+        "name": "Purple",
+        "type": "",
+        "descr": "'#800080';"
+      },
+      {
+        "name": "RebeccaPurple",
+        "type": "",
+        "descr": "'#663399';"
+      },
+      {
+        "name": "Red",
+        "type": "",
+        "descr": "'#FF0000';"
+      },
+      {
+        "name": "RosyBrown",
+        "type": "",
+        "descr": "'#BC8F8F';"
+      },
+      {
+        "name": "RoyalBlue",
+        "type": "",
+        "descr": "'#4169E1';"
+      },
+      {
+        "name": "SaddleBrown",
+        "type": "",
+        "descr": "'#8B4513';"
+      },
+      {
+        "name": "Salmon",
+        "type": "",
+        "descr": "'#FA8072';"
+      },
+      {
+        "name": "SandyBrown",
+        "type": "",
+        "descr": "'#F4A460';"
+      },
+      {
+        "name": "SeaGreen",
+        "type": "",
+        "descr": "'#2E8B57';"
+      },
+      {
+        "name": "SeaShell",
+        "type": "",
+        "descr": "'#FFF5EE';"
+      },
+      {
+        "name": "Sienna",
+        "type": "",
+        "descr": "'#A0522D';"
+      },
+      {
+        "name": "Silver",
+        "type": "",
+        "descr": "'#C0C0C0';"
+      },
+      {
+        "name": "SkyBlue",
+        "type": "",
+        "descr": "'#87CEEB';"
+      },
+      {
+        "name": "SlateBlue",
+        "type": "",
+        "descr": "'#6A5ACD';"
+      },
+      {
+        "name": "SlateGray",
+        "type": "",
+        "descr": "'#708090';"
+      },
+      {
+        "name": "SlateGrey",
+        "type": "",
+        "descr": "'#708090';"
+      },
+      {
+        "name": "Snow",
+        "type": "",
+        "descr": "'#FFFAFA';"
+      },
+      {
+        "name": "SpringGreen",
+        "type": "",
+        "descr": "'#00FF7F';"
+      },
+      {
+        "name": "SteelBlue",
+        "type": "",
+        "descr": "'#4682B4';"
+      },
+      {
+        "name": "Tan",
+        "type": "",
+        "descr": "'#D2B48C';"
+      },
+      {
+        "name": "Teal",
+        "type": "",
+        "descr": "'#008080';"
+      },
+      {
+        "name": "Thistle",
+        "type": "",
+        "descr": "'#D8BFD8';"
+      },
+      {
+        "name": "Tomato",
+        "type": "",
+        "descr": "'#FF6347';"
+      },
+      {
+        "name": "Turquoise",
+        "type": "",
+        "descr": "'#40E0D0';"
+      },
+      {
+        "name": "Violet",
+        "type": "",
+        "descr": "'#EE82EE';"
+      },
+      {
+        "name": "Wheat",
+        "type": "",
+        "descr": "'#F5DEB3';"
+      },
+      {
+        "name": "White",
+        "type": "",
+        "descr": "'#FFFFFF';"
+      },
+      {
+        "name": "WhiteSmoke",
+        "type": "",
+        "descr": "'#F5F5F5';"
+      },
+      {
+        "name": "Yellow",
+        "type": "",
+        "descr": "'#FFFF00';"
+      },
+      {
+        "name": "YellowGreen",
+        "type": "",
+        "descr": "'#9ACD32';"
+      }
+    ],
+    "events": [],
+    "methods": []
+  }
+}

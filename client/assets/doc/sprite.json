@@ -37,7 +37,7 @@
         "descr": "Set the sprite invisible",
         "params": [],
         "return": {
-          "type": "void",
+          "type": "",
           "descr": ""
         }
       },
@@ -46,7 +46,7 @@
         "descr": "Set the sprite visible",
         "params": [],
         "return": {
-          "type": "void",
+          "type": "",
           "descr": ""
         }
       },
@@ -55,7 +55,7 @@
         "descr": "Move the sprite one layer up",
         "params": [],
         "return": {
-          "type": "void",
+          "type": "",
           "descr": ""
         }
       },
@@ -87,7 +87,7 @@
         }
       },
       {
-        "name": "",
+        "name": "resizeHitBox",
         "descr": "Resize the Sprite hitbox",
         "params": [
           {
